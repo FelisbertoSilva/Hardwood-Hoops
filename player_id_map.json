@@ -1,0 +1,4752 @@
+{
+  "Precious Achiuwa": {
+    "id": 1630173,
+    "active": true,
+    "birthdate": "1999-09-19T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "20",
+      "year": 2020
+    }
+  },
+  "Steven Adams": {
+    "id": 203500,
+    "active": true,
+    "birthdate": "1993-07-20T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "12",
+      "year": 2013
+    }
+  },
+  "Bam Adebayo": {
+    "id": 1628389,
+    "active": true,
+    "birthdate": "1997-07-18T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "14",
+      "year": 2017
+    }
+  },
+  "Ochai Agbaji": {
+    "id": 1630534,
+    "active": true,
+    "birthdate": "2000-04-20T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "14",
+      "year": 2022
+    }
+  },
+  "Santi Aldama": {
+    "id": 1630583,
+    "active": true,
+    "birthdate": "2001-01-10T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "30",
+      "year": 2021
+    }
+  },
+  "Trey Alexander": {
+    "id": 1641725,
+    "active": true,
+    "birthdate": "2003-05-02T00:00:00",
+    "draft": null
+  },
+  "Nickeil Alexander-Walker": {
+    "id": 1629638,
+    "active": true,
+    "birthdate": "1998-09-02T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "17",
+      "year": 2019
+    }
+  },
+  "Grayson Allen": {
+    "id": 1628960,
+    "active": true,
+    "birthdate": "1995-10-08T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "21",
+      "year": 2018
+    }
+  },
+  "Jarrett Allen": {
+    "id": 1628386,
+    "active": true,
+    "birthdate": "1998-04-21T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "22",
+      "year": 2017
+    }
+  },
+  "Jose Alvarado": {
+    "id": 1630631,
+    "active": true,
+    "birthdate": "1998-04-12T00:00:00",
+    "draft": null
+  },
+  "Kyle Anderson": {
+    "id": 203937,
+    "active": true,
+    "birthdate": "1993-09-20T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "30",
+      "year": 2014
+    }
+  },
+  "Alex Antetokounmpo": {
+    "id": 1630828,
+    "active": true,
+    "birthdate": "2001-08-27T00:00:00",
+    "draft": null
+  },
+  "Giannis Antetokounmpo": {
+    "id": 203507,
+    "active": true,
+    "birthdate": "1994-12-06T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "15",
+      "year": 2013
+    }
+  },
+  "Thanasis Antetokounmpo": {
+    "id": 203648,
+    "active": true,
+    "birthdate": "1992-07-18T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "2",
+      "pick": "51",
+      "year": 2014
+    }
+  },
+  "Cole Anthony": {
+    "id": 1630175,
+    "active": true,
+    "birthdate": "2000-05-15T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "15",
+      "year": 2020
+    }
+  },
+  "OG Anunoby": {
+    "id": 1628384,
+    "active": true,
+    "birthdate": "1997-07-17T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "23",
+      "year": 2017
+    }
+  },
+  "Deni Avdija": {
+    "id": 1630166,
+    "active": true,
+    "birthdate": "2001-01-03T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "9",
+      "year": 2020
+    }
+  },
+  "Deandre Ayton": {
+    "id": 1629028,
+    "active": true,
+    "birthdate": "1998-07-23T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "1",
+      "year": 2018
+    }
+  },
+  "Marvin Bagley III": {
+    "id": 1628963,
+    "active": true,
+    "birthdate": "1999-03-14T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "2",
+      "year": 2018
+    }
+  },
+  "Ace Bailey": {
+    "id": 1642846,
+    "active": true,
+    "birthdate": "2006-08-13T00:00:00",
+    "draft": null
+  },
+  "LaMelo Ball": {
+    "id": 1630163,
+    "active": true,
+    "birthdate": "2001-08-22T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "3",
+      "year": 2020
+    }
+  },
+  "Lonzo Ball": {
+    "id": 1628366,
+    "active": true,
+    "birthdate": "1997-10-27T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "2",
+      "year": 2017
+    }
+  },
+  "Paolo Banchero": {
+    "id": 1631094,
+    "active": true,
+    "birthdate": "2002-11-12T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "1",
+      "year": 2022
+    }
+  },
+  "Desmond Bane": {
+    "id": 1630217,
+    "active": true,
+    "birthdate": "1998-06-25T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "30",
+      "year": 2020
+    }
+  },
+  "Dominick Barlow": {
+    "id": 1631230,
+    "active": true,
+    "birthdate": "2003-05-26T00:00:00",
+    "draft": null
+  },
+  "Harrison Barnes": {
+    "id": 203084,
+    "active": true,
+    "birthdate": "1992-05-30T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "7",
+      "year": 2012
+    }
+  },
+  "Scottie Barnes": {
+    "id": 1630567,
+    "active": true,
+    "birthdate": "2001-08-01T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "4",
+      "year": 2021
+    }
+  },
+  "Brooks Barnhizer": {
+    "id": 1642964,
+    "active": true,
+    "birthdate": "2002-03-02T00:00:00",
+    "draft": null
+  },
+  "RJ Barrett": {
+    "id": 1629628,
+    "active": true,
+    "birthdate": "2000-06-14T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "3",
+      "year": 2019
+    }
+  },
+  "Charles Bassey": {
+    "id": 1629646,
+    "active": true,
+    "birthdate": "2000-10-28T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "2",
+      "pick": "53",
+      "year": 2021
+    }
+  },
+  "Tamar Bates": {
+    "id": 1642926,
+    "active": true,
+    "birthdate": "2003-02-21T00:00:00",
+    "draft": null
+  },
+  "Jamison Battle": {
+    "id": 1642419,
+    "active": true,
+    "birthdate": "2001-05-10T00:00:00",
+    "draft": null
+  },
+  "Nicolas Batum": {
+    "id": 201587,
+    "active": true,
+    "birthdate": "1988-12-14T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "25",
+      "year": 2008
+    }
+  },
+  "Bradley Beal": {
+    "id": 203078,
+    "active": true,
+    "birthdate": "1993-06-28T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "3",
+      "year": 2012
+    }
+  },
+  "Joan Beringer": {
+    "id": 1642866,
+    "active": true,
+    "birthdate": "2006-11-11T00:00:00",
+    "draft": null
+  },
+  "Saddiq Bey": {
+    "id": 1630180,
+    "active": true,
+    "birthdate": "1999-04-09T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "19",
+      "year": 2020
+    }
+  },
+  "Goga Bitadze": {
+    "id": 1629048,
+    "active": true,
+    "birthdate": "1999-07-20T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "18",
+      "year": 2019
+    }
+  },
+  "Bismack Biyombo": {
+    "id": 202687,
+    "active": true,
+    "birthdate": "1992-08-28T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "7",
+      "year": 2011
+    }
+  },
+  "Anthony Black": {
+    "id": 1641710,
+    "active": true,
+    "birthdate": "2004-01-20T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "6",
+      "year": 2023
+    }
+  },
+  "Bogdan Bogdanović": {
+    "id": 203992,
+    "active": true,
+    "birthdate": "1992-08-18T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "27",
+      "year": 2014
+    }
+  },
+  "Adem Bona": {
+    "id": 1641737,
+    "active": true,
+    "birthdate": "2003-03-28T00:00:00",
+    "draft": null
+  },
+  "Devin Booker": {
+    "id": 1626164,
+    "active": true,
+    "birthdate": "1996-10-30T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "13",
+      "year": 2015
+    }
+  },
+  "Chris Boucher": {
+    "id": 1628449,
+    "active": true,
+    "birthdate": "1993-01-11T00:00:00",
+    "draft": null
+  },
+  "Tony Bradley": {
+    "id": 1628396,
+    "active": true,
+    "birthdate": "1998-01-08T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "28",
+      "year": 2017
+    }
+  },
+  "Malaki Branham": {
+    "id": 1631103,
+    "active": true,
+    "birthdate": "2003-05-12T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "20",
+      "year": 2022
+    }
+  },
+  "Christian Braun": {
+    "id": 1631128,
+    "active": true,
+    "birthdate": "2001-04-17T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "21",
+      "year": 2022
+    }
+  },
+  "Koby Brea": {
+    "id": 1642886,
+    "active": true,
+    "birthdate": "2002-11-06T00:00:00",
+    "draft": null
+  },
+  "Mikal Bridges": {
+    "id": 1628969,
+    "active": true,
+    "birthdate": "1996-08-30T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "10",
+      "year": 2018
+    }
+  },
+  "Miles Bridges": {
+    "id": 1628970,
+    "active": true,
+    "birthdate": "1998-03-21T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "12",
+      "year": 2018
+    }
+  },
+  "Dillon Brooks": {
+    "id": 1628415,
+    "active": true,
+    "birthdate": "1996-01-22T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "2",
+      "pick": "45",
+      "year": 2017
+    }
+  },
+  "Johni Broome": {
+    "id": 1641780,
+    "active": true,
+    "birthdate": "2002-07-19T00:00:00",
+    "draft": null
+  },
+  "Bruce Brown": {
+    "id": 1628971,
+    "active": true,
+    "birthdate": "1996-08-15T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "2",
+      "pick": "42",
+      "year": 2018
+    }
+  },
+  "Jaylen Brown": {
+    "id": 1627759,
+    "active": true,
+    "birthdate": "1996-10-24T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "3",
+      "year": 2016
+    }
+  },
+  "Kobe Brown": {
+    "id": 1641738,
+    "active": true,
+    "birthdate": "2000-01-01T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "30",
+      "year": 2023
+    }
+  },
+  "Jalen Brunson": {
+    "id": 1628973,
+    "active": true,
+    "birthdate": "1996-08-31T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "2",
+      "pick": "33",
+      "year": 2018
+    }
+  },
+  "Carter Bryant": {
+    "id": 1642868,
+    "active": true,
+    "birthdate": "2005-11-26T00:00:00",
+    "draft": null
+  },
+  "Thomas Bryant": {
+    "id": 1628418,
+    "active": true,
+    "birthdate": "1997-07-31T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "2",
+      "pick": "42",
+      "year": 2017
+    }
+  },
+  "Jimmy Butler III": {
+    "id": 202710,
+    "active": true,
+    "birthdate": "1989-09-14T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "30",
+      "year": 2011
+    }
+  },
+  "Matas Buzelis": {
+    "id": 1641824,
+    "active": true,
+    "birthdate": "2004-10-13T00:00:00",
+    "draft": null
+  },
+  "Jamal Cain": {
+    "id": 1631288,
+    "active": true,
+    "birthdate": "1999-03-20T00:00:00",
+    "draft": null
+  },
+  "Kentavious Caldwell-Pope": {
+    "id": 203484,
+    "active": true,
+    "birthdate": "1993-02-18T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "8",
+      "year": 2013
+    }
+  },
+  "Toumani Camara": {
+    "id": 1641739,
+    "active": true,
+    "birthdate": "2000-05-08T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "2",
+      "pick": "52",
+      "year": 2023
+    }
+  },
+  "Clint Capela": {
+    "id": 203991,
+    "active": true,
+    "birthdate": "1994-05-18T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "25",
+      "year": 2014
+    }
+  },
+  "Dylan Cardwell": {
+    "id": 1642928,
+    "active": true,
+    "birthdate": "2001-12-16T00:00:00",
+    "draft": null
+  },
+  "Branden Carlson": {
+    "id": 1642382,
+    "active": true,
+    "birthdate": "1999-06-14T00:00:00",
+    "draft": null
+  },
+  "Bub Carrington": {
+    "id": 1642267,
+    "active": true,
+    "birthdate": "2005-07-21T00:00:00",
+    "draft": null
+  },
+  "Devin Carter": {
+    "id": 1642269,
+    "active": true,
+    "birthdate": "2002-03-18T00:00:00",
+    "draft": null
+  },
+  "Jevon Carter": {
+    "id": 1628975,
+    "active": true,
+    "birthdate": "1995-09-14T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "2",
+      "pick": "32",
+      "year": 2018
+    }
+  },
+  "Wendell Carter Jr.": {
+    "id": 1628976,
+    "active": true,
+    "birthdate": "1999-04-16T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "7",
+      "year": 2018
+    }
+  },
+  "Alex Caruso": {
+    "id": 1627936,
+    "active": true,
+    "birthdate": "1994-02-28T00:00:00",
+    "draft": null
+  },
+  "Stephon Castle": {
+    "id": 1642264,
+    "active": true,
+    "birthdate": "2004-11-01T00:00:00",
+    "draft": null
+  },
+  "Colin Castleton": {
+    "id": 1630658,
+    "active": true,
+    "birthdate": "2000-05-25T00:00:00",
+    "draft": null
+  },
+  "Julian Champagnie": {
+    "id": 1630577,
+    "active": true,
+    "birthdate": "2001-06-29T00:00:00",
+    "draft": null
+  },
+  "Justin Champagnie": {
+    "id": 1630551,
+    "active": true,
+    "birthdate": "2001-06-29T00:00:00",
+    "draft": null
+  },
+  "Cam Christie": {
+    "id": 1642353,
+    "active": true,
+    "birthdate": "2005-07-24T00:00:00",
+    "draft": null
+  },
+  "Max Christie": {
+    "id": 1631108,
+    "active": true,
+    "birthdate": "2003-02-10T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "2",
+      "pick": "35",
+      "year": 2022
+    }
+  },
+  "Moussa Cisse": {
+    "id": 1630619,
+    "active": true,
+    "birthdate": "2002-09-10T00:00:00",
+    "draft": null
+  },
+  "Sidy Cissoko": {
+    "id": 1631321,
+    "active": true,
+    "birthdate": "2004-04-02T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "2",
+      "pick": "44",
+      "year": 2023
+    }
+  },
+  "Jaylen Clark": {
+    "id": 1641740,
+    "active": true,
+    "birthdate": "2001-10-13T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "2",
+      "pick": "53",
+      "year": 2023
+    }
+  },
+  "Brandon Clarke": {
+    "id": 1629634,
+    "active": true,
+    "birthdate": "1996-09-19T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "21",
+      "year": 2019
+    }
+  },
+  "Jordan Clarkson": {
+    "id": 203903,
+    "active": true,
+    "birthdate": "1992-06-07T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "2",
+      "pick": "46",
+      "year": 2014
+    }
+  },
+  "Nic Claxton": {
+    "id": 1629651,
+    "active": true,
+    "birthdate": "1999-04-17T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "2",
+      "pick": "31",
+      "year": 2019
+    }
+  },
+  "Walter Clayton Jr.": {
+    "id": 1642383,
+    "active": true,
+    "birthdate": "2003-03-06T00:00:00",
+    "draft": null
+  },
+  "Nique Clifford": {
+    "id": 1642363,
+    "active": true,
+    "birthdate": "2002-02-09T00:00:00",
+    "draft": null
+  },
+  "Donovan Clingan": {
+    "id": 1642270,
+    "active": true,
+    "birthdate": "2004-02-23T00:00:00",
+    "draft": null
+  },
+  "Noah Clowney": {
+    "id": 1641730,
+    "active": true,
+    "birthdate": "2004-07-14T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "21",
+      "year": 2023
+    }
+  },
+  "Amir Coffey": {
+    "id": 1629599,
+    "active": true,
+    "birthdate": "1997-06-17T00:00:00",
+    "draft": null
+  },
+  "Isaiah Collier": {
+    "id": 1642268,
+    "active": true,
+    "birthdate": "2004-10-08T00:00:00",
+    "draft": null
+  },
+  "John Collins": {
+    "id": 1628381,
+    "active": true,
+    "birthdate": "1997-09-23T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "19",
+      "year": 2017
+    }
+  },
+  "Zach Collins": {
+    "id": 1628380,
+    "active": true,
+    "birthdate": "1997-11-19T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "10",
+      "year": 2017
+    }
+  },
+  "Mike Conley": {
+    "id": 201144,
+    "active": true,
+    "birthdate": "1987-10-11T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "4",
+      "year": 2007
+    }
+  },
+  "Pat Connaughton": {
+    "id": 1626192,
+    "active": true,
+    "birthdate": "1993-01-06T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "2",
+      "pick": "41",
+      "year": 2015
+    }
+  },
+  "Javonte Cooke": {
+    "id": 1631451,
+    "active": true,
+    "birthdate": "1999-07-11T00:00:00",
+    "draft": null
+  },
+  "Sharife Cooper": {
+    "id": 1630536,
+    "active": true,
+    "birthdate": "2001-06-11T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "2",
+      "pick": "48",
+      "year": 2021
+    }
+  },
+  "Bilal Coulibaly": {
+    "id": 1641731,
+    "active": true,
+    "birthdate": "2004-07-26T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "7",
+      "year": 2023
+    }
+  },
+  "Cedric Coward": {
+    "id": 1642907,
+    "active": true,
+    "birthdate": "2003-09-11T00:00:00",
+    "draft": null
+  },
+  "Isaiah Crawford": {
+    "id": 1642384,
+    "active": true,
+    "birthdate": "2001-11-01T00:00:00",
+    "draft": null
+  },
+  "Cade Cunningham": {
+    "id": 1630595,
+    "active": true,
+    "birthdate": "2001-09-25T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "1",
+      "year": 2021
+    }
+  },
+  "Stephen Curry": {
+    "id": 201939,
+    "active": true,
+    "birthdate": "1988-03-14T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "7",
+      "year": 2009
+    }
+  },
+  "Pacôme Dadiet": {
+    "id": 1642359,
+    "active": true,
+    "birthdate": "2005-07-27T00:00:00",
+    "draft": null
+  },
+  "Dyson Daniels": {
+    "id": 1630700,
+    "active": true,
+    "birthdate": "2003-03-17T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "8",
+      "year": 2022
+    }
+  },
+  "N'Faly Dante": {
+    "id": 1642368,
+    "active": true,
+    "birthdate": "2001-10-19T00:00:00",
+    "draft": null
+  },
+  "Anthony Davis": {
+    "id": 203076,
+    "active": true,
+    "birthdate": "1993-03-11T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "1",
+      "year": 2012
+    }
+  },
+  "JD Davison": {
+    "id": 1631120,
+    "active": true,
+    "birthdate": "2002-10-03T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "2",
+      "pick": "53",
+      "year": 2022
+    }
+  },
+  "DeMar DeRozan": {
+    "id": 201942,
+    "active": true,
+    "birthdate": "1989-08-07T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "9",
+      "year": 2009
+    }
+  },
+  "RayJ Dennis": {
+    "id": 1642484,
+    "active": true,
+    "birthdate": "2001-03-30T00:00:00",
+    "draft": null
+  },
+  "Donte DiVincenzo": {
+    "id": 1628978,
+    "active": true,
+    "birthdate": "1997-01-31T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "17",
+      "year": 2018
+    }
+  },
+  "Moussa Diabaté": {
+    "id": 1631217,
+    "active": true,
+    "birthdate": "2002-01-21T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "2",
+      "pick": "43",
+      "year": 2022
+    }
+  },
+  "Mohamed Diawara": {
+    "id": 1642885,
+    "active": true,
+    "birthdate": "2005-04-29T00:00:00",
+    "draft": null
+  },
+  "Gradey Dick": {
+    "id": 1641711,
+    "active": true,
+    "birthdate": "2003-11-20T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "13",
+      "year": 2023
+    }
+  },
+  "Hunter Dickinson": {
+    "id": 1630621,
+    "active": true,
+    "birthdate": "2000-11-25T00:00:00",
+    "draft": null
+  },
+  "Ousmane Dieng": {
+    "id": 1631172,
+    "active": true,
+    "birthdate": "2003-05-21T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "11",
+      "year": 2022
+    }
+  },
+  "Rob Dillingham": {
+    "id": 1642265,
+    "active": true,
+    "birthdate": "2005-01-04T00:00:00",
+    "draft": null
+  },
+  "Luka Dončić": {
+    "id": 1629029,
+    "active": true,
+    "birthdate": "1999-02-28T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "3",
+      "year": 2018
+    }
+  },
+  "Luguentz Dort": {
+    "id": 1629652,
+    "active": true,
+    "birthdate": "1999-04-19T00:00:00",
+    "draft": null
+  },
+  "Ayo Dosunmu": {
+    "id": 1630245,
+    "active": true,
+    "birthdate": "2000-01-17T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "2",
+      "pick": "38",
+      "year": 2021
+    }
+  },
+  "Andre Drummond": {
+    "id": 203083,
+    "active": true,
+    "birthdate": "1993-08-10T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "9",
+      "year": 2012
+    }
+  },
+  "Kris Dunn": {
+    "id": 1627739,
+    "active": true,
+    "birthdate": "1994-03-18T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "5",
+      "year": 2016
+    }
+  },
+  "Ryan Dunn": {
+    "id": 1642346,
+    "active": true,
+    "birthdate": "2003-01-07T00:00:00",
+    "draft": null
+  },
+  "Kevin Durant": {
+    "id": 201142,
+    "active": true,
+    "birthdate": "1988-09-29T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "2",
+      "year": 2007
+    }
+  },
+  "Jalen Duren": {
+    "id": 1631105,
+    "active": true,
+    "birthdate": "2003-11-18T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "13",
+      "year": 2022
+    }
+  },
+  "Egor Dëmin": {
+    "id": 1642856,
+    "active": true,
+    "birthdate": "2006-03-03T00:00:00",
+    "draft": null
+  },
+  "Tari Eason": {
+    "id": 1631106,
+    "active": true,
+    "birthdate": "2001-05-10T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "17",
+      "year": 2022
+    }
+  },
+  "Zach Edey": {
+    "id": 1641744,
+    "active": true,
+    "birthdate": "2002-05-14T00:00:00",
+    "draft": null
+  },
+  "VJ Edgecombe": {
+    "id": 1642845,
+    "active": true,
+    "birthdate": "2005-07-30T00:00:00",
+    "draft": null
+  },
+  "Anthony Edwards": {
+    "id": 1630162,
+    "active": true,
+    "birthdate": "2001-08-05T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "1",
+      "year": 2020
+    }
+  },
+  "Justin Edwards": {
+    "id": 1642348,
+    "active": true,
+    "birthdate": "2003-12-16T00:00:00",
+    "draft": null
+  },
+  "Keon Ellis": {
+    "id": 1631165,
+    "active": true,
+    "birthdate": "2000-01-08T00:00:00",
+    "draft": null
+  },
+  "Joel Embiid": {
+    "id": 203954,
+    "active": true,
+    "birthdate": "1994-03-16T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "3",
+      "year": 2014
+    }
+  },
+  "Noa Essengue": {
+    "id": 1642855,
+    "active": true,
+    "birthdate": "2006-12-18T00:00:00",
+    "draft": null
+  },
+  "Tyson Etienne": {
+    "id": 1630623,
+    "active": true,
+    "birthdate": "1999-09-17T00:00:00",
+    "draft": null
+  },
+  "Drew Eubanks": {
+    "id": 1629234,
+    "active": true,
+    "birthdate": "1997-02-01T00:00:00",
+    "draft": null
+  },
+  "Tosan Evbuomwan": {
+    "id": 1641787,
+    "active": true,
+    "birthdate": "2001-02-16T00:00:00",
+    "draft": null
+  },
+  "Danté Exum": {
+    "id": 203957,
+    "active": true,
+    "birthdate": "1995-07-13T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "5",
+      "year": 2014
+    }
+  },
+  "Jeremiah Fears": {
+    "id": 1642847,
+    "active": true,
+    "birthdate": "2006-10-14T00:00:00",
+    "draft": null
+  },
+  "Kyle Filipowski": {
+    "id": 1642271,
+    "active": true,
+    "birthdate": "2003-11-07T00:00:00",
+    "draft": null
+  },
+  "Dorian Finney-Smith": {
+    "id": 1627827,
+    "active": true,
+    "birthdate": "1993-05-04T00:00:00",
+    "draft": null
+  },
+  "Cooper Flagg": {
+    "id": 1642843,
+    "active": true,
+    "birthdate": "2006-12-21T00:00:00",
+    "draft": null
+  },
+  "Rasheer Fleming": {
+    "id": 1642853,
+    "active": true,
+    "birthdate": "2004-07-10T00:00:00",
+    "draft": null
+  },
+  "Trentyn Flowers": {
+    "id": 1642280,
+    "active": true,
+    "birthdate": "2005-03-08T00:00:00",
+    "draft": null
+  },
+  "Simone Fontecchio": {
+    "id": 1631323,
+    "active": true,
+    "birthdate": "1995-12-09T00:00:00",
+    "draft": null
+  },
+  "De'Aaron Fox": {
+    "id": 1628368,
+    "active": true,
+    "birthdate": "1997-12-20T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "5",
+      "year": 2017
+    }
+  },
+  "Enrique Freeman": {
+    "id": 1642402,
+    "active": true,
+    "birthdate": "2000-07-29T00:00:00",
+    "draft": null
+  },
+  "Johnny Furphy": {
+    "id": 1642277,
+    "active": true,
+    "birthdate": "2004-12-08T00:00:00",
+    "draft": null
+  },
+  "Daniel Gafford": {
+    "id": 1629655,
+    "active": true,
+    "birthdate": "1998-10-01T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "2",
+      "pick": "38",
+      "year": 2019
+    }
+  },
+  "Myron Gardner": {
+    "id": 1642066,
+    "active": true,
+    "birthdate": "2001-05-21T00:00:00",
+    "draft": null
+  },
+  "Darius Garland": {
+    "id": 1629636,
+    "active": true,
+    "birthdate": "2000-01-26T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "5",
+      "year": 2019
+    }
+  },
+  "Luka Garza": {
+    "id": 1630568,
+    "active": true,
+    "birthdate": "1998-12-27T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "2",
+      "pick": "52",
+      "year": 2021
+    }
+  },
+  "Keyonte George": {
+    "id": 1641718,
+    "active": true,
+    "birthdate": "2003-11-08T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "16",
+      "year": 2023
+    }
+  },
+  "Kyshawn George": {
+    "id": 1642273,
+    "active": true,
+    "birthdate": "2003-12-12T00:00:00",
+    "draft": null
+  },
+  "Paul George": {
+    "id": 202331,
+    "active": true,
+    "birthdate": "1990-05-02T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "10",
+      "year": 2010
+    }
+  },
+  "Josh Giddey": {
+    "id": 1630581,
+    "active": true,
+    "birthdate": "2002-10-10T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "6",
+      "year": 2021
+    }
+  },
+  "Shai Gilgeous-Alexander": {
+    "id": 1628983,
+    "active": true,
+    "birthdate": "1998-07-12T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "11",
+      "year": 2018
+    }
+  },
+  "Anthony Gill": {
+    "id": 1630264,
+    "active": true,
+    "birthdate": "1992-10-17T00:00:00",
+    "draft": null
+  },
+  "Collin Gillespie": {
+    "id": 1631221,
+    "active": true,
+    "birthdate": "1999-06-25T00:00:00",
+    "draft": null
+  },
+  "Rudy Gobert": {
+    "id": 203497,
+    "active": true,
+    "birthdate": "1992-06-26T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "27",
+      "year": 2013
+    }
+  },
+  "Vladislav Goldin": {
+    "id": 1642884,
+    "active": true,
+    "birthdate": "2001-05-12T00:00:00",
+    "draft": null
+  },
+  "Hugo González": {
+    "id": 1642864,
+    "active": true,
+    "birthdate": "2006-02-05T00:00:00",
+    "draft": null
+  },
+  "Jordan Goodwin": {
+    "id": 1630692,
+    "active": true,
+    "birthdate": "1998-10-23T00:00:00",
+    "draft": null
+  },
+  "Aaron Gordon": {
+    "id": 203932,
+    "active": true,
+    "birthdate": "1995-09-16T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "4",
+      "year": 2014
+    }
+  },
+  "Eric Gordon": {
+    "id": 201569,
+    "active": true,
+    "birthdate": "1988-12-25T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "7",
+      "year": 2008
+    }
+  },
+  "Jerami Grant": {
+    "id": 203924,
+    "active": true,
+    "birthdate": "1994-03-12T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "2",
+      "pick": "39",
+      "year": 2014
+    }
+  },
+  "AJ Green": {
+    "id": 1631260,
+    "active": true,
+    "birthdate": "1999-09-27T00:00:00",
+    "draft": null
+  },
+  "Draymond Green": {
+    "id": 203110,
+    "active": true,
+    "birthdate": "1990-03-04T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "2",
+      "pick": "35",
+      "year": 2012
+    }
+  },
+  "Jalen Green": {
+    "id": 1630224,
+    "active": true,
+    "birthdate": "2002-02-09T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "2",
+      "year": 2021
+    }
+  },
+  "Javonte Green": {
+    "id": 1629750,
+    "active": true,
+    "birthdate": "1993-07-23T00:00:00",
+    "draft": null
+  },
+  "Jeff Green": {
+    "id": 201145,
+    "active": true,
+    "birthdate": "1986-08-28T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "5",
+      "year": 2007
+    }
+  },
+  "Josh Green": {
+    "id": 1630182,
+    "active": true,
+    "birthdate": "2000-11-16T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "18",
+      "year": 2020
+    }
+  },
+  "Quentin Grimes": {
+    "id": 1629656,
+    "active": true,
+    "birthdate": "2000-05-08T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "25",
+      "year": 2021
+    }
+  },
+  "Mouhamed Gueye": {
+    "id": 1631243,
+    "active": true,
+    "birthdate": "2002-11-09T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "2",
+      "pick": "39",
+      "year": 2023
+    }
+  },
+  "Rui Hachimura": {
+    "id": 1629060,
+    "active": true,
+    "birthdate": "1998-02-08T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "9",
+      "year": 2019
+    }
+  },
+  "Tyrese Haliburton": {
+    "id": 1630169,
+    "active": true,
+    "birthdate": "2000-02-29T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "12",
+      "year": 2020
+    }
+  },
+  "PJ Hall": {
+    "id": 1641790,
+    "active": true,
+    "birthdate": "2002-02-21T00:00:00",
+    "draft": null
+  },
+  "Tim Hardaway Jr.": {
+    "id": 203501,
+    "active": true,
+    "birthdate": "1992-03-16T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "24",
+      "year": 2013
+    }
+  },
+  "James Harden": {
+    "id": 201935,
+    "active": true,
+    "birthdate": "1989-08-26T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "3",
+      "year": 2009
+    }
+  },
+  "Jaden Hardy": {
+    "id": 1630702,
+    "active": true,
+    "birthdate": "2002-07-05T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "2",
+      "pick": "37",
+      "year": 2022
+    }
+  },
+  "Elijah Harkless": {
+    "id": 1641989,
+    "active": true,
+    "birthdate": "2000-02-03T00:00:00",
+    "draft": null
+  },
+  "Dylan Harper": {
+    "id": 1642844,
+    "active": true,
+    "birthdate": "2006-03-02T00:00:00",
+    "draft": null
+  },
+  "Ron Harper Jr.": {
+    "id": 1631199,
+    "active": true,
+    "birthdate": "2000-04-12T00:00:00",
+    "draft": null
+  },
+  "Gary Harris": {
+    "id": 203914,
+    "active": true,
+    "birthdate": "1994-09-14T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "19",
+      "year": 2014
+    }
+  },
+  "Kevon Harris": {
+    "id": 1630284,
+    "active": true,
+    "birthdate": "1997-06-24T00:00:00",
+    "draft": null
+  },
+  "Tobias Harris": {
+    "id": 202699,
+    "active": true,
+    "birthdate": "1992-07-15T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "19",
+      "year": 2011
+    }
+  },
+  "Josh Hart": {
+    "id": 1628404,
+    "active": true,
+    "birthdate": "1995-03-06T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "30",
+      "year": 2017
+    }
+  },
+  "Isaiah Hartenstein": {
+    "id": 1628392,
+    "active": true,
+    "birthdate": "1998-05-05T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "2",
+      "pick": "43",
+      "year": 2017
+    }
+  },
+  "Sam Hauser": {
+    "id": 1630573,
+    "active": true,
+    "birthdate": "1997-12-08T00:00:00",
+    "draft": null
+  },
+  "Jordan Hawkins": {
+    "id": 1641722,
+    "active": true,
+    "birthdate": "2002-04-29T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "14",
+      "year": 2023
+    }
+  },
+  "Jaxson Hayes": {
+    "id": 1629637,
+    "active": true,
+    "birthdate": "2000-05-23T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "8",
+      "year": 2019
+    }
+  },
+  "Nigel Hayes-Davis": {
+    "id": 1628502,
+    "active": true,
+    "birthdate": "1994-12-16T00:00:00",
+    "draft": null
+  },
+  "Scoot Henderson": {
+    "id": 1630703,
+    "active": true,
+    "birthdate": "2004-02-03T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "3",
+      "year": 2023
+    }
+  },
+  "Taylor Hendricks": {
+    "id": 1641707,
+    "active": true,
+    "birthdate": "2003-11-22T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "9",
+      "year": 2023
+    }
+  },
+  "Chucky Hepburn": {
+    "id": 1642935,
+    "active": true,
+    "birthdate": "2003-02-09T00:00:00",
+    "draft": null
+  },
+  "Tyler Herro": {
+    "id": 1629639,
+    "active": true,
+    "birthdate": "2000-01-20T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "13",
+      "year": 2019
+    }
+  },
+  "Buddy Hield": {
+    "id": 1627741,
+    "active": true,
+    "birthdate": "1992-12-17T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "6",
+      "year": 2016
+    }
+  },
+  "Haywood Highsmith": {
+    "id": 1629312,
+    "active": true,
+    "birthdate": "1996-12-09T00:00:00",
+    "draft": {
+      "team": null,
+      "round": null,
+      "pick": null,
+      "year": 2018
+    }
+  },
+  "Aaron Holiday": {
+    "id": 1628988,
+    "active": true,
+    "birthdate": "1996-09-30T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "23",
+      "year": 2018
+    }
+  },
+  "Jrue Holiday": {
+    "id": 201950,
+    "active": true,
+    "birthdate": "1990-06-12T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "17",
+      "year": 2009
+    }
+  },
+  "Ronald Holland II": {
+    "id": 1641842,
+    "active": true,
+    "birthdate": "2005-07-07T00:00:00",
+    "draft": null
+  },
+  "DaRon Holmes II": {
+    "id": 1641747,
+    "active": true,
+    "birthdate": "2002-08-15T00:00:00",
+    "draft": null
+  },
+  "Chet Holmgren": {
+    "id": 1631096,
+    "active": true,
+    "birthdate": "2002-05-01T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "2",
+      "year": 2022
+    }
+  },
+  "Al Horford": {
+    "id": 201143,
+    "active": true,
+    "birthdate": "1986-06-03T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "3",
+      "year": 2007
+    }
+  },
+  "Caleb Houstan": {
+    "id": 1631216,
+    "active": true,
+    "birthdate": "2003-01-09T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "2",
+      "pick": "32",
+      "year": 2022
+    }
+  },
+  "Jett Howard": {
+    "id": 1641724,
+    "active": true,
+    "birthdate": "2003-09-14T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "11",
+      "year": 2023
+    }
+  },
+  "Kevin Huerter": {
+    "id": 1628989,
+    "active": true,
+    "birthdate": "1998-08-27T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "19",
+      "year": 2018
+    }
+  },
+  "Jay Huff": {
+    "id": 1630643,
+    "active": true,
+    "birthdate": "1997-08-25T00:00:00",
+    "draft": null
+  },
+  "Ariel Hukporti": {
+    "id": 1630574,
+    "active": true,
+    "birthdate": "2002-04-12T00:00:00",
+    "draft": null
+  },
+  "De'Andre Hunter": {
+    "id": 1629631,
+    "active": true,
+    "birthdate": "1997-12-02T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "4",
+      "year": 2019
+    }
+  },
+  "CJ Huntley": {
+    "id": 1643047,
+    "active": true,
+    "birthdate": "2002-01-06T00:00:00",
+    "draft": null
+  },
+  "Bones Hyland": {
+    "id": 1630538,
+    "active": true,
+    "birthdate": "2000-09-14T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "26",
+      "year": 2021
+    }
+  },
+  "Oso Ighodaro": {
+    "id": 1642345,
+    "active": true,
+    "birthdate": "2002-07-14T00:00:00",
+    "draft": null
+  },
+  "Joe Ingles": {
+    "id": 204060,
+    "active": true,
+    "birthdate": "1987-10-02T00:00:00",
+    "draft": null
+  },
+  "Brandon Ingram": {
+    "id": 1627742,
+    "active": true,
+    "birthdate": "1997-09-02T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "2",
+      "year": 2016
+    }
+  },
+  "Harrison Ingram": {
+    "id": 1631127,
+    "active": true,
+    "birthdate": "2002-11-27T00:00:00",
+    "draft": null
+  },
+  "Kyrie Irving": {
+    "id": 202681,
+    "active": true,
+    "birthdate": "1992-03-23T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "1",
+      "year": 2011
+    }
+  },
+  "Jonathan Isaac": {
+    "id": 1628371,
+    "active": true,
+    "birthdate": "1997-10-03T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "6",
+      "year": 2017
+    }
+  },
+  "Jaden Ivey": {
+    "id": 1631093,
+    "active": true,
+    "birthdate": "2002-02-13T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "5",
+      "year": 2022
+    }
+  },
+  "GG Jackson": {
+    "id": 1641713,
+    "active": true,
+    "birthdate": "2004-12-17T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "2",
+      "pick": "45",
+      "year": 2023
+    }
+  },
+  "Isaiah Jackson": {
+    "id": 1630543,
+    "active": true,
+    "birthdate": "2002-01-10T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "22",
+      "year": 2021
+    }
+  },
+  "Quenton Jackson": {
+    "id": 1631245,
+    "active": true,
+    "birthdate": "1998-09-15T00:00:00",
+    "draft": null
+  },
+  "Andre Jackson Jr.": {
+    "id": 1641748,
+    "active": true,
+    "birthdate": "2001-11-13T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "2",
+      "pick": "36",
+      "year": 2023
+    }
+  },
+  "Jaren Jackson Jr.": {
+    "id": 1628991,
+    "active": true,
+    "birthdate": "1999-09-15T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "4",
+      "year": 2018
+    }
+  },
+  "Trayce Jackson-Davis": {
+    "id": 1631218,
+    "active": true,
+    "birthdate": "2000-02-22T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "2",
+      "pick": "57",
+      "year": 2023
+    }
+  },
+  "Kasparas Jakučionis": {
+    "id": 1642857,
+    "active": true,
+    "birthdate": "2006-05-29T00:00:00",
+    "draft": null
+  },
+  "Bronny James": {
+    "id": 1642355,
+    "active": true,
+    "birthdate": "2004-10-06T00:00:00",
+    "draft": null
+  },
+  "LeBron James": {
+    "id": 2544,
+    "active": true,
+    "birthdate": "1984-12-30T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "1",
+      "year": 2003
+    }
+  },
+  "Sion James": {
+    "id": 1642883,
+    "active": true,
+    "birthdate": "2002-12-04T00:00:00",
+    "draft": null
+  },
+  "Jaime Jaquez Jr.": {
+    "id": 1631170,
+    "active": true,
+    "birthdate": "2001-02-18T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "18",
+      "year": 2023
+    }
+  },
+  "Trey Jemison III": {
+    "id": 1641998,
+    "active": true,
+    "birthdate": "1999-11-28T00:00:00",
+    "draft": null
+  },
+  "Daniss Jenkins": {
+    "id": 1642450,
+    "active": true,
+    "birthdate": "2001-08-17T00:00:00",
+    "draft": null
+  },
+  "Ty Jerome": {
+    "id": 1629660,
+    "active": true,
+    "birthdate": "1997-07-08T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "24",
+      "year": 2019
+    }
+  },
+  "Isaiah Joe": {
+    "id": 1630198,
+    "active": true,
+    "birthdate": "1999-07-02T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "2",
+      "pick": "49",
+      "year": 2020
+    }
+  },
+  "AJ Johnson": {
+    "id": 1642358,
+    "active": true,
+    "birthdate": "2004-12-01T00:00:00",
+    "draft": null
+  },
+  "Cameron Johnson": {
+    "id": 1629661,
+    "active": true,
+    "birthdate": "1996-03-03T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "11",
+      "year": 2019
+    }
+  },
+  "Jalen Johnson": {
+    "id": 1630552,
+    "active": true,
+    "birthdate": "2001-12-18T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "20",
+      "year": 2021
+    }
+  },
+  "Keldon Johnson": {
+    "id": 1629640,
+    "active": true,
+    "birthdate": "1999-10-11T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "29",
+      "year": 2019
+    }
+  },
+  "Keshad Johnson": {
+    "id": 1642352,
+    "active": true,
+    "birthdate": "2001-06-23T00:00:00",
+    "draft": null
+  },
+  "Tre Johnson": {
+    "id": 1642848,
+    "active": true,
+    "birthdate": "2006-03-07T00:00:00",
+    "draft": null
+  },
+  "Nikola Jokić": {
+    "id": 203999,
+    "active": true,
+    "birthdate": "1995-02-19T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "2",
+      "pick": "41",
+      "year": 2014
+    }
+  },
+  "Colby Jones": {
+    "id": 1641732,
+    "active": true,
+    "birthdate": "2002-05-28T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "2",
+      "pick": "34",
+      "year": 2023
+    }
+  },
+  "Curtis Jones": {
+    "id": 1642938,
+    "active": true,
+    "birthdate": "2001-10-04T00:00:00",
+    "draft": null
+  },
+  "Herbert Jones": {
+    "id": 1630529,
+    "active": true,
+    "birthdate": "1998-10-06T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "2",
+      "pick": "35",
+      "year": 2021
+    }
+  },
+  "Isaac Jones": {
+    "id": 1642403,
+    "active": true,
+    "birthdate": "2000-07-11T00:00:00",
+    "draft": null
+  },
+  "Kam Jones": {
+    "id": 1642880,
+    "active": true,
+    "birthdate": "2002-02-25T00:00:00",
+    "draft": null
+  },
+  "Spencer Jones": {
+    "id": 1642461,
+    "active": true,
+    "birthdate": "2001-06-14T00:00:00",
+    "draft": null
+  },
+  "Tre Jones": {
+    "id": 1630200,
+    "active": true,
+    "birthdate": "2000-01-08T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "2",
+      "pick": "41",
+      "year": 2020
+    }
+  },
+  "Tyus Jones": {
+    "id": 1626145,
+    "active": true,
+    "birthdate": "1996-05-10T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "24",
+      "year": 2015
+    }
+  },
+  "David Jones Garcia": {
+    "id": 1642357,
+    "active": true,
+    "birthdate": "2001-11-24T00:00:00",
+    "draft": null
+  },
+  "Derrick Jones Jr.": {
+    "id": 1627884,
+    "active": true,
+    "birthdate": "1997-02-15T00:00:00",
+    "draft": null
+  },
+  "DeAndre Jordan": {
+    "id": 201599,
+    "active": true,
+    "birthdate": "1988-07-21T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "2",
+      "pick": "35",
+      "year": 2008
+    }
+  },
+  "Nikola Jović": {
+    "id": 1631107,
+    "active": true,
+    "birthdate": "2003-06-09T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "27",
+      "year": 2022
+    }
+  },
+  "Johnny Juzang": {
+    "id": 1630548,
+    "active": true,
+    "birthdate": "2001-03-17T00:00:00",
+    "draft": null
+  },
+  "Ryan Kalkbrenner": {
+    "id": 1641750,
+    "active": true,
+    "birthdate": "2002-01-17T00:00:00",
+    "draft": null
+  },
+  "Miles Kelly": {
+    "id": 1642939,
+    "active": true,
+    "birthdate": "2003-01-26T00:00:00",
+    "draft": null
+  },
+  "Luke Kennard": {
+    "id": 1628379,
+    "active": true,
+    "birthdate": "1996-06-24T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "12",
+      "year": 2017
+    }
+  },
+  "Walker Kessler": {
+    "id": 1631117,
+    "active": true,
+    "birthdate": "2001-07-26T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "22",
+      "year": 2022
+    }
+  },
+  "Corey Kispert": {
+    "id": 1630557,
+    "active": true,
+    "birthdate": "1999-03-03T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "15",
+      "year": 2021
+    }
+  },
+  "Maxi Kleber": {
+    "id": 1628467,
+    "active": true,
+    "birthdate": "1992-01-29T00:00:00",
+    "draft": null
+  },
+  "Bobi Klintman": {
+    "id": 1641752,
+    "active": true,
+    "birthdate": "2003-03-06T00:00:00",
+    "draft": null
+  },
+  "Dalton Knecht": {
+    "id": 1642261,
+    "active": true,
+    "birthdate": "2001-04-19T00:00:00",
+    "draft": null
+  },
+  "Kon Knueppel": {
+    "id": 1642851,
+    "active": true,
+    "birthdate": "2005-08-03T00:00:00",
+    "draft": null
+  },
+  "Tyler Kolek": {
+    "id": 1642278,
+    "active": true,
+    "birthdate": "2001-03-27T00:00:00",
+    "draft": null
+  },
+  "Christian Koloko": {
+    "id": 1631132,
+    "active": true,
+    "birthdate": "2000-06-20T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "2",
+      "pick": "33",
+      "year": 2022
+    }
+  },
+  "John Konchar": {
+    "id": 1629723,
+    "active": true,
+    "birthdate": "1996-03-22T00:00:00",
+    "draft": null
+  },
+  "Luke Kornet": {
+    "id": 1628436,
+    "active": true,
+    "birthdate": "1995-07-15T00:00:00",
+    "draft": null
+  },
+  "Vít Krejčí": {
+    "id": 1630249,
+    "active": true,
+    "birthdate": "2000-06-19T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "2",
+      "pick": "37",
+      "year": 2020
+    }
+  },
+  "Jonathan Kuminga": {
+    "id": 1630228,
+    "active": true,
+    "birthdate": "2002-10-06T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "7",
+      "year": 2021
+    }
+  },
+  "Kyle Kuzma": {
+    "id": 1628398,
+    "active": true,
+    "birthdate": "1995-07-24T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "27",
+      "year": 2017
+    }
+  },
+  "Jake LaRavia": {
+    "id": 1631222,
+    "active": true,
+    "birthdate": "2001-11-03T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "19",
+      "year": 2022
+    }
+  },
+  "Zach LaVine": {
+    "id": 203897,
+    "active": true,
+    "birthdate": "1995-03-10T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "13",
+      "year": 2014
+    }
+  },
+  "Jock Landale": {
+    "id": 1629111,
+    "active": true,
+    "birthdate": "1995-10-25T00:00:00",
+    "draft": null
+  },
+  "Chaz Lanier": {
+    "id": 1642404,
+    "active": true,
+    "birthdate": "2001-12-19T00:00:00",
+    "draft": null
+  },
+  "Pelle Larsson": {
+    "id": 1641796,
+    "active": true,
+    "birthdate": "2001-02-23T00:00:00",
+    "draft": null
+  },
+  "A.J. Lawson": {
+    "id": 1630639,
+    "active": true,
+    "birthdate": "2000-07-15T00:00:00",
+    "draft": null
+  },
+  "Caris LeVert": {
+    "id": 1627747,
+    "active": true,
+    "birthdate": "1994-08-25T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "20",
+      "year": 2016
+    }
+  },
+  "Kawhi Leonard": {
+    "id": 202695,
+    "active": true,
+    "birthdate": "1991-06-29T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "15",
+      "year": 2011
+    }
+  },
+  "E.J. Liddell": {
+    "id": 1630604,
+    "active": true,
+    "birthdate": "2000-12-18T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "2",
+      "pick": "41",
+      "year": 2022
+    }
+  },
+  "Damian Lillard": {
+    "id": 203081,
+    "active": true,
+    "birthdate": "1990-07-15T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "6",
+      "year": 2012
+    }
+  },
+  "Dereck Lively II": {
+    "id": 1641726,
+    "active": true,
+    "birthdate": "2004-02-12T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "12",
+      "year": 2023
+    }
+  },
+  "Isaiah Livers": {
+    "id": 1630587,
+    "active": true,
+    "birthdate": "1998-07-28T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "2",
+      "pick": "42",
+      "year": 2021
+    }
+  },
+  "Chris Livingston": {
+    "id": 1641753,
+    "active": true,
+    "birthdate": "2003-10-15T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "2",
+      "pick": "58",
+      "year": 2023
+    }
+  },
+  "Kevon Looney": {
+    "id": 1626172,
+    "active": true,
+    "birthdate": "1996-02-06T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "30",
+      "year": 2015
+    }
+  },
+  "Brook Lopez": {
+    "id": 201572,
+    "active": true,
+    "birthdate": "1988-04-01T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "10",
+      "year": 2008
+    }
+  },
+  "Caleb Love": {
+    "id": 1631126,
+    "active": true,
+    "birthdate": "2001-09-27T00:00:00",
+    "draft": null
+  },
+  "Kevin Love": {
+    "id": 201567,
+    "active": true,
+    "birthdate": "1988-09-07T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "5",
+      "year": 2008
+    }
+  },
+  "Kyle Lowry": {
+    "id": 200768,
+    "active": true,
+    "birthdate": "1986-03-25T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "24",
+      "year": 2006
+    }
+  },
+  "Khaman Maluach": {
+    "id": 1642863,
+    "active": true,
+    "birthdate": "2006-09-14T00:00:00",
+    "draft": null
+  },
+  "Sandro Mamukelashvili": {
+    "id": 1630572,
+    "active": true,
+    "birthdate": "1999-05-23T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "2",
+      "pick": "54",
+      "year": 2021
+    }
+  },
+  "Terance Mann": {
+    "id": 1629611,
+    "active": true,
+    "birthdate": "1996-10-18T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "2",
+      "pick": "48",
+      "year": 2019
+    }
+  },
+  "Tre Mann": {
+    "id": 1630544,
+    "active": true,
+    "birthdate": "2001-02-03T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "18",
+      "year": 2021
+    }
+  },
+  "Lauri Markkanen": {
+    "id": 1628374,
+    "active": true,
+    "birthdate": "1997-05-22T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "7",
+      "year": 2017
+    }
+  },
+  "Naji Marshall": {
+    "id": 1630230,
+    "active": true,
+    "birthdate": "1998-01-24T00:00:00",
+    "draft": null
+  },
+  "Alijah Martin": {
+    "id": 1642918,
+    "active": true,
+    "birthdate": "2001-12-26T00:00:00",
+    "draft": null
+  },
+  "Caleb Martin": {
+    "id": 1628997,
+    "active": true,
+    "birthdate": "1995-09-28T00:00:00",
+    "draft": null
+  },
+  "Cody Martin": {
+    "id": 1628998,
+    "active": true,
+    "birthdate": "1995-09-28T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "2",
+      "pick": "36",
+      "year": 2019
+    }
+  },
+  "Tyrese Martin": {
+    "id": 1631213,
+    "active": true,
+    "birthdate": "1999-03-07T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "2",
+      "pick": "51",
+      "year": 2022
+    }
+  },
+  "Bennedict Mathurin": {
+    "id": 1631097,
+    "active": true,
+    "birthdate": "2002-06-19T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "6",
+      "year": 2022
+    }
+  },
+  "Karlo Matković": {
+    "id": 1631255,
+    "active": true,
+    "birthdate": "2001-03-30T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "2",
+      "pick": "52",
+      "year": 2022
+    }
+  },
+  "Tyrese Maxey": {
+    "id": 1630178,
+    "active": true,
+    "birthdate": "2000-11-04T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "21",
+      "year": 2020
+    }
+  },
+  "Chris Mañon": {
+    "id": 1643024,
+    "active": true,
+    "birthdate": "2001-12-09T00:00:00",
+    "draft": null
+  },
+  "Miles McBride": {
+    "id": 1630540,
+    "active": true,
+    "birthdate": "2000-09-08T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "2",
+      "pick": "36",
+      "year": 2021
+    }
+  },
+  "Jared McCain": {
+    "id": 1642272,
+    "active": true,
+    "birthdate": "2004-02-20T00:00:00",
+    "draft": null
+  },
+  "Mac McClung": {
+    "id": 1630644,
+    "active": true,
+    "birthdate": "1999-01-06T00:00:00",
+    "draft": null
+  },
+  "CJ McCollum": {
+    "id": 203468,
+    "active": true,
+    "birthdate": "1991-09-19T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "10",
+      "year": 2013
+    }
+  },
+  "T.J. McConnell": {
+    "id": 204456,
+    "active": true,
+    "birthdate": "1992-03-25T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "0",
+      "pick": null,
+      "year": 2015
+    }
+  },
+  "Kevin McCullar Jr.": {
+    "id": 1641755,
+    "active": true,
+    "birthdate": "2001-03-15T00:00:00",
+    "draft": null
+  },
+  "Jaden McDaniels": {
+    "id": 1630183,
+    "active": true,
+    "birthdate": "2000-09-29T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "28",
+      "year": 2020
+    }
+  },
+  "Doug McDermott": {
+    "id": 203926,
+    "active": true,
+    "birthdate": "1992-01-03T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "11",
+      "year": 2014
+    }
+  },
+  "Bryce McGowens": {
+    "id": 1631121,
+    "active": true,
+    "birthdate": "2002-11-08T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "2",
+      "pick": "40",
+      "year": 2022
+    }
+  },
+  "Jordan McLaughlin": {
+    "id": 1629162,
+    "active": true,
+    "birthdate": "1996-04-09T00:00:00",
+    "draft": null
+  },
+  "Liam McNeeley": {
+    "id": 1642862,
+    "active": true,
+    "birthdate": "2005-10-10T00:00:00",
+    "draft": null
+  },
+  "De'Anthony Melton": {
+    "id": 1629001,
+    "active": true,
+    "birthdate": "1998-05-28T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "2",
+      "pick": "46",
+      "year": 2018
+    }
+  },
+  "Sam Merrill": {
+    "id": 1630241,
+    "active": true,
+    "birthdate": "1996-05-15T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "2",
+      "pick": "60",
+      "year": 2020
+    }
+  },
+  "Khris Middleton": {
+    "id": 203114,
+    "active": true,
+    "birthdate": "1991-08-12T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "2",
+      "pick": "39",
+      "year": 2012
+    }
+  },
+  "Brandon Miller": {
+    "id": 1641706,
+    "active": true,
+    "birthdate": "2002-11-22T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "2",
+      "year": 2023
+    }
+  },
+  "Emanuel Miller": {
+    "id": 1641801,
+    "active": true,
+    "birthdate": "2000-06-19T00:00:00",
+    "draft": null
+  },
+  "Jordan Miller": {
+    "id": 1641757,
+    "active": true,
+    "birthdate": "2000-01-23T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "2",
+      "pick": "48",
+      "year": 2023
+    }
+  },
+  "Leonard Miller": {
+    "id": 1631159,
+    "active": true,
+    "birthdate": "2003-11-26T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "2",
+      "pick": "33",
+      "year": 2023
+    }
+  },
+  "Riley Minix": {
+    "id": 1642434,
+    "active": true,
+    "birthdate": "2000-09-22T00:00:00",
+    "draft": null
+  },
+  "Josh Minott": {
+    "id": 1631169,
+    "active": true,
+    "birthdate": "2002-11-25T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "2",
+      "pick": "45",
+      "year": 2022
+    }
+  },
+  "Yves Missi": {
+    "id": 1642274,
+    "active": true,
+    "birthdate": "2004-05-14T00:00:00",
+    "draft": null
+  },
+  "Ajay Mitchell": {
+    "id": 1642349,
+    "active": true,
+    "birthdate": "2002-06-25T00:00:00",
+    "draft": null
+  },
+  "Davion Mitchell": {
+    "id": 1630558,
+    "active": true,
+    "birthdate": "1998-09-05T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "9",
+      "year": 2021
+    }
+  },
+  "Donovan Mitchell": {
+    "id": 1628378,
+    "active": true,
+    "birthdate": "1996-09-07T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "13",
+      "year": 2017
+    }
+  },
+  "Evan Mobley": {
+    "id": 1630596,
+    "active": true,
+    "birthdate": "2001-06-18T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "3",
+      "year": 2021
+    }
+  },
+  "Jonathan Mogbo": {
+    "id": 1642367,
+    "active": true,
+    "birthdate": "2001-10-29T00:00:00",
+    "draft": null
+  },
+  "Malik Monk": {
+    "id": 1628370,
+    "active": true,
+    "birthdate": "1998-02-04T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "11",
+      "year": 2017
+    }
+  },
+  "Moses Moody": {
+    "id": 1630541,
+    "active": true,
+    "birthdate": "2002-05-31T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "14",
+      "year": 2021
+    }
+  },
+  "Wendell Moore Jr.": {
+    "id": 1631111,
+    "active": true,
+    "birthdate": "2001-09-18T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "26",
+      "year": 2022
+    }
+  },
+  "Ja Morant": {
+    "id": 1629630,
+    "active": true,
+    "birthdate": "1999-08-10T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "2",
+      "year": 2019
+    }
+  },
+  "Monté Morris": {
+    "id": 1628420,
+    "active": true,
+    "birthdate": "1995-06-27T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "2",
+      "pick": "51",
+      "year": 2017
+    }
+  },
+  "Trey Murphy III": {
+    "id": 1630530,
+    "active": true,
+    "birthdate": "2000-06-18T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "17",
+      "year": 2021
+    }
+  },
+  "Dejounte Murray": {
+    "id": 1627749,
+    "active": true,
+    "birthdate": "1996-09-19T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "29",
+      "year": 2016
+    }
+  },
+  "Jamal Murray": {
+    "id": 1627750,
+    "active": true,
+    "birthdate": "1997-02-23T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "7",
+      "year": 2016
+    }
+  },
+  "Keegan Murray": {
+    "id": 1631099,
+    "active": true,
+    "birthdate": "2000-08-19T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "4",
+      "year": 2022
+    }
+  },
+  "Kris Murray": {
+    "id": 1631200,
+    "active": true,
+    "birthdate": "2000-08-19T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "23",
+      "year": 2023
+    }
+  },
+  "Collin Murray-Boyles": {
+    "id": 1642867,
+    "active": true,
+    "birthdate": "2005-06-10T00:00:00",
+    "draft": null
+  },
+  "Svi Mykhailiuk": {
+    "id": 1629004,
+    "active": true,
+    "birthdate": "1997-06-10T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "2",
+      "pick": "47",
+      "year": 2018
+    }
+  },
+  "Pete Nance": {
+    "id": 1631250,
+    "active": true,
+    "birthdate": "2000-02-19T00:00:00",
+    "draft": null
+  },
+  "Larry Nance Jr.": {
+    "id": 1626204,
+    "active": true,
+    "birthdate": "1993-01-01T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "27",
+      "year": 2015
+    }
+  },
+  "Eli John Ndiaye": {
+    "id": 1642947,
+    "active": true,
+    "birthdate": "2004-06-26T00:00:00",
+    "draft": null
+  },
+  "Andrew Nembhard": {
+    "id": 1629614,
+    "active": true,
+    "birthdate": "2000-01-16T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "2",
+      "pick": "31",
+      "year": 2022
+    }
+  },
+  "Ryan Nembhard": {
+    "id": 1642948,
+    "active": true,
+    "birthdate": "2003-03-10T00:00:00",
+    "draft": null
+  },
+  "Aaron Nesmith": {
+    "id": 1630174,
+    "active": true,
+    "birthdate": "1999-10-16T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "14",
+      "year": 2020
+    }
+  },
+  "Asa Newell": {
+    "id": 1642854,
+    "active": true,
+    "birthdate": "2005-10-05T00:00:00",
+    "draft": null
+  },
+  "Georges Niang": {
+    "id": 1627777,
+    "active": true,
+    "birthdate": "1993-06-17T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "2",
+      "pick": "50",
+      "year": 2016
+    }
+  },
+  "Yanic Konan Niederhäuser": {
+    "id": 1642949,
+    "active": true,
+    "birthdate": "2003-03-14T00:00:00",
+    "draft": null
+  },
+  "Zeke Nnaji": {
+    "id": 1630192,
+    "active": true,
+    "birthdate": "2001-01-09T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "22",
+      "year": 2020
+    }
+  },
+  "Jusuf Nurkić": {
+    "id": 203994,
+    "active": true,
+    "birthdate": "1994-08-23T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "16",
+      "year": 2014
+    }
+  },
+  "Royce O'Neale": {
+    "id": 1626220,
+    "active": true,
+    "birthdate": "1993-06-05T00:00:00",
+    "draft": null
+  },
+  "Josh Okogie": {
+    "id": 1629006,
+    "active": true,
+    "birthdate": "1998-09-01T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "20",
+      "year": 2018
+    }
+  },
+  "Onyeka Okongwu": {
+    "id": 1630168,
+    "active": true,
+    "birthdate": "2000-12-11T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "6",
+      "year": 2020
+    }
+  },
+  "Isaac Okoro": {
+    "id": 1630171,
+    "active": true,
+    "birthdate": "2001-01-26T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "5",
+      "year": 2020
+    }
+  },
+  "Lachlan Olbrich": {
+    "id": 1642950,
+    "active": true,
+    "birthdate": "2003-12-30T00:00:00",
+    "draft": null
+  },
+  "Kelly Olynyk": {
+    "id": 203482,
+    "active": true,
+    "birthdate": "1991-04-19T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "13",
+      "year": 2013
+    }
+  },
+  "Kelly Oubre Jr.": {
+    "id": 1626162,
+    "active": true,
+    "birthdate": "1995-12-09T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "15",
+      "year": 2015
+    }
+  },
+  "Chris Paul": {
+    "id": 101108,
+    "active": true,
+    "birthdate": "1985-05-06T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "4",
+      "year": 2005
+    }
+  },
+  "Gary Payton II": {
+    "id": 1627780,
+    "active": true,
+    "birthdate": "1992-12-01T00:00:00",
+    "draft": null
+  },
+  "Micah Peavy": {
+    "id": 1642877,
+    "active": true,
+    "birthdate": "2001-07-16T00:00:00",
+    "draft": null
+  },
+  "Noah Penda": {
+    "id": 1642869,
+    "active": true,
+    "birthdate": "2005-01-07T00:00:00",
+    "draft": null
+  },
+  "Taelon Peter": {
+    "id": 1643007,
+    "active": true,
+    "birthdate": "2002-02-27T00:00:00",
+    "draft": null
+  },
+  "Drew Peterson": {
+    "id": 1641809,
+    "active": true,
+    "birthdate": "1999-11-09T00:00:00",
+    "draft": null
+  },
+  "Julian Phillips": {
+    "id": 1641763,
+    "active": true,
+    "birthdate": "2003-11-05T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "2",
+      "pick": "35",
+      "year": 2023
+    }
+  },
+  "Jalen Pickett": {
+    "id": 1629618,
+    "active": true,
+    "birthdate": "1999-10-22T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "2",
+      "pick": "32",
+      "year": 2023
+    }
+  },
+  "Scotty Pippen Jr.": {
+    "id": 1630590,
+    "active": true,
+    "birthdate": "2000-11-10T00:00:00",
+    "draft": null
+  },
+  "Daeqwon Plowden": {
+    "id": 1631342,
+    "active": true,
+    "birthdate": "1998-08-29T00:00:00",
+    "draft": null
+  },
+  "Mason Plumlee": {
+    "id": 203486,
+    "active": true,
+    "birthdate": "1990-03-05T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "22",
+      "year": 2013
+    }
+  },
+  "Brandin Podziemski": {
+    "id": 1641764,
+    "active": true,
+    "birthdate": "2003-02-25T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "19",
+      "year": 2023
+    }
+  },
+  "Jakob Poeltl": {
+    "id": 1627751,
+    "active": true,
+    "birthdate": "1995-10-15T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "9",
+      "year": 2016
+    }
+  },
+  "Jordan Poole": {
+    "id": 1629673,
+    "active": true,
+    "birthdate": "1999-06-19T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "28",
+      "year": 2019
+    }
+  },
+  "Craig Porter Jr.": {
+    "id": 1641854,
+    "active": true,
+    "birthdate": "2000-02-26T00:00:00",
+    "draft": null
+  },
+  "Kevin Porter Jr.": {
+    "id": 1629645,
+    "active": true,
+    "birthdate": "2000-05-04T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "30",
+      "year": 2019
+    }
+  },
+  "Michael Porter Jr.": {
+    "id": 1629008,
+    "active": true,
+    "birthdate": "1998-06-29T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "14",
+      "year": 2018
+    }
+  },
+  "Bobby Portis": {
+    "id": 1626171,
+    "active": true,
+    "birthdate": "1995-02-10T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "22",
+      "year": 2015
+    }
+  },
+  "Kristaps Porziņģis": {
+    "id": 204001,
+    "active": true,
+    "birthdate": "1995-08-02T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "4",
+      "year": 2015
+    }
+  },
+  "Quinten Post": {
+    "id": 1642366,
+    "active": true,
+    "birthdate": "2000-03-21T00:00:00",
+    "draft": null
+  },
+  "Drake Powell": {
+    "id": 1642962,
+    "active": true,
+    "birthdate": "2005-09-08T00:00:00",
+    "draft": null
+  },
+  "Dwight Powell": {
+    "id": 203939,
+    "active": true,
+    "birthdate": "1991-07-20T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "2",
+      "pick": "45",
+      "year": 2014
+    }
+  },
+  "Norman Powell": {
+    "id": 1626181,
+    "active": true,
+    "birthdate": "1993-05-25T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "2",
+      "pick": "46",
+      "year": 2015
+    }
+  },
+  "Taurean Prince": {
+    "id": 1627752,
+    "active": true,
+    "birthdate": "1994-03-22T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "12",
+      "year": 2016
+    }
+  },
+  "Payton Pritchard": {
+    "id": 1630202,
+    "active": true,
+    "birthdate": "1998-01-28T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "26",
+      "year": 2020
+    }
+  },
+  "Tyrese Proctor": {
+    "id": 1642878,
+    "active": true,
+    "birthdate": "2004-04-01T00:00:00",
+    "draft": null
+  },
+  "Olivier-Maxence Prosper": {
+    "id": 1641765,
+    "active": true,
+    "birthdate": "2002-07-03T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "24",
+      "year": 2023
+    }
+  },
+  "Derik Queen": {
+    "id": 1642852,
+    "active": true,
+    "birthdate": "2004-12-27T00:00:00",
+    "draft": null
+  },
+  "Neemias Queta": {
+    "id": 1629674,
+    "active": true,
+    "birthdate": "1999-07-13T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "2",
+      "pick": "39",
+      "year": 2021
+    }
+  },
+  "Immanuel Quickley": {
+    "id": 1630193,
+    "active": true,
+    "birthdate": "1999-06-17T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "25",
+      "year": 2020
+    }
+  },
+  "Julius Randle": {
+    "id": 203944,
+    "active": true,
+    "birthdate": "1994-11-29T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "7",
+      "year": 2014
+    }
+  },
+  "Maxime Raynaud": {
+    "id": 1642875,
+    "active": true,
+    "birthdate": "2003-04-07T00:00:00",
+    "draft": null
+  },
+  "Duop Reath": {
+    "id": 1641871,
+    "active": true,
+    "birthdate": "1996-06-26T00:00:00",
+    "draft": null
+  },
+  "Austin Reaves": {
+    "id": 1630559,
+    "active": true,
+    "birthdate": "1998-05-29T00:00:00",
+    "draft": null
+  },
+  "Paul Reed": {
+    "id": 1630194,
+    "active": true,
+    "birthdate": "1999-06-14T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "2",
+      "pick": "58",
+      "year": 2020
+    }
+  },
+  "Antonio Reeves": {
+    "id": 1641810,
+    "active": true,
+    "birthdate": "2000-11-20T00:00:00",
+    "draft": null
+  },
+  "Naz Reid": {
+    "id": 1629675,
+    "active": true,
+    "birthdate": "1999-08-26T00:00:00",
+    "draft": null
+  },
+  "Will Richard": {
+    "id": 1642954,
+    "active": true,
+    "birthdate": "2002-12-24T00:00:00",
+    "draft": null
+  },
+  "Nick Richards": {
+    "id": 1630208,
+    "active": true,
+    "birthdate": "1997-11-29T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "2",
+      "pick": "42",
+      "year": 2020
+    }
+  },
+  "Jase Richardson": {
+    "id": 1642859,
+    "active": true,
+    "birthdate": "2005-10-16T00:00:00",
+    "draft": null
+  },
+  "Will Riley": {
+    "id": 1642860,
+    "active": true,
+    "birthdate": "2006-02-10T00:00:00",
+    "draft": null
+  },
+  "Zaccharie Risacher": {
+    "id": 1642258,
+    "active": true,
+    "birthdate": "2005-04-08T00:00:00",
+    "draft": null
+  },
+  "Duncan Robinson": {
+    "id": 1629130,
+    "active": true,
+    "birthdate": "1994-04-22T00:00:00",
+    "draft": null
+  },
+  "Mitchell Robinson": {
+    "id": 1629011,
+    "active": true,
+    "birthdate": "1998-04-01T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "2",
+      "pick": "36",
+      "year": 2018
+    }
+  },
+  "Orlando Robinson": {
+    "id": 1631115,
+    "active": true,
+    "birthdate": "2000-07-10T00:00:00",
+    "draft": null
+  },
+  "Jeremiah Robinson-Earl": {
+    "id": 1630526,
+    "active": true,
+    "birthdate": "2000-11-03T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "2",
+      "pick": "32",
+      "year": 2021
+    }
+  },
+  "Ryan Rollins": {
+    "id": 1631157,
+    "active": true,
+    "birthdate": "2002-07-03T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "2",
+      "pick": "44",
+      "year": 2022
+    }
+  },
+  "Jackson Rowe": {
+    "id": 1642050,
+    "active": true,
+    "birthdate": "1997-01-04T00:00:00",
+    "draft": null
+  },
+  "Terry Rozier": {
+    "id": 1626179,
+    "active": true,
+    "birthdate": "1994-03-17T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "16",
+      "year": 2015
+    }
+  },
+  "Rayan Rupert": {
+    "id": 1641712,
+    "active": true,
+    "birthdate": "2004-05-31T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "2",
+      "pick": "43",
+      "year": 2023
+    }
+  },
+  "D'Angelo Russell": {
+    "id": 1626156,
+    "active": true,
+    "birthdate": "1996-02-23T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "2",
+      "year": 2015
+    }
+  },
+  "Domantas Sabonis": {
+    "id": 1627734,
+    "active": true,
+    "birthdate": "1996-05-03T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "11",
+      "year": 2016
+    }
+  },
+  "Tidjane Salaün": {
+    "id": 1642275,
+    "active": true,
+    "birthdate": "2005-08-10T00:00:00",
+    "draft": null
+  },
+  "Hunter Sallis": {
+    "id": 1642282,
+    "active": true,
+    "birthdate": "2003-03-26T00:00:00",
+    "draft": null
+  },
+  "Kobe Sanders": {
+    "id": 1642920,
+    "active": true,
+    "birthdate": "2002-05-30T00:00:00",
+    "draft": null
+  },
+  "Gui Santos": {
+    "id": 1630611,
+    "active": true,
+    "birthdate": "2002-06-22T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "2",
+      "pick": "55",
+      "year": 2022
+    }
+  },
+  "Ben Saraf": {
+    "id": 1642879,
+    "active": true,
+    "birthdate": "2006-04-14T00:00:00",
+    "draft": null
+  },
+  "Alex Sarr": {
+    "id": 1642259,
+    "active": true,
+    "birthdate": "2005-04-26T00:00:00",
+    "draft": null
+  },
+  "Marcus Sasser": {
+    "id": 1631204,
+    "active": true,
+    "birthdate": "2000-09-21T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "25",
+      "year": 2023
+    }
+  },
+  "Baylor Scheierman": {
+    "id": 1631248,
+    "active": true,
+    "birthdate": "2000-09-26T00:00:00",
+    "draft": null
+  },
+  "Dennis Schröder": {
+    "id": 203471,
+    "active": true,
+    "birthdate": "1993-09-15T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "17",
+      "year": 2013
+    }
+  },
+  "Mark Sears": {
+    "id": 1641813,
+    "active": true,
+    "birthdate": "2002-02-19T00:00:00",
+    "draft": null
+  },
+  "Alperen Sengun": {
+    "id": 1630578,
+    "active": true,
+    "birthdate": "2002-07-25T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "16",
+      "year": 2021
+    }
+  },
+  "Brice Sensabaugh": {
+    "id": 1641729,
+    "active": true,
+    "birthdate": "2003-10-30T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "28",
+      "year": 2023
+    }
+  },
+  "Collin Sexton": {
+    "id": 1629012,
+    "active": true,
+    "birthdate": "1999-01-04T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "8",
+      "year": 2018
+    }
+  },
+  "Landry Shamet": {
+    "id": 1629013,
+    "active": true,
+    "birthdate": "1997-03-13T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "26",
+      "year": 2018
+    }
+  },
+  "Terrence Shannon Jr.": {
+    "id": 1630545,
+    "active": true,
+    "birthdate": "2000-07-30T00:00:00",
+    "draft": null
+  },
+  "Day'Ron Sharpe": {
+    "id": 1630549,
+    "active": true,
+    "birthdate": "2001-11-06T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "29",
+      "year": 2021
+    }
+  },
+  "Shaedon Sharpe": {
+    "id": 1631101,
+    "active": true,
+    "birthdate": "2003-05-30T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "7",
+      "year": 2022
+    }
+  },
+  "Jamal Shead": {
+    "id": 1642347,
+    "active": true,
+    "birthdate": "2002-07-24T00:00:00",
+    "draft": null
+  },
+  "Ben Sheppard": {
+    "id": 1641767,
+    "active": true,
+    "birthdate": "2001-07-16T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "26",
+      "year": 2023
+    }
+  },
+  "Reed Sheppard": {
+    "id": 1642263,
+    "active": true,
+    "birthdate": "2004-06-24T00:00:00",
+    "draft": null
+  },
+  "Max Shulga": {
+    "id": 1642917,
+    "active": true,
+    "birthdate": "2002-06-25T00:00:00",
+    "draft": null
+  },
+  "Pascal Siakam": {
+    "id": 1627783,
+    "active": true,
+    "birthdate": "1994-04-02T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "27",
+      "year": 2016
+    }
+  },
+  "Anfernee Simons": {
+    "id": 1629014,
+    "active": true,
+    "birthdate": "1999-06-08T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "24",
+      "year": 2018
+    }
+  },
+  "KJ Simpson": {
+    "id": 1642354,
+    "active": true,
+    "birthdate": "2002-08-08T00:00:00",
+    "draft": null
+  },
+  "Jericho Sims": {
+    "id": 1630579,
+    "active": true,
+    "birthdate": "1998-10-20T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "2",
+      "pick": "58",
+      "year": 2021
+    }
+  },
+  "Javon Small": {
+    "id": 1642914,
+    "active": true,
+    "birthdate": "2002-12-19T00:00:00",
+    "draft": null
+  },
+  "Marcus Smart": {
+    "id": 203935,
+    "active": true,
+    "birthdate": "1994-03-06T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "6",
+      "year": 2014
+    }
+  },
+  "Dru Smith": {
+    "id": 1630696,
+    "active": true,
+    "birthdate": "1997-12-30T00:00:00",
+    "draft": null
+  },
+  "Jalen Smith": {
+    "id": 1630188,
+    "active": true,
+    "birthdate": "2000-03-16T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "10",
+      "year": 2020
+    }
+  },
+  "Tolu Smith": {
+    "id": 1642449,
+    "active": true,
+    "birthdate": "2000-07-26T00:00:00",
+    "draft": null
+  },
+  "Jabari Smith Jr.": {
+    "id": 1631095,
+    "active": true,
+    "birthdate": "2003-05-13T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "3",
+      "year": 2022
+    }
+  },
+  "Nick Smith Jr.": {
+    "id": 1641733,
+    "active": true,
+    "birthdate": "2004-04-18T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "27",
+      "year": 2023
+    }
+  },
+  "Jeremy Sochan": {
+    "id": 1631110,
+    "active": true,
+    "birthdate": "2003-05-20T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "9",
+      "year": 2022
+    }
+  },
+  "Thomas Sorber": {
+    "id": 1642850,
+    "active": true,
+    "birthdate": "2005-12-25T00:00:00",
+    "draft": null
+  },
+  "Cam Spencer": {
+    "id": 1642285,
+    "active": true,
+    "birthdate": "2000-04-06T00:00:00",
+    "draft": null
+  },
+  "Pat Spencer": {
+    "id": 1630311,
+    "active": true,
+    "birthdate": "1996-07-04T00:00:00",
+    "draft": null
+  },
+  "Isaiah Stevens": {
+    "id": 1641815,
+    "active": true,
+    "birthdate": "2000-11-01T00:00:00",
+    "draft": null
+  },
+  "Isaiah Stewart": {
+    "id": 1630191,
+    "active": true,
+    "birthdate": "2001-05-22T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "16",
+      "year": 2020
+    }
+  },
+  "Julian Strawther": {
+    "id": 1631124,
+    "active": true,
+    "birthdate": "2002-04-18T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "29",
+      "year": 2023
+    }
+  },
+  "Max Strus": {
+    "id": 1629622,
+    "active": true,
+    "birthdate": "1996-03-28T00:00:00",
+    "draft": null
+  },
+  "Jalen Suggs": {
+    "id": 1630591,
+    "active": true,
+    "birthdate": "2001-06-03T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "5",
+      "year": 2021
+    }
+  },
+  "Jae'Sean Tate": {
+    "id": 1630256,
+    "active": true,
+    "birthdate": "1995-10-28T00:00:00",
+    "draft": null
+  },
+  "Jayson Tatum": {
+    "id": 1628369,
+    "active": true,
+    "birthdate": "1998-03-03T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "3",
+      "year": 2017
+    }
+  },
+  "Jahmyl Telfort": {
+    "id": 1643141,
+    "active": true,
+    "birthdate": "2001-04-30T00:00:00",
+    "draft": null
+  },
+  "Garrett Temple": {
+    "id": 202066,
+    "active": true,
+    "birthdate": "1986-05-08T00:00:00",
+    "draft": null
+  },
+  "Dalen Terry": {
+    "id": 1631207,
+    "active": true,
+    "birthdate": "2002-07-12T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "18",
+      "year": 2022
+    }
+  },
+  "Adou Thiero": {
+    "id": 1642876,
+    "active": true,
+    "birthdate": "2004-05-08T00:00:00",
+    "draft": null
+  },
+  "Cam Thomas": {
+    "id": 1630560,
+    "active": true,
+    "birthdate": "2001-10-13T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "27",
+      "year": 2021
+    }
+  },
+  "Amen Thompson": {
+    "id": 1641708,
+    "active": true,
+    "birthdate": "2003-01-30T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "4",
+      "year": 2023
+    }
+  },
+  "Ausar Thompson": {
+    "id": 1641709,
+    "active": true,
+    "birthdate": "2003-01-30T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "5",
+      "year": 2023
+    }
+  },
+  "Klay Thompson": {
+    "id": 202691,
+    "active": true,
+    "birthdate": "1990-02-08T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "11",
+      "year": 2011
+    }
+  },
+  "Matisse Thybulle": {
+    "id": 1629680,
+    "active": true,
+    "birthdate": "1997-03-04T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "20",
+      "year": 2019
+    }
+  },
+  "Xavier Tillman": {
+    "id": 1630214,
+    "active": true,
+    "birthdate": "1999-01-12T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "2",
+      "pick": "35",
+      "year": 2020
+    }
+  },
+  "Nae'Qwan Tomlin": {
+    "id": 1641772,
+    "active": true,
+    "birthdate": "2000-12-19T00:00:00",
+    "draft": null
+  },
+  "John Tonje": {
+    "id": 1642910,
+    "active": true,
+    "birthdate": "2001-04-23T00:00:00",
+    "draft": null
+  },
+  "Alex Toohey": {
+    "id": 1642893,
+    "active": true,
+    "birthdate": "2004-05-05T00:00:00",
+    "draft": null
+  },
+  "Nikola Topić": {
+    "id": 1642260,
+    "active": true,
+    "birthdate": "2005-08-10T00:00:00",
+    "draft": null
+  },
+  "Jacob Toppin": {
+    "id": 1631210,
+    "active": true,
+    "birthdate": "2000-05-08T00:00:00",
+    "draft": null
+  },
+  "Obi Toppin": {
+    "id": 1630167,
+    "active": true,
+    "birthdate": "1998-03-04T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "8",
+      "year": 2020
+    }
+  },
+  "Karl-Anthony Towns": {
+    "id": 1626157,
+    "active": true,
+    "birthdate": "1995-11-15T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "1",
+      "year": 2015
+    }
+  },
+  "Nolan Traore": {
+    "id": 1642849,
+    "active": true,
+    "birthdate": "2006-05-28T00:00:00",
+    "draft": null
+  },
+  "Luke Travers": {
+    "id": 1631247,
+    "active": true,
+    "birthdate": "2001-09-03T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "2",
+      "pick": "56",
+      "year": 2022
+    }
+  },
+  "Gary Trent Jr.": {
+    "id": 1629018,
+    "active": true,
+    "birthdate": "1999-01-18T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "2",
+      "pick": "37",
+      "year": 2018
+    }
+  },
+  "Oscar Tshiebwe": {
+    "id": 1631131,
+    "active": true,
+    "birthdate": "1999-11-27T00:00:00",
+    "draft": null
+  },
+  "Myles Turner": {
+    "id": 1626167,
+    "active": true,
+    "birthdate": "1996-03-24T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "11",
+      "year": 2015
+    }
+  },
+  "Hunter Tyson": {
+    "id": 1641816,
+    "active": true,
+    "birthdate": "2000-06-13T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "2",
+      "pick": "37",
+      "year": 2023
+    }
+  },
+  "Jaylon Tyson": {
+    "id": 1642281,
+    "active": true,
+    "birthdate": "2002-12-02T00:00:00",
+    "draft": null
+  },
+  "Jonas Valančiūnas": {
+    "id": 202685,
+    "active": true,
+    "birthdate": "1992-05-06T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "5",
+      "year": 2011
+    }
+  },
+  "Fred VanVleet": {
+    "id": 1627832,
+    "active": true,
+    "birthdate": "1994-02-25T00:00:00",
+    "draft": null
+  },
+  "Jarred Vanderbilt": {
+    "id": 1629020,
+    "active": true,
+    "birthdate": "1999-04-03T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "2",
+      "pick": "41",
+      "year": 2018
+    }
+  },
+  "Devin Vassell": {
+    "id": 1630170,
+    "active": true,
+    "birthdate": "2000-08-23T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "11",
+      "year": 2020
+    }
+  },
+  "Gabe Vincent": {
+    "id": 1629216,
+    "active": true,
+    "birthdate": "1996-06-14T00:00:00",
+    "draft": null
+  },
+  "Tristan Vukcevic": {
+    "id": 1641774,
+    "active": true,
+    "birthdate": "2003-03-11T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "2",
+      "pick": "42",
+      "year": 2023
+    }
+  },
+  "Nikola Vučević": {
+    "id": 202696,
+    "active": true,
+    "birthdate": "1990-10-24T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "16",
+      "year": 2011
+    }
+  },
+  "Dean Wade": {
+    "id": 1629731,
+    "active": true,
+    "birthdate": "1996-11-20T00:00:00",
+    "draft": null
+  },
+  "Franz Wagner": {
+    "id": 1630532,
+    "active": true,
+    "birthdate": "2001-08-27T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "8",
+      "year": 2021
+    }
+  },
+  "Moritz Wagner": {
+    "id": 1629021,
+    "active": true,
+    "birthdate": "1997-04-26T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "25",
+      "year": 2018
+    }
+  },
+  "Jabari Walker": {
+    "id": 1631133,
+    "active": true,
+    "birthdate": "2002-07-30T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "2",
+      "pick": "57",
+      "year": 2022
+    }
+  },
+  "Jarace Walker": {
+    "id": 1641716,
+    "active": true,
+    "birthdate": "2003-09-04T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "8",
+      "year": 2023
+    }
+  },
+  "Cason Wallace": {
+    "id": 1641717,
+    "active": true,
+    "birthdate": "2003-11-07T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "10",
+      "year": 2023
+    }
+  },
+  "Keaton Wallace": {
+    "id": 1630811,
+    "active": true,
+    "birthdate": "1999-02-26T00:00:00",
+    "draft": null
+  },
+  "Jordan Walsh": {
+    "id": 1641775,
+    "active": true,
+    "birthdate": "2004-03-03T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "2",
+      "pick": "38",
+      "year": 2023
+    }
+  },
+  "Ja'Kobe Walter": {
+    "id": 1642266,
+    "active": true,
+    "birthdate": "2004-09-04T00:00:00",
+    "draft": null
+  },
+  "Kel'el Ware": {
+    "id": 1642276,
+    "active": true,
+    "birthdate": "2004-04-20T00:00:00",
+    "draft": null
+  },
+  "P.J. Washington": {
+    "id": 1629023,
+    "active": true,
+    "birthdate": "1998-08-23T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "12",
+      "year": 2019
+    }
+  },
+  "Lindy Waters III": {
+    "id": 1630322,
+    "active": true,
+    "birthdate": "1997-07-28T00:00:00",
+    "draft": null
+  },
+  "Trendon Watford": {
+    "id": 1630570,
+    "active": true,
+    "birthdate": "2000-11-09T00:00:00",
+    "draft": null
+  },
+  "Jamir Watkins": {
+    "id": 1642364,
+    "active": true,
+    "birthdate": "2001-07-06T00:00:00",
+    "draft": null
+  },
+  "Peyton Watson": {
+    "id": 1631212,
+    "active": true,
+    "birthdate": "2002-09-11T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "30",
+      "year": 2022
+    }
+  },
+  "Jaylen Wells": {
+    "id": 1642377,
+    "active": true,
+    "birthdate": "2003-08-26T00:00:00",
+    "draft": null
+  },
+  "Victor Wembanyama": {
+    "id": 1641705,
+    "active": true,
+    "birthdate": "2004-01-04T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "1",
+      "year": 2023
+    }
+  },
+  "Blake Wesley": {
+    "id": 1631104,
+    "active": true,
+    "birthdate": "2003-03-16T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "25",
+      "year": 2022
+    }
+  },
+  "Russell Westbrook": {
+    "id": 201566,
+    "active": true,
+    "birthdate": "1988-11-12T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "4",
+      "year": 2008
+    }
+  },
+  "Coby White": {
+    "id": 1629632,
+    "active": true,
+    "birthdate": "2000-02-16T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "7",
+      "year": 2019
+    }
+  },
+  "Derrick White": {
+    "id": 1628401,
+    "active": true,
+    "birthdate": "1994-07-02T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "29",
+      "year": 2017
+    }
+  },
+  "Cam Whitmore": {
+    "id": 1641715,
+    "active": true,
+    "birthdate": "2004-07-08T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "20",
+      "year": 2023
+    }
+  },
+  "Aaron Wiggins": {
+    "id": 1630598,
+    "active": true,
+    "birthdate": "1999-01-02T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "2",
+      "pick": "55",
+      "year": 2021
+    }
+  },
+  "Andrew Wiggins": {
+    "id": 203952,
+    "active": true,
+    "birthdate": "1995-02-23T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "1",
+      "year": 2014
+    }
+  },
+  "Amari Williams": {
+    "id": 1642873,
+    "active": true,
+    "birthdate": "2002-01-28T00:00:00",
+    "draft": null
+  },
+  "Brandon Williams": {
+    "id": 1630314,
+    "active": true,
+    "birthdate": "1999-11-22T00:00:00",
+    "draft": null
+  },
+  "Cody Williams": {
+    "id": 1642262,
+    "active": true,
+    "birthdate": "2004-11-20T00:00:00",
+    "draft": null
+  },
+  "Grant Williams": {
+    "id": 1629684,
+    "active": true,
+    "birthdate": "1998-11-30T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "22",
+      "year": 2019
+    }
+  },
+  "Jalen Williams": {
+    "id": 1631114,
+    "active": true,
+    "birthdate": "2001-04-14T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "12",
+      "year": 2022
+    }
+  },
+  "Jaylin Williams": {
+    "id": 1631119,
+    "active": true,
+    "birthdate": "2002-06-29T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "2",
+      "pick": "34",
+      "year": 2022
+    }
+  },
+  "Kenrich Williams": {
+    "id": 1629026,
+    "active": true,
+    "birthdate": "1994-12-02T00:00:00",
+    "draft": null
+  },
+  "Mark Williams": {
+    "id": 1631109,
+    "active": true,
+    "birthdate": "2001-12-16T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "15",
+      "year": 2022
+    }
+  },
+  "Patrick Williams": {
+    "id": 1630172,
+    "active": true,
+    "birthdate": "2001-08-26T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "4",
+      "year": 2020
+    }
+  },
+  "Ziaire Williams": {
+    "id": 1630533,
+    "active": true,
+    "birthdate": "2001-09-12T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "10",
+      "year": 2021
+    }
+  },
+  "Robert Williams III": {
+    "id": 1629057,
+    "active": true,
+    "birthdate": "1997-10-17T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "27",
+      "year": 2018
+    }
+  },
+  "Vince Williams Jr.": {
+    "id": 1631246,
+    "active": true,
+    "birthdate": "2000-08-30T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "2",
+      "pick": "47",
+      "year": 2022
+    }
+  },
+  "Zion Williamson": {
+    "id": 1629627,
+    "active": true,
+    "birthdate": "2000-07-06T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "1",
+      "year": 2019
+    }
+  },
+  "Jalen Wilson": {
+    "id": 1630592,
+    "active": true,
+    "birthdate": "2000-11-04T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "2",
+      "pick": "51",
+      "year": 2023
+    }
+  },
+  "James Wiseman": {
+    "id": 1630164,
+    "active": true,
+    "birthdate": "2001-03-31T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "2",
+      "year": 2020
+    }
+  },
+  "Danny Wolf": {
+    "id": 1642874,
+    "active": true,
+    "birthdate": "2004-05-05T00:00:00",
+    "draft": null
+  },
+  "Guerschon Yabusele": {
+    "id": 1627824,
+    "active": true,
+    "birthdate": "1995-12-17T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "16",
+      "year": 2016
+    }
+  },
+  "Yang Hansen": {
+    "id": 1642905,
+    "active": true,
+    "birthdate": "2005-06-26T00:00:00",
+    "draft": null
+  },
+  "Jahmir Young": {
+    "id": 1642443,
+    "active": true,
+    "birthdate": "2000-10-07T00:00:00",
+    "draft": null
+  },
+  "Trae Young": {
+    "id": 1629027,
+    "active": true,
+    "birthdate": "1998-09-19T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "5",
+      "year": 2018
+    }
+  },
+  "Chris Youngblood": {
+    "id": 1642959,
+    "active": true,
+    "birthdate": "2002-02-09T00:00:00",
+    "draft": null
+  },
+  "Rocco Zikarsky": {
+    "id": 1642911,
+    "active": true,
+    "birthdate": "2006-07-11T00:00:00",
+    "draft": null
+  },
+  "Ivica Zubac": {
+    "id": 1627826,
+    "active": true,
+    "birthdate": "1997-03-18T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "2",
+      "pick": "32",
+      "year": 2016
+    }
+  },
+  "Tristan da Silva": {
+    "id": 1641783,
+    "active": true,
+    "birthdate": "2001-05-15T00:00:00",
+    "draft": null
+  },
+  "Nikola Đurišić": {
+    "id": 1642365,
+    "active": true,
+    "birthdate": "2004-02-23T00:00:00",
+    "draft": null
+  },
+  "Dario Šarić": {
+    "id": 203967,
+    "active": true,
+    "birthdate": "1994-04-08T00:00:00",
+    "draft": {
+      "team": null,
+      "round": "1",
+      "pick": "12",
+      "year": 2014
+    }
+  }
+}
