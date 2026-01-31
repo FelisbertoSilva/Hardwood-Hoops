@@ -1,0 +1,557 @@
+{% extends "base.html" %}
+
+{% block title %}Records - BoxToData{% endblock %}
+
+{% block extra_css %}
+<style>
+/* dark theme override */
+.content {
+    padding: 0 !important;
+    background-color: #1a1a1a !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+}
+.content-inner { padding: 40px 30px; max-width: 1800px; margin: 0 auto; }
+
+/* section headers */
+.records-section { margin-bottom: 60px; }
+.section-header {
+    display: flex; justify-content: space-between;
+    align-items: center; margin-bottom: 30px;
+    padding-bottom: 15px; border: none !important;
+}
+.section-title {
+    font-size: 1.6em; font-weight: 900;
+    text-transform: uppercase; color: #ffffff;
+    margin: 0; letter-spacing: 0.5px;
+    text-decoration: none !important;
+    border-bottom: none !important;
+}
+.section-title::after, .section-header::after {
+    display: none !important; content: none !important;
+}
+
+/* awards */
+.awards-container { margin-bottom: 40px; }
+.mvp-row { display: flex; justify-content: center; margin-bottom: 25px; }
+.mvp-row .award-card { width: 100%; max-width: 400px; }
+
+.awards-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 25px;
+}
+.award-card {
+    background: linear-gradient(135deg, #2b2b2b 0%, #1f1f1f 100%);
+    border-radius: 12px;
+    border: 2px solid #3a3a3a;
+    overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+.award-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+.award-header {
+    background: linear-gradient(135deg, #d4af37 0%, #b8960c 100%);
+    color: #1a1a1a; padding: 15px 20px; text-align: center;
+}
+.award-header h3 {
+    margin: 0; font-size: 1.1em; font-weight: 900;
+    text-transform: uppercase; letter-spacing: 0.5px;
+}
+.award-list { list-style: none; padding: 0; margin: 0; }
+.award-list li {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 12px 20px; border-bottom: 1px solid #3a3a3a; color: #e0e0e0;
+}
+.award-list li:last-child { border-bottom: none; }
+.award-list li:nth-child(even) { background-color: #272727; }
+
+.award-season { color: #888; font-size: 0.9em; }
+.award-player { color: #ffffff; font-weight: 600; }
+.award-player a { color: #ffffff; text-decoration: none; }
+.award-player a:hover { text-decoration: underline; }
+.award-no-data { padding: 30px 20px; text-align: center; color: #666; font-style: italic; }
+
+/* records grid */
+.records-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 30px; margin-top: 20px;
+}
+.record-category {
+    background-color: #2b2b2b; border-radius: 8px;
+    overflow: hidden; border: 2px solid #3a3a3a;
+}
+.record-category h3 {
+    background: linear-gradient(135deg, #2b2b2b 0%, #1f1f1f 100%);
+    color: white; margin: 0; padding: 18px 20px;
+    border-bottom: 2px solid #3a3a3a;
+    font-size: 1.2em; text-transform: uppercase;
+    font-weight: 900; letter-spacing: -0.5px;
+}
+.record-list { list-style: none; padding: 0; margin: 0; }
+.record-list li {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 12px 20px; border-bottom: 1px solid #3a3a3a; color: #e0e0e0;
+}
+.record-list li:last-child { border-bottom: none; }
+.record-list li:nth-child(even) { background-color: #272727; }
+.record-list li:hover { background-color: #333333; }
+
+.record-left { display: flex; align-items: center; gap: 12px; flex: 1; }
+.record-rank { color: #888; font-weight: bold; font-size: 1em; min-width: 25px; }
+.record-player { color: #ffffff; font-weight: 600; font-size: 1em; }
+.record-player a { color: #ffffff; text-decoration: none; }
+.record-player a:hover { text-decoration: underline; }
+
+.record-team { color: #888; font-size: 0.85em; font-weight: 500; margin-left: 8px; }
+.record-team-logo {
+    width: 20px; height: 20px; object-fit: contain;
+    margin-left: 8px; vertical-align: text-bottom; display: inline-block;
+}
+.record-meta { color: #666; font-size: 0.8em; margin-left: 8px; }
+.record-value {
+    color: #ffffff; font-weight: bold; font-size: 1.1em;
+    margin-left: 15px; min-width: 110px;
+    text-align: right; font-variant-numeric: tabular-nums;
+}
+.record-no-data {
+    padding: 30px 20px; text-align: center;
+    color: #666; font-style: italic; font-size: 0.95em;
+}
+
+/* team records */
+.team-record-info { display: flex; flex-direction: column; }
+.team-record-main { color: #ffffff; font-weight: 600; }
+.team-record-main a { color: #ffffff; text-decoration: none; }
+.team-record-main a:hover { text-decoration: underline; }
+.team-record-detail { color: #888; font-size: 0.85em; margin-top: 2px; }
+
+/* tabs */
+.records-tabs {
+    display: flex; justify-content: center;
+    width: 100%; gap: 0; margin-bottom: 40px;
+}
+.records-tab-btn {
+    flex: 1; max-width: 300px;
+    padding: 15px 0; font-size: 1.3em;
+    font-weight: 900; text-transform: uppercase;
+    letter-spacing: 0.5px; cursor: pointer;
+    transition: all 0.2s ease; outline: none;
+    background-color: #2b2b2b; color: #ffffff;
+    border: 2px solid #3a3a3a;
+}
+.records-tab-btn:first-child { border-radius: 8px 0 0 8px; border-right: 1px solid #3a3a3a; }
+.records-tab-btn:last-child { border-radius: 0 8px 8px 0; border-left: 1px solid #3a3a3a; }
+.records-tab-btn:not(.active):hover { background-color: #353535; }
+.records-tab-btn.active {
+    background-color: #ffffff; color: #1a1a1a;
+    border-color: #ffffff; box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+    z-index: 1;
+}
+
+.records-view { display: none; opacity: 0; transition: opacity 0.3s ease-in-out; }
+.records-view.active { display: block; opacity: 1; }
+
+/* responsive */
+@media (max-width: 1200px) {
+    .records-grid { grid-template-columns: repeat(2, 1fr); }
+    .awards-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 768px) {
+    .records-grid { grid-template-columns: 1fr; }
+    .awards-grid { grid-template-columns: 1fr; }
+    .records-tabs { flex-direction: column; gap: 15px; }
+    .records-tab-btn {
+        width: 100%; max-width: none;
+        border-radius: 8px !important; border: 2px solid #3a3a3a !important;
+    }
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="content-inner">
+
+    <div class="records-section">
+        <div class="section-header">
+            <h2 class="section-title">Awards</h2>
+        </div>
+
+        <div class="awards-container">
+            <div class="mvp-row">
+                <div class="award-card">
+                    <div class="award-header"><h3>MVP</h3></div>
+                    {% if awards.mvp %}
+                    <ul class="award-list">
+                        {% for award in awards.mvp %}
+                        <li>
+                            <span class="award-season">{{ award.season }}</span>
+                            <span class="award-player">
+                                <a href="{{ url_for('player.player_page', player_name=award.player_name) }}">{{ award.player_name }}</a>
+                            </span>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    {% else %}
+                    <div class="award-no-data">No awards yet</div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="awards-grid">
+                <div class="award-card">
+                    <div class="award-header"><h3>DPOY</h3></div>
+                    {% if awards.dpoy %}
+                    <ul class="award-list">
+                        {% for award in awards.dpoy %}
+                        <li>
+                            <span class="award-season">{{ award.season }}</span>
+                            <span class="award-player"><a href="{{ url_for('player.player_page', player_name=award.player_name) }}">{{ award.player_name }}</a></span>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    {% else %}
+                    <div class="award-no-data">No awards yet</div>
+                    {% endif %}
+                </div>
+
+                <div class="award-card">
+                    <div class="award-header"><h3>ROY</h3></div>
+                    {% if awards.roy %}
+                    <ul class="award-list">
+                        {% for award in awards.roy %}
+                        <li>
+                            <span class="award-season">{{ award.season }}</span>
+                            <span class="award-player"><a href="{{ url_for('player.player_page', player_name=award.player_name) }}">{{ award.player_name }}</a></span>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    {% else %}
+                    <div class="award-no-data">No awards yet</div>
+                    {% endif %}
+                </div>
+
+                <div class="award-card">
+                    <div class="award-header"><h3>6MOY</h3></div>
+                    {% if awards.smoy %}
+                    <ul class="award-list">
+                        {% for award in awards.smoy %}
+                        <li>
+                            <span class="award-season">{{ award.season }}</span>
+                            <span class="award-player"><a href="{{ url_for('player.player_page', player_name=award.player_name) }}">{{ award.player_name }}</a></span>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    {% else %}
+                    <div class="award-no-data">No awards yet</div>
+                    {% endif %}
+                </div>
+
+                <div class="award-card">
+                    <div class="award-header"><h3>MIP</h3></div>
+                    {% if awards.mip %}
+                    <ul class="award-list">
+                        {% for award in awards.mip %}
+                        <li>
+                            <span class="award-season">{{ award.season }}</span>
+                            <span class="award-player"><a href="{{ url_for('player.player_page', player_name=award.player_name) }}">{{ award.player_name }}</a></span>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    {% else %}
+                    <div class="award-no-data">No awards yet</div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="records-section">
+        <div class="section-header">
+            <h2 class="section-title">League Records</h2>
+        </div>
+
+        <div class="records-tabs">
+            <button class="records-tab-btn active" id="btn-single-game" onclick="switchRecords('single-game')">Single Game</button>
+            <button class="records-tab-btn" id="btn-career" onclick="switchRecords('career')">Career</button>
+            <button class="records-tab-btn" id="btn-team" onclick="switchRecords('team')">Teams</button>
+        </div>
+
+        <div id="single-game" class="records-view active">
+            <div class="section-header" style="margin-bottom: 20px;">
+                <h2 class="section-title">Regular Season Records</h2>
+            </div>
+            <div class="records-grid">
+                {% set single_game_categories = [
+                    ('Points', single_game.points),
+                    ('Rebounds', single_game.rebounds),
+                    ('Assists', single_game.assists),
+                    ('Steals', single_game.steals),
+                    ('Blocks', single_game.blocks),
+                    ('3-Pointers Made', single_game.three_pointers),
+                    ('Free Throws Made', single_game.free_throws),
+                    ('Field Goals Made', single_game.field_goals)
+                ] %}
+
+                {% for title, records in single_game_categories %}
+                <div class="record-category">
+                    <h3>{{ title }}</h3>
+                    {% if records %}
+                    <ol class="record-list">
+                        {% for record in records %}
+                        <li>
+                            <div class="record-left">
+                                <span class="record-rank">{{ loop.index }}.</span>
+                                <span class="record-player">
+                                    <a href="{{ url_for('player.player_page', player_name=record.player_name) }}">{{ record.player_name }}</a>
+                                    <img src="{{ url_for('static', filename='teams/' + record.team + '.png') }}" alt="{{ record.team }}" class="record-team-logo">
+                                    <span class="record-meta">vs {{ record.opponent }} ({{ record.game_date }})</span>
+                                </span>
+                            </div>
+                            <span class="record-value">{{ record.value }}</span>
+                        </li>
+                        {% endfor %}
+                    </ol>
+                    {% else %}
+                    <div class="record-no-data">No data available</div>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+
+            <div class="section-header" style="margin-top: 60px;">
+                <h2 class="section-title">Playoff Records</h2>
+            </div>
+            <div class="records-grid">
+                {% set playoff_single_game_categories = [
+                    ('Points', playoff_single_game.points),
+                    ('Rebounds', playoff_single_game.rebounds),
+                    ('Assists', playoff_single_game.assists),
+                    ('Steals', playoff_single_game.steals),
+                    ('Blocks', playoff_single_game.blocks),
+                    ('3-Pointers Made', playoff_single_game.three_pointers),
+                    ('Free Throws Made', playoff_single_game.free_throws),
+                    ('Field Goals Made', playoff_single_game.field_goals)
+                ] %}
+
+                {% for title, records in playoff_single_game_categories %}
+                <div class="record-category">
+                    <h3>{{ title }}</h3>
+                    {% if records %}
+                    <ol class="record-list">
+                        {% for record in records %}
+                        <li>
+                            <div class="record-left">
+                                <span class="record-rank">{{ loop.index }}.</span>
+                                <span class="record-player">
+                                    <a href="{{ url_for('player.player_page', player_name=record.player_name) }}">{{ record.player_name }}</a>
+                                    <img src="{{ url_for('static', filename='teams/' + record.team + '.png') }}" alt="{{ record.team }}" class="record-team-logo">
+                                    <span class="record-meta">vs {{ record.opponent }} ({{ record.game_date }})</span>
+                                </span>
+                            </div>
+                            <span class="record-value">{{ record.value }}</span>
+                        </li>
+                        {% endfor %}
+                    </ol>
+                    {% else %}
+                    <div class="record-no-data">No data available</div>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div id="career" class="records-view">
+            <div class="section-header" style="margin-bottom: 20px;">
+                <h2 class="section-title">Regular Season Records</h2>
+            </div>
+            <div class="records-grid">
+                {% set career_categories = [
+                    ('Points', career.points),
+                    ('Rebounds', career.rebounds),
+                    ('Assists', career.assists),
+                    ('Steals', career.steals),
+                    ('Blocks', career.blocks),
+                    ('3-Pointers Made', career.three_pointers),
+                    ('Free Throws Made', career.free_throws),
+                    ('Field Goals Made', career.field_goals),
+                    ('Games Played', career.games_played)
+                ] %}
+
+                {% for title, records in career_categories %}
+                <div class="record-category">
+                    <h3>{{ title }}</h3>
+                    {% if records %}
+                    <ol class="record-list">
+                        {% for record in records %}
+                        <li>
+                            <div class="record-left">
+                                <span class="record-rank">{{ loop.index }}.</span>
+                                <span class="record-player">
+                                    <a href="{{ url_for('player.player_page', player_name=record.player_name) }}">{{ record.player_name }}</a>
+                                    {% if record.games_played %}<span class="record-meta">({{ record.games_played }} games)</span>{% endif %}
+                                </span>
+                            </div>
+                            <span class="record-value">{{ record.value }}</span>
+                        </li>
+                        {% endfor %}
+                    </ol>
+                    {% else %}
+                    <div class="record-no-data">No data available</div>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+
+            <div class="section-header" style="margin-top: 60px;">
+                <h2 class="section-title">Playoff Records</h2>
+            </div>
+            <div class="records-grid">
+                {% set playoff_career_categories = [
+                    ('Points', playoff_career.points),
+                    ('Rebounds', playoff_career.rebounds),
+                    ('Assists', playoff_career.assists),
+                    ('Steals', playoff_career.steals),
+                    ('Blocks', playoff_career.blocks),
+                    ('3-Pointers Made', playoff_career.three_pointers),
+                    ('Free Throws Made', playoff_career.free_throws),
+                    ('Field Goals Made', playoff_career.field_goals),
+                    ('Games Played', playoff_career.games_played)
+                ] %}
+
+                {% for title, records in playoff_career_categories %}
+                <div class="record-category">
+                    <h3>{{ title }}</h3>
+                    {% if records %}
+                    <ol class="record-list">
+                        {% for record in records %}
+                        <li>
+                            <div class="record-left">
+                                <span class="record-rank">{{ loop.index }}.</span>
+                                <span class="record-player">
+                                    <a href="{{ url_for('player.player_page', player_name=record.player_name) }}">{{ record.player_name }}</a>
+                                    {% if record.games_played %}<span class="record-meta">({{ record.games_played }} games)</span>{% endif %}
+                                </span>
+                            </div>
+                            <span class="record-value">{{ record.value }}</span>
+                        </li>
+                        {% endfor %}
+                    </ol>
+                    {% else %}
+                    <div class="record-no-data">No data available</div>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div id="team" class="records-view">
+            <div class="records-grid">
+                <div class="record-category">
+                    <h3>Most Wins (Season)</h3>
+                    {% if team_season.most_wins %}
+                    <ol class="record-list">
+                        {% for record in team_season.most_wins %}
+                        <li>
+                            <div class="record-left">
+                                <span class="record-rank">{{ loop.index }}.</span>
+                                <div class="team-record-info">
+                                    <span class="team-record-main"><a href="{{ url_for('team.team_page', team_name=record.team_name) }}">{{ record.team_name }}</a></span>
+                                    <span class="team-record-detail">{{ (record.season - 1) }}-{{ (record.season|string)[-2:] }}</span>
+                                </div>
+                            </div>
+                            <span class="record-value">{{ record.wins }}</span>
+                        </li>
+                        {% endfor %}
+                    </ol>
+                    {% else %}
+                    <div class="record-no-data">No data available</div>
+                    {% endif %}
+                </div>
+
+                <div class="record-category">
+                    <h3>Most Points (Game)</h3>
+                    {% if team_season.most_points_game %}
+                    <ol class="record-list">
+                        {% for record in team_season.most_points_game %}
+                        <li>
+                            <div class="record-left">
+                                <span class="record-rank">{{ loop.index }}.</span>
+                                <div class="team-record-info">
+                                    <span class="team-record-main"><a href="{{ url_for('team.team_page', team_name=record.team_name) }}">{{ record.team_name }}</a></span>
+                                    <span class="team-record-detail">vs {{ record.opponent }} ({{ record.game_date }})</span>
+                                </div>
+                            </div>
+                            <span class="record-value">{{ record.value }}-{{ record.opponent_score }}</span>
+                        </li>
+                        {% endfor %}
+                    </ol>
+                    {% else %}
+                    <div class="record-no-data">No data available</div>
+                    {% endif %}
+                </div>
+
+                <div class="record-category">
+                    <h3>Longest Win Streak</h3>
+                    {% if team_streaks.win_streaks %}
+                    <ol class="record-list">
+                        {% for record in team_streaks.win_streaks %}
+                        <li>
+                            <div class="record-left">
+                                <span class="record-rank">{{ loop.index }}.</span>
+                                <div class="team-record-info">
+                                    <span class="team-record-main"><a href="{{ url_for('team.team_page', team_name=record.team_name) }}">{{ record.team_name }}</a></span>
+                                    <span class="team-record-detail">{{ record.start_date }} - {{ record.end_date }}</span>
+                                </div>
+                            </div>
+                            <span class="record-value">{{ record.streak }}W</span>
+                        </li>
+                        {% endfor %}
+                    </ol>
+                    {% else %}
+                    <div class="record-no-data">No data available</div>
+                    {% endif %}
+                </div>
+
+                <div class="record-category">
+                    <h3>Longest Losing Streak</h3>
+                    {% if team_streaks.loss_streaks %}
+                    <ol class="record-list">
+                        {% for record in team_streaks.loss_streaks %}
+                        <li>
+                            <div class="record-left">
+                                <span class="record-rank">{{ loop.index }}.</span>
+                                <div class="team-record-info">
+                                    <span class="team-record-main"><a href="{{ url_for('team.team_page', team_name=record.team_name) }}">{{ record.team_name }}</a></span>
+                                    <span class="team-record-detail">{{ record.start_date }} - {{ record.end_date }}</span>
+                                </div>
+                            </div>
+                            <span class="record-value">{{ record.streak }}L</span>
+                        </li>
+                        {% endfor %}
+                    </ol>
+                    {% else %}
+                    <div class="record-no-data">No data available</div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+function switchRecords(view) {
+    const views = ['single-game', 'career', 'team'];
+    views.forEach(function(v) {
+        document.getElementById('btn-' + v).classList.remove('active');
+        document.getElementById(v).classList.remove('active');
+    });
+    document.getElementById(view).classList.add('active');
+    document.getElementById('btn-' + view).classList.add('active');
+}
+</script>
+{% endblock %}

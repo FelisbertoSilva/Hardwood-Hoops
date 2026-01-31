@@ -1,0 +1,897 @@
+{% extends "base.html" %}
+
+{% block title %}League Standings - BoxToData{% endblock %}
+
+{% block extra_css %}
+<style>
+/* dark theme override */
+.content {
+    padding: 0 !important;
+    background-color: #1a1a1a !important;
+    border-radius: 0 !important; box-shadow: none !important;
+}
+.content-inner { padding: 40px 30px; max-width: 1800px; margin: 0 auto; }
+
+.standings-header {
+    display: flex; justify-content: space-between;
+    align-items: center; margin-bottom: 30px;
+}
+.standings-header h2 {
+    color: #ffffff; font-size: 2.5em; font-weight: 900;
+    text-transform: uppercase; letter-spacing: -1px;
+    border: none; margin: 0; padding: 0;
+}
+
+/* season selector */
+.season-selector select {
+    padding: 10px 15px; font-size: 1.1em;
+    border: 2px solid #3a3a3a; border-radius: 6px;
+    background-color: #2b2b2b; color: #ffffff;
+    cursor: pointer; font-weight: 600; transition: all 0.2s;
+}
+.season-selector select:hover { background-color: #353535; border-color: #4a4a4a; }
+.season-selector select:focus { outline: none; border-color: #666; }
+
+/* tabs */
+.view-tabs {
+    display: flex; gap: 0;
+    margin-bottom: 40px;
+    border-bottom: 2px solid #3a3a3a;
+}
+.tab-button {
+    background: none; border: none;
+    color: #888; padding: 15px 30px;
+    font-size: 1.1em; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.5px;
+    cursor: pointer; transition: all 0.2s;
+    border-bottom: 3px solid transparent;
+    margin-bottom: -2px;
+}
+.tab-button:hover { color: #b0b0b0; }
+.tab-button.active { color: #ffffff; border-bottom-color: #4CAF50; }
+
+.view-content { display: none; }
+.view-content.active { display: block; }
+
+/* conference sections */
+.conference-section { margin-bottom: 60px; }
+.conference-title {
+    background: linear-gradient(135deg, #2b2b2b 0%, #1f1f1f 100%);
+    color: white; padding: 18px 20px;
+    margin: 0; border-radius: 8px 8px 0 0;
+    font-size: 1.8em; font-weight: 900;
+    text-transform: uppercase; letter-spacing: -0.5px;
+    border: 2px solid #3a3a3a; border-bottom: none;
+}
+
+/* standings table */
+.standings-table {
+    width: 100%; border-collapse: collapse;
+    font-size: 0.95em; background-color: #2b2b2b;
+    border-radius: 0 0 8px 8px; overflow: hidden;
+    border: 2px solid #3a3a3a; border-top: none;
+}
+.standings-table th {
+    background-color: #1f1f1f !important;
+    color: #b0b0b0; padding: 14px 10px;
+    text-align: center; font-weight: 700;
+    text-transform: uppercase; font-size: 0.85em;
+    letter-spacing: 0.5px;
+    position: sticky; top: 0; z-index: 10;
+    border-bottom: 2px solid #3a3a3a;
+}
+.standings-table th:first-child, .standings-table td:first-child {
+    text-align: center; width: 50px;
+    background-color: transparent !important;
+    position: relative !important; left: auto !important;
+}
+.standings-table th:nth-child(2), .standings-table td:nth-child(2) {
+    text-align: left; min-width: 220px;
+    background-color: transparent !important;
+    position: relative !important; left: auto !important;
+}
+.standings-table th:first-child, .standings-table th:nth-child(2) {
+    background-color: #1f1f1f !important; z-index: 10;
+}
+.standings-table td {
+    padding: 12px 10px; text-align: center;
+    border-bottom: 1px solid #3a3a3a; color: #e0e0e0;
+}
+.standings-table tbody tr { background-color: #2b2b2b; }
+.standings-table tbody tr:nth-child(even) { background-color: #272727; }
+.standings-table tbody tr td { background-color: inherit; }
+.standings-table tbody tr:hover td { background-color: transparent !important; }
+.standings-table tbody tr:hover td:first-child,
+.standings-table tbody tr:hover td:nth-child(2) { background-color: transparent !important; }
+
+.team-cell { display: flex; align-items: center; gap: 10px; }
+.team-logo { width: 28px; height: 28px; object-fit: contain; flex-shrink: 0; }
+.team-name-container { display: flex; align-items: center; gap: 6px; }
+.team-name { color: #e0e0e0; text-decoration: none; font-weight: normal; }
+.team-name:hover { text-decoration: underline; }
+
+.clinch-indicator {
+    color: #4CAF50; font-weight: 700; font-size: 0.75em;
+    padding: 2px 4px;
+    background-color: rgba(76, 175, 80, 0.15);
+    border-radius: 3px; text-transform: lowercase;
+}
+
+/* playoff/playin lines */
+.standings-table tbody tr:nth-child(6) { border-bottom: 3px solid #4CAF50 !important; }
+.standings-table tbody tr:nth-child(10) { border-bottom: 3px solid #f44336 !important; }
+
+.win-streak { color: #4CAF50; font-weight: 700; }
+.loss-streak { color: #f44336; font-weight: 700; }
+
+/* legend box */
+.standings-legend {
+    margin-top: 30px; padding: 20px 25px;
+    background-color: #2b2b2b; border-radius: 8px;
+    font-size: 0.9em; color: #b0b0b0;
+    border: 2px solid #3a3a3a;
+}
+.standings-legend h3 {
+    color: #ffffff; margin: 0 0 15px 0;
+    font-size: 1.3em; font-weight: 900;
+    text-transform: uppercase; border: none; padding: 0;
+}
+.standings-legend p { margin: 8px 0; line-height: 1.6; }
+.standings-legend strong { color: #ffffff; font-weight: 700; }
+
+.legend-line { display: flex; align-items: center; gap: 12px; margin: 10px 0; }
+.legend-line .color-box { width: 50px; height: 3px; border-radius: 2px; }
+.playoff-color { background-color: #4CAF50; }
+.playin-color { background-color: #f44336; }
+
+.clinch-legend { margin-top: 20px; padding-top: 20px; border-top: 1px solid #3a3a3a; }
+.clinch-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px; margin-top: 15px;
+}
+.clinch-item { display: flex; align-items: baseline; gap: 8px; }
+.clinch-item .indicator { color: #4CAF50; font-weight: 700; font-size: 0.9em; min-width: 30px; }
+.clinch-item .description { color: #b0b0b0; font-size: 0.85em; }
+
+/* tiebreaker info */
+.tiebreaker-info {
+    margin-top: 30px; padding: 25px 30px;
+    background-color: #2b2b2b; border-radius: 8px;
+    font-size: 0.9em; color: #b0b0b0;
+    border: 2px solid #3a3a3a;
+}
+.tiebreaker-info h3 {
+    color: #ffffff; margin: 0 0 20px 0;
+    font-size: 1.3em; font-weight: 900;
+    text-transform: uppercase; border: none; padding: 0;
+}
+.tiebreaker-info strong { color: #ffffff; font-weight: 700; font-size: 1em; }
+.tiebreaker-info ul { margin: 15px 0 15px 25px; padding: 0; }
+.tiebreaker-info li { margin: 8px 0; line-height: 1.6; }
+
+/* playoff bracket */
+.playoff-bracket {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 60px; margin-top: 20px;
+}
+.bracket-conference {
+    background-color: #2b2b2b; border-radius: 8px;
+    padding: 25px; border: 2px solid #3a3a3a;
+}
+.bracket-conference h3 {
+    color: #ffffff; font-size: 1.5em; font-weight: 900;
+    text-transform: uppercase; letter-spacing: -0.5px;
+    margin: 0 0 25px 0; text-align: center;
+}
+.bracket-round { margin-bottom: 30px; }
+.bracket-round h4 {
+    color: #b0b0b0; font-size: 0.9em; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.5px;
+    margin: 0 0 15px 0;
+}
+.bracket-matchup {
+    background-color: #1f1f1f; border-radius: 6px;
+    padding: 12px 15px; margin-bottom: 10px;
+    display: flex; justify-content: space-between;
+    align-items: center; border: 1px solid #3a3a3a;
+}
+.bracket-team { display: flex; align-items: center; gap: 10px; color: #e0e0e0; }
+.bracket-seed { color: #888; font-weight: 700; min-width: 20px; }
+
+.mvp-container { margin-top: 15px; text-align: center; }
+.mvp-label {
+    font-size: 0.8em; font-weight: 900; color: #ffb300;
+    text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 4px;
+}
+.mvp-name { font-size: 1.2em; color: #ffffff; font-weight: 800; }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="content-inner">
+
+<div class="standings-header">
+    <h2>League Standings</h2>
+    <div class="season-selector">
+        <select onchange="window.location.href='/league/' + this.value">
+            {% for season in available_seasons %}
+            <option value="{{ season }}" {% if season == current_season %}selected{% endif %}>
+                {{ season.replace('-', '/20') }}
+            </option>
+            {% endfor %}
+        </select>
+    </div>
+</div>
+
+<!-- tabs -->
+<div class="view-tabs">
+    <button class="tab-button active" onclick="switchView('conference')">Conference</button>
+    <button class="tab-button" onclick="switchView('division')">Division</button>
+    <button class="tab-button" onclick="switchView('playoff')">Playoffs</button>
+</div>
+
+<!-- conference view -->
+<div id="conference-view" class="view-content active">
+    <div class="conference-section">
+        <h3 class="conference-title" style="border-radius: 8px 8px 0 0; margin-bottom: 0;">Eastern Conference</h3>
+        <table class="standings-table" style="margin-top: 0; border-radius: 0 0 8px 8px;">
+            <thead>
+                <tr>
+                    <th>RK</th><th>TEAM</th><th>W</th><th>L</th><th>PCT</th><th>GB</th>
+                    <th>CONF</th><th>DIV</th><th>HOME</th><th>ROAD</th><th>L10</th><th>STRK</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for team in eastern %}
+                <tr>
+                    <td>{{ team.seed }}</td>
+                    <td>
+                        <div class="team-cell">
+                            <img src="{{ url_for('static', filename='teams/' + team.team + '.png') }}" alt="{{ team.team }}" class="team-logo">
+                            <div class="team-name-container">
+                                <a href="{{ url_for('team.team_page', team_name=team.team) }}" class="team-name">{{ team.team }}</a>
+                                {% if team.clinch %}<span class="clinch-indicator">{{ team.clinch }}</span>{% endif %}
+                            </div>
+                        </div>
+                    </td>
+                    <td><strong>{{ team.wins }}</strong></td>
+                    <td>{{ team.losses }}</td>
+                    <td>{{ "%.1f"|format(team.win_pct * 100) }}%</td>
+                    <td>{{ team.gb }}</td>
+                    <td>{{ team.conf_wins }}-{{ team.conf_losses }}</td>
+                    <td>{{ team.div_wins }}-{{ team.div_losses }}</td>
+                    <td>{{ team.home_wins }}-{{ team.home_losses }}</td>
+                    <td>{{ team.road_wins }}-{{ team.road_losses }}</td>
+                    <td>{{ team.last10_wins }}-{{ team.last10_losses }}</td>
+                    <td><span class="{% if team.streak.startswith('W') %}win-streak{% else %}loss-streak{% endif %}">{{ team.streak }}</span></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="conference-section">
+        <h3 class="conference-title" style="border-radius: 8px 8px 0 0; margin-bottom: 0;">Western Conference</h3>
+        <table class="standings-table" style="margin-top: 0; border-radius: 0 0 8px 8px;">
+            <thead>
+                <tr>
+                    <th>RK</th><th>TEAM</th><th>W</th><th>L</th><th>PCT</th><th>GB</th>
+                    <th>CONF</th><th>DIV</th><th>HOME</th><th>ROAD</th><th>L10</th><th>STRK</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for team in western %}
+                <tr>
+                    <td>{{ team.seed }}</td>
+                    <td>
+                        <div class="team-cell">
+                            <img src="{{ url_for('static', filename='teams/' + team.team + '.png') }}" alt="{{ team.team }}" class="team-logo">
+                            <div class="team-name-container">
+                                <a href="{{ url_for('team.team_page', team_name=team.team) }}" class="team-name">{{ team.team }}</a>
+                                {% if team.clinch %}<span class="clinch-indicator">{{ team.clinch }}</span>{% endif %}
+                            </div>
+                        </div>
+                    </td>
+                    <td><strong>{{ team.wins }}</strong></td>
+                    <td>{{ team.losses }}</td>
+                    <td>{{ "%.1f"|format(team.win_pct * 100) }}%</td>
+                    <td>{{ team.gb }}</td>
+                    <td>{{ team.conf_wins }}-{{ team.conf_losses }}</td>
+                    <td>{{ team.div_wins }}-{{ team.div_losses }}</td>
+                    <td>{{ team.home_wins }}-{{ team.home_losses }}</td>
+                    <td>{{ team.road_wins }}-{{ team.road_losses }}</td>
+                    <td>{{ team.last10_wins }}-{{ team.last10_losses }}</td>
+                    <td><span class="{% if team.streak.startswith('W') %}win-streak{% else %}loss-streak{% endif %}">{{ team.streak }}</span></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+<div class="standings-legend">
+    <p><strong>Abbreviations:</strong></p>
+    <p><strong>PCT</strong> - Winning Percentage | <strong>GB</strong> - Games Behind | <strong>CONF</strong> - Conference Record</p>
+    <p><strong>DIV</strong> - Division Record | <strong>HOME/ROAD</strong> - Home and Away Records | <strong>L10</strong> - Last 10 Games</p>
+    <p><strong>STRK</strong> - Current Streak (W = Win, L = Loss)</p>
+
+    <div style="margin-top: 20px;">
+        <p><strong>Playoff Structure:</strong></p>
+        <div class="legend-line">
+            <div class="color-box playoff-color"></div>
+            <span>Green line: Guaranteed playoff spot (seeds 1-6)</span>
+        </div>
+        <div class="legend-line">
+            <div class="color-box playin-color"></div>
+            <span>Red line: Play-in tournament cutoff (seeds 7-10)</span>
+        </div>
+    </div>
+
+    <div class="clinch-legend">
+        <p><strong>Clinching Indicators:</strong></p>
+        <div class="clinch-grid">
+            <div class="clinch-item"><span class="indicator">x</span><span class="description">Clinched Playoff Berth</span></div>
+            <div class="clinch-item"><span class="indicator">e</span><span class="description">Clinched Eastern Conference</span></div>
+            <div class="clinch-item"><span class="indicator">w</span><span class="description">Clinched Western Conference</span></div>
+            <div class="clinch-item"><span class="indicator">a</span><span class="description">Clinched Atlantic Division</span></div>
+            <div class="clinch-item"><span class="indicator">c</span><span class="description">Clinched Central Division</span></div>
+            <div class="clinch-item"><span class="indicator">se</span><span class="description">Clinched Southeast Division</span></div>
+            <div class="clinch-item"><span class="indicator">nw</span><span class="description">Clinched Northwest Division</span></div>
+            <div class="clinch-item"><span class="indicator">p</span><span class="description">Clinched Pacific Division</span></div>
+            <div class="clinch-item"><span class="indicator">sw</span><span class="description">Clinched Southwest Division</span></div>
+            <div class="clinch-item"><span class="indicator">pi</span><span class="description">Clinched Play-In (10th seed or higher)</span></div>
+            <div class="clinch-item"><span class="indicator">o</span><span class="description">Eliminated from Playoffs</span></div>
+        </div>
+    </div>
+</div>
+
+<div class="tiebreaker-info">
+    <h3>Tiebreaker Rules</h3>
+
+    <div style="margin-bottom: 20px;">
+        <strong>FOR TWO-WAY TIES:</strong>
+        <ul>
+            <li><strong>(-)</strong> Tie breaker not needed (better overall winning percentage)</li>
+            <li><strong>(1)</strong> Head-to-head won-lost percentage</li>
+            <li><strong>(2)</strong> Division leader wins tie from team not leading a division</li>
+            <li><strong>(3)</strong> Division won-lost percentage for teams in the same division</li>
+            <li><strong>(4)</strong> Conference won-lost percentage</li>
+            <li><strong>(5)</strong> W-L Percentage vs. Playoff eligible teams, own conference</li>
+            <li><strong>(6)</strong> W-L Percentage vs. Playoff eligible teams, other conference</li>
+            <li><strong>(7)</strong> Net Points, all games</li>
+        </ul>
+    </div>
+
+    <div>
+        <strong>FOR MULTI-WAY TIES:</strong>
+        <ul>
+            <li><strong>(-)</strong> Tie breaker not needed (better overall winning percentage)</li>
+            <li><strong>(1)</strong> Division leader wins tie from team not leading a division</li>
+            <li><strong>(2)</strong> Head-to-head won-lost percentage</li>
+            <li><strong>(3)</strong> Division won-lost percentage for teams in the same division</li>
+            <li><strong>(4)</strong> Conference won-lost percentage</li>
+            <li><strong>(5)</strong> W-L Percentage vs. Playoff eligible teams, own conference</li>
+            <li><strong>(6)</strong> W-L Percentage vs. Playoff eligible teams, other conference</li>
+            <li><strong>(7)</strong> Net Points, all games</li>
+        </ul>
+    </div>
+</div>
+</div>
+
+<!-- division view -->
+<div id="division-view" class="view-content">
+    {% set divisions = {
+        'Atlantic': ['Boston Celtics', 'Brooklyn Nets', 'Montreal Mastodons', 'New York Knicks', 'Philadelphia 76ers', 'Toronto Raptors'],
+        'Central': ['Chicago Bulls', 'Cleveland Cavaliers', 'Detroit Pistons', 'Indiana Pacers', 'Milwaukee Bucks'],
+        'Southeast': ['Atlanta Hawks', 'Charlotte Hornets', 'Miami Heat', 'Orlando Magic', 'Washington Wizards'],
+        'Northwest': ['Denver Nuggets', 'Minnesota Timberwolves', 'Oklahoma City Thunder', 'Portland Trailblazers', 'Utah Jazz'],
+        'Pacific': ['Golden State Warriors', 'Los Angeles Clippers', 'Los Angeles Lakers', 'Phoenix Suns', 'Sacramento Kings'],
+        'Southwest': ['Dallas Mavericks', 'Houston Rockets', 'Memphis Grizzlies', 'New Orleans Pelicans', 'San Antonio Spurs', 'San Diego Caravels']
+    } %}
+
+    {% for div_name, div_teams in divisions.items() %}
+    <div class="conference-section" style="margin-bottom: 40px;">
+        <h3 class="conference-title" style="border-radius: 8px 8px 0 0; margin-bottom: 0;">{{ div_name }} Division</h3>
+        <table class="standings-table" style="border-radius: 0 0 8px 8px; margin-top: 0;">
+            <thead>
+                <tr>
+                    <th>RK</th><th>TEAM</th><th>W</th><th>L</th><th>PCT</th><th>GB</th>
+                    <th>CONF</th><th>DIV</th><th>HOME</th><th>ROAD</th><th>L10</th><th>STRK</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% set div_standings = [] %}
+                {% for team in eastern + western %}
+                    {% if team.team in div_teams %}
+                        {% set _ = div_standings.append(team) %}
+                    {% endif %}
+                {% endfor %}
+                {% for team in div_standings|sort(attribute='wins', reverse=true) %}
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    <td>
+                        <div class="team-cell">
+                            <img src="{{ url_for('static', filename='teams/' + team.team + '.png') }}" alt="{{ team.team }}" class="team-logo">
+                            <div class="team-name-container">
+                                <a href="{{ url_for('team.team_page', team_name=team.team) }}" class="team-name">{{ team.team }}</a>
+                                {% if team.clinch %}<span class="clinch-indicator">{{ team.clinch }}</span>{% endif %}
+                            </div>
+                        </div>
+                    </td>
+                    <td><strong>{{ team.wins }}</strong></td>
+                    <td>{{ team.losses }}</td>
+                    <td>{{ "%.1f"|format(team.win_pct * 100) }}%</td>
+                    <td>{% if loop.index == 1 %}-{% else %}{% set gb_val = ((div_standings|sort(attribute='wins', reverse=true))[0].wins - team.wins + team.losses - (div_standings|sort(attribute='wins', reverse=true))[0].losses) / 2 %}{% if gb_val == gb_val|int %}{{ gb_val|int }}{% else %}{{ gb_val }}{% endif %}{% endif %}</td>
+                    <td>{{ team.conf_wins }}-{{ team.conf_losses }}</td>
+                    <td>{{ team.div_wins }}-{{ team.div_losses }}</td>
+                    <td>{{ team.home_wins }}-{{ team.home_losses }}</td>
+                    <td>{{ team.road_wins }}-{{ team.road_losses }}</td>
+                    <td>{{ team.last10_wins }}-{{ team.last10_losses }}</td>
+                    <td><span class="{% if team.streak.startswith('W') %}win-streak{% else %}loss-streak{% endif %}">{{ team.streak }}</span></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% endfor %}
+
+    <!-- legend at bottom -->
+    <div class="standings-legend">
+        <p><strong>Abbreviations:</strong></p>
+        <p><strong>PCT</strong> - Winning Percentage | <strong>GB</strong> - Games Behind | <strong>CONF</strong> - Conference Record</p>
+        <p><strong>DIV</strong> - Division Record | <strong>HOME/ROAD</strong> - Home and Away Records | <strong>L10</strong> - Last 10 Games</p>
+        <p><strong>STRK</strong> - Current Streak (W = Win, L = Loss)</p>
+
+        <div style="margin-top: 20px;">
+            <p><strong>Playoff Structure:</strong></p>
+            <div class="legend-line">
+                <div class="color-box playoff-color"></div>
+                <span>Green line: Guaranteed playoff spot (seeds 1-6)</span>
+            </div>
+            <div class="legend-line">
+                <div class="color-box playin-color"></div>
+                <span>Red line: Play-in tournament cutoff (seeds 7-10)</span>
+            </div>
+        </div>
+
+        <div class="clinch-legend">
+            <p><strong>Clinching Indicators:</strong></p>
+            <div class="clinch-grid">
+                <div class="clinch-item"><span class="indicator">x</span><span class="description">Clinched Playoff Berth</span></div>
+                <div class="clinch-item"><span class="indicator">e</span><span class="description">Clinched Eastern Conference</span></div>
+                <div class="clinch-item"><span class="indicator">w</span><span class="description">Clinched Western Conference</span></div>
+                <div class="clinch-item"><span class="indicator">a</span><span class="description">Clinched Atlantic Division</span></div>
+                <div class="clinch-item"><span class="indicator">c</span><span class="description">Clinched Central Division</span></div>
+                <div class="clinch-item"><span class="indicator">se</span><span class="description">Clinched Southeast Division</span></div>
+                <div class="clinch-item"><span class="indicator">nw</span><span class="description">Clinched Northwest Division</span></div>
+                <div class="clinch-item"><span class="indicator">p</span><span class="description">Clinched Pacific Division</span></div>
+                <div class="clinch-item"><span class="indicator">sw</span><span class="description">Clinched Southwest Division</span></div>
+                <div class="clinch-item"><span class="indicator">pi</span><span class="description">Clinched Play-In (10th seed or higher)</span></div>
+                <div class="clinch-item"><span class="indicator">o</span><span class="description">Eliminated from Playoffs</span></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="tiebreaker-info">
+        <h3>Tiebreaker Rules</h3>
+
+        <div style="margin-bottom: 20px;">
+            <strong>FOR TWO-WAY TIES:</strong>
+            <ul>
+                <li><strong>(-)</strong> Tie breaker not needed (better overall winning percentage)</li>
+                <li><strong>(1)</strong> Head-to-head won-lost percentage</li>
+                <li><strong>(2)</strong> Division leader wins tie from team not leading a division</li>
+                <li><strong>(3)</strong> Division won-lost percentage for teams in the same division</li>
+                <li><strong>(4)</strong> Conference won-lost percentage</li>
+                <li><strong>(5)</strong> W-L Percentage vs. Playoff eligible teams, own conference</li>
+                <li><strong>(6)</strong> W-L Percentage vs. Playoff eligible teams, other conference</li>
+                <li><strong>(7)</strong> Net Points, all games</li>
+            </ul>
+        </div>
+
+        <div>
+            <strong>FOR MULTI-WAY TIES:</strong>
+            <ul>
+                <li><strong>(-)</strong> Tie breaker not needed (better overall winning percentage)</li>
+                <li><strong>(1)</strong> Division leader wins tie from team not leading a division</li>
+                <li><strong>(2)</strong> Head-to-head won-lost percentage</li>
+                <li><strong>(3)</strong> Division won-lost percentage for teams in the same division</li>
+                <li><strong>(4)</strong> Conference won-lost percentage</li>
+                <li><strong>(5)</strong> W-L Percentage vs. Playoff eligible teams, own conference</li>
+                <li><strong>(6)</strong> W-L Percentage vs. Playoff eligible teams, other conference</li>
+                <li><strong>(7)</strong> Net Points, all games</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+
+<div id="playoff-view" class="view-content">
+    {% if playoff_bracket %}
+
+        {% if playoff_bracket.Finals %}
+        <div style="margin-bottom: 60px;">
+            <h3 style="text-align: center; color: #ffffff; font-size: 2.2em; margin-bottom: 30px; text-transform: uppercase; letter-spacing: 2px;">Hardwood Hoops Finals</h3>
+            <div style="max-width: 700px; margin: 0 auto; background-color: #2b2b2b; border-radius: 8px; padding: 25px; border: 2px solid #FFD700;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+
+                    <div style="flex: 1; text-align: right; padding-right: 20px;">
+                        {% if playoff_bracket.Finals.team1 != 'TBD' %}
+                        <a href="{{ url_for('team.team_page', team_name=playoff_bracket.Finals.team1) }}" style="text-decoration: none; color: #e0e0e0; display: inline-flex; align-items: center; gap: 12px;" onmouseover="this.style.color='#FFD700'" onmouseout="this.style.color='#e0e0e0'">
+                            <span style="font-size: 1.4em; font-weight: 700;">{{ playoff_bracket.Finals.team1 }}</span>
+                            <img src="{{ url_for('static', filename='teams/' + playoff_bracket.Finals.team1 + '.png') }}" style="width: 45px; height: 45px;" alt="{{ playoff_bracket.Finals.team1 }}">
+                        </a>
+                        {% else %}
+                        <div style="display: inline-flex; align-items: center; gap: 12px; color: #666;">
+                            <span style="font-size: 1.4em; font-weight: 700; font-style: italic;">TBD</span>
+                            <div style="width: 45px; height: 45px; background-color: #333; border-radius: 50%;"></div>
+                        </div>
+                        {% endif %}
+                    </div>
+
+                    <div style="padding: 0 25px; min-width: 80px; text-align: center;">
+                        {% if playoff_bracket.Finals.team1 != 'TBD' and playoff_bracket.Finals.team2 != 'TBD' %}
+                        <a href="{{ url_for('team.playoff_series', season=current_season, team1=playoff_bracket.Finals.team1, team2=playoff_bracket.Finals.team2) }}" style="text-decoration: none; color: #FFD700; font-weight: 900; font-size: 2em; transition: opacity 0.2s;" onmouseover="this.style.opacity='0.7'" onmouseout="this.style.opacity='1'">
+                            {{ playoff_bracket.Finals.team1_wins }}-{{ playoff_bracket.Finals.team2_wins }}
+                        </a>
+                        {% else %}
+                        <span style="color: #666; font-weight: 900; font-size: 2em;">0-0</span>
+                        {% endif %}
+                    </div>
+
+                    <div style="flex: 1; text-align: left; padding-left: 20px;">
+                        {% if playoff_bracket.Finals.team2 != 'TBD' %}
+                        <a href="{{ url_for('team.team_page', team_name=playoff_bracket.Finals.team2) }}" style="text-decoration: none; color: #e0e0e0; display: inline-flex; align-items: center; gap: 12px;" onmouseover="this.style.color='#FFD700'" onmouseout="this.style.color='#e0e0e0'">
+                            <img src="{{ url_for('static', filename='teams/' + playoff_bracket.Finals.team2 + '.png') }}" style="width: 45px; height: 45px;" alt="{{ playoff_bracket.Finals.team2 }}">
+                            <span style="font-size: 1.4em; font-weight: 700;">{{ playoff_bracket.Finals.team2 }}</span>
+                        </a>
+                        {% else %}
+                        <div style="display: inline-flex; align-items: center; gap: 12px; color: #666;">
+                            <div style="width: 45px; height: 45px; background-color: #333; border-radius: 50%;"></div>
+                            <span style="font-size: 1.4em; font-weight: 700; font-style: italic;">TBD</span>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                {% if playoff_bracket.Finals.winner %}
+                <div style="text-align: center; color: #FFD700; font-size: 1.3em; font-weight: 900; margin-top: 20px; padding-top: 20px; border-top: 1px solid #3a3a3a;">
+                    {{ playoff_bracket.Finals.winner }} - HH CHAMPIONS
+                </div>
+                    {% if playoff_bracket.Finals.mvp %}
+                    <div class="mvp-container">
+                        <div class="mvp-label">🏆 Finals MVP</div>
+                        <div class="mvp-name">
+                            {% if playoff_bracket.Finals.mvp.name is defined %}
+                            {{ playoff_bracket.Finals.mvp.name }}
+                            {% else %}
+                            {{ playoff_bracket.Finals.mvp }}
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% endif %}
+                {% else %}
+                <div style="text-align: center; color: #888; font-size: 1em; margin-top: 15px; padding-top: 15px; border-top: 1px solid #3a3a3a;">
+                    Best of 7 • First to 4 wins
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        {% endif %}
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; max-width: 1400px; margin: 0 auto;">
+
+            <div>
+                <h3 style="color: #ffffff; text-align: center; font-size: 1.8em; margin-bottom: 30px; text-transform: uppercase;">Eastern Conference</h3>
+                {% set east = playoff_bracket.Eastern %}
+
+                {% if east.conference_finals %}
+                <div style="margin-bottom: 35px;">
+                    <h4 style="color: #b0b0b0; font-size: 0.9em; text-transform: uppercase; margin-bottom: 15px; letter-spacing: 1px;">Conference Finals</h4>
+                    {% set s = east.conference_finals %}
+                    <div style="background-color: #2b2b2b; border-radius: 6px; padding: 15px; border: 2px solid #4CAF50;">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <div style="flex: 1; text-align: right; padding-right: 15px; display: flex; align-items: center; justify-content: flex-end; gap: 8px;">
+                                {% if s.team1 != 'TBD' %}
+                                <a href="{{ url_for('team.team_page', team_name=s.team1) }}" style="color: #e0e0e0; text-decoration: none; font-size: 1.1em; display: flex; align-items: center; gap: 8px;" onmouseover="this.style.color='#4CAF50'" onmouseout="this.style.color='#e0e0e0'">
+                                    <span>{% if s.team1_seed %}<span style="color: #888; font-size: 0.9em;">({{ s.team1_seed }}) </span>{% endif %}{{ s.team1 }}</span>
+                                    <img src="{{ url_for('static', filename='teams/' + s.team1 + '.png') }}" style="width: 28px; height: 28px; object-fit: contain;" alt="{{ s.team1 }}">
+                                </a>
+                                {% else %}
+                                <span style="color: #666; font-style: italic; font-size: 1.1em;">TBD</span>
+                                <div style="width: 28px; height: 28px; background-color: #333; border-radius: 50%;"></div>
+                                {% endif %}
+                            </div>
+                            <div style="font-weight: 900; font-size: 1.3em; color: {% if s.team1 == 'TBD' or s.team2 == 'TBD' %}#666{% else %}#4CAF50{% endif %}; min-width: 60px; text-align: center;">
+                                {% if s.team1 != 'TBD' and s.team2 != 'TBD' %}
+                                <a href="{{ url_for('team.playoff_series', season=current_season, team1=s.team1, team2=s.team2) }}" style="text-decoration: none; color: inherit; transition: opacity 0.2s;" onmouseover="this.style.opacity='0.7'" onmouseout="this.style.opacity='1'">{{ s.team1_wins }}-{{ s.team2_wins }}</a>
+                                {% else %}0-0{% endif %}
+                            </div>
+                            <div style="flex: 1; text-align: left; padding-left: 15px; display: flex; align-items: center; gap: 8px;">
+                                {% if s.team2 != 'TBD' %}
+                                <a href="{{ url_for('team.team_page', team_name=s.team2) }}" style="color: #e0e0e0; text-decoration: none; font-size: 1.1em; display: flex; align-items: center; gap: 8px;" onmouseover="this.style.color='#4CAF50'" onmouseout="this.style.color='#e0e0e0'">
+                                    <img src="{{ url_for('static', filename='teams/' + s.team2 + '.png') }}" style="width: 28px; height: 28px; object-fit: contain;" alt="{{ s.team2 }}">
+                                    <span>{{ s.team2 }}{% if s.team2_seed %} <span style="color: #888; font-size: 0.9em;">({{ s.team2_seed }})</span>{% endif %}</span>
+                                </a>
+                                {% else %}
+                                <div style="width: 28px; height: 28px; background-color: #333; border-radius: 50%;"></div>
+                                <span style="color: #666; font-style: italic; font-size: 1.1em;">TBD</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+
+                {% if east.conference_semis %}
+                <div style="margin-bottom: 35px;">
+                    <h4 style="color: #b0b0b0; font-size: 0.9em; text-transform: uppercase; margin-bottom: 15px; letter-spacing: 1px;">Conference Semifinals</h4>
+                    {% for key in ['upper', 'lower'] %}
+                        {% set s = east.conference_semis.get(key) %}
+                        {% if s %}
+                        <div style="background-color: #2b2b2b; border-radius: 6px; padding: 12px; margin-bottom: 12px;">
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <div style="flex: 1; text-align: right; padding-right: 12px; display: flex; align-items: center; justify-content: flex-end; gap: 8px;">
+                                    {% if s.team1 != 'TBD' %}
+                                    <a href="{{ url_for('team.team_page', team_name=s.team1) }}" style="color: #e0e0e0; text-decoration: none; display: flex; align-items: center; gap: 8px;" onmouseover="this.style.color='#4CAF50'" onmouseout="this.style.color='#e0e0e0'">
+                                        <span>{% if s.team1_seed %}<span style="color: #888; font-size: 0.9em;">({{ s.team1_seed }}) </span>{% endif %}{{ s.team1 }}</span>
+                                        <img src="{{ url_for('static', filename='teams/' + s.team1 + '.png') }}" style="width: 28px; height: 28px; object-fit: contain;" alt="{{ s.team1 }}">
+                                    </a>
+                                    {% else %}<span style="color: #666; font-style: italic;">TBD</span>{% endif %}
+                                </div>
+                                <div style="font-weight: 700; color: {% if s.team1 == 'TBD' or s.team2 == 'TBD' %}#666{% else %}#4CAF50{% endif %}; min-width: 50px; text-align: center;">
+                                    {% if s.team1 != 'TBD' and s.team2 != 'TBD' %}
+                                    <a href="{{ url_for('team.playoff_series', season=current_season, team1=s.team1, team2=s.team2) }}" style="text-decoration: none; color: #4CAF50; transition: opacity 0.2s;" onmouseover="this.style.opacity='0.7'" onmouseout="this.style.opacity='1'">{{ s.team1_wins }}-{{ s.team2_wins }}</a>
+                                    {% else %}vs{% endif %}
+                                </div>
+                                <div style="flex: 1; text-align: left; padding-left: 12px; display: flex; align-items: center; gap: 8px;">
+                                    {% if s.team2 != 'TBD' %}
+                                    <a href="{{ url_for('team.team_page', team_name=s.team2) }}" style="color: #e0e0e0; text-decoration: none; display: flex; align-items: center; gap: 8px;" onmouseover="this.style.color='#4CAF50'" onmouseout="this.style.color='#e0e0e0'">
+                                        <img src="{{ url_for('static', filename='teams/' + s.team2 + '.png') }}" style="width: 28px; height: 28px; object-fit: contain;" alt="{{ s.team2 }}">
+                                        <span>{{ s.team2 }}{% if s.team2_seed %} <span style="color: #888; font-size: 0.9em;">({{ s.team2_seed }})</span>{% endif %}</span>
+                                    </a>
+                                    {% else %}<span style="color: #666; font-style: italic;">TBD</span>{% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                {% endif %}
+
+                {% if east.first_round %}
+                <div style="margin-bottom: 35px;">
+                    <h4 style="color: #b0b0b0; font-size: 0.9em; text-transform: uppercase; margin-bottom: 15px; letter-spacing: 1px;">First Round</h4>
+                    {% for matchup in ['1v8', '4v5', '3v6', '2v7'] %}
+                        {% set s = east.first_round.get(matchup) %}
+                        {% if s %}
+                        <div style="background-color: #2b2b2b; border-radius: 6px; padding: 10px; margin-bottom: 10px;">
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <div style="flex: 1; text-align: right; padding-right: 10px; display: flex; align-items: center; justify-content: flex-end; gap: 8px;">
+                                    {% if s.team1 != 'TBD' %}
+                                    <a href="{{ url_for('team.team_page', team_name=s.team1) }}" style="color: #e0e0e0; text-decoration: none; font-size: 0.95em; display: flex; align-items: center; gap: 8px;" onmouseover="this.style.color='#4CAF50'" onmouseout="this.style.color='#e0e0e0'">
+                                        <span>{% if s.team1_seed %}<span style="color: #888; font-size: 0.9em;">({{ s.team1_seed }}) </span>{% endif %}{{ s.team1 }}</span>
+                                        <img src="{{ url_for('static', filename='teams/' + s.team1 + '.png') }}" style="width: 28px; height: 28px; object-fit: contain;" alt="{{ s.team1 }}">
+                                    </a>
+                                    {% else %}
+                                    <span style="color: #666; font-style: italic; font-size: 0.95em;">TBD</span>
+                                    <div style="width: 28px; height: 28px; background-color: #333; border-radius: 50%;"></div>
+                                    {% endif %}
+                                </div>
+                                <div style="font-weight: 700; color: {% if s.team1 == 'TBD' or s.team2 == 'TBD' %}#666{% else %}#4CAF50{% endif %}; min-width: 45px; text-align: center; font-size: 0.95em;">
+                                    {% if s.team1 != 'TBD' and s.team2 != 'TBD' %}<a href="{{ url_for('team.playoff_series', season=current_season, team1=s.team1, team2=s.team2) }}" style="text-decoration: none; color: #4CAF50; transition: opacity 0.2s;" onmouseover="this.style.opacity='0.7'" onmouseout="this.style.opacity='1'">{{ s.team1_wins }}-{{ s.team2_wins }}</a>{% else %}vs{% endif %}
+                                </div>
+                                <div style="flex: 1; text-align: left; padding-left: 10px; display: flex; align-items: center; gap: 8px;">
+                                    {% if s.team2 != 'TBD' %}
+                                    <a href="{{ url_for('team.team_page', team_name=s.team2) }}" style="color: #e0e0e0; text-decoration: none; font-size: 0.95em; display: flex; align-items: center; gap: 8px;" onmouseover="this.style.color='#4CAF50'" onmouseout="this.style.color='#e0e0e0'">
+                                        <img src="{{ url_for('static', filename='teams/' + s.team2 + '.png') }}" style="width: 28px; height: 28px; object-fit: contain;" alt="{{ s.team2 }}">
+                                        <span>{{ s.team2 }}{% if s.team2_seed %} <span style="color: #888; font-size: 0.9em;">({{ s.team2_seed }})</span>{% endif %}</span>
+                                    </a>
+                                    {% else %}
+                                    <div style="width: 28px; height: 28px; background-color: #333; border-radius: 50%;"></div>
+                                    <span style="color: #666; font-style: italic; font-size: 0.95em;">TBD</span>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                {% endif %}
+
+                {% if east.play_in %}
+                <div>
+                   <h4 style="color: #b0b0b0; font-size: 0.9em; text-transform: uppercase; margin-bottom: 15px; letter-spacing: 1px;">Play-In Tournament</h4>
+                   {% for game_key in ['winner_9v10_vs_loser_7v8', '9v10', '7v8'] %}
+                       {% set s = east.play_in.get(game_key) %}
+                       {% if s %}
+                           {% if game_key != 'winner_9v10_vs_loser_7v8' or (east.play_in.get('9v10').winner and east.play_in.get('7v8').winner) %}
+                           <div style="background-color: #2b2b2b; border-radius: 6px; padding: 10px; margin-bottom: 10px;">
+                                <div style="display: flex; justify-content: space-between; align-items: center;">
+                                    <div style="flex: 1; text-align: right; padding-right: 10px; display: flex; align-items: center; justify-content: flex-end; gap: 8px;">
+                                        {% if s.team1 != 'TBD' %}
+                                        <a href="{{ url_for('team.team_page', team_name=s.team1) }}" style="color: #e0e0e0; text-decoration: none; font-size: 0.9em; display: flex; align-items: center; gap: 8px;"><span>{% if s.team1_seed %}<span style="color: #888;">({{ s.team1_seed }}) </span>{% endif %}{{ s.team1 }}</span><img src="{{ url_for('static', filename='teams/' + s.team1 + '.png') }}" style="width: 28px; height: 28px; object-fit: contain;"></a>
+                                        {% else %}<span style="color: #666; font-style: italic;">TBD</span><div style="width: 28px; height: 28px; background-color: #333; border-radius: 50%;"></div>{% endif %}
+                                    </div>
+                                    <div style="font-weight: 700; color: {% if s.winner %}#4CAF50{% else %}#e0e0e0{% endif %}; min-width: 40px; text-align: center; font-size: 0.9em;">
+                                        {% if s.winner and s.team1 != 'TBD' and s.team2 != 'TBD' %}{{ s.team1_wins }}-{{ s.team2_wins }}{% else %}vs{% endif %}
+                                    </div>
+                                    <div style="flex: 1; text-align: left; padding-left: 10px; display: flex; align-items: center; gap: 8px;">
+                                        {% if s.team2 != 'TBD' %}
+                                        <a href="{{ url_for('team.team_page', team_name=s.team2) }}" style="color: #e0e0e0; text-decoration: none; font-size: 0.9em; display: flex; align-items: center; gap: 8px;"><img src="{{ url_for('static', filename='teams/' + s.team2 + '.png') }}" style="width: 28px; height: 28px; object-fit: contain;"><span>{{ s.team2 }}{% if s.team2_seed %} <span style="color: #888;">({{ s.team2_seed }})</span>{% endif %}</span></a>
+                                        {% else %}<div style="width: 28px; height: 28px; background-color: #333; border-radius: 50%;"></div><span style="color: #666; font-style: italic;">TBD</span>{% endif %}
+                                    </div>
+                                </div>
+                           </div>
+                           {% endif %}
+                       {% endif %}
+                   {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+
+            <div>
+                <h3 style="color: #ffffff; text-align: center; font-size: 1.8em; margin-bottom: 30px; text-transform: uppercase;">Western Conference</h3>
+                {% set west = playoff_bracket.Western %}
+
+                {% if west.conference_finals %}
+                <div style="margin-bottom: 35px;">
+                    <h4 style="color: #b0b0b0; font-size: 0.9em; text-transform: uppercase; margin-bottom: 15px; letter-spacing: 1px;">Conference Finals</h4>
+                    {% set s = west.conference_finals %}
+                    <div style="background-color: #2b2b2b; border-radius: 6px; padding: 15px; border: 2px solid #4CAF50;">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <div style="flex: 1; text-align: right; padding-right: 15px; display: flex; align-items: center; justify-content: flex-end; gap: 8px;">
+                                {% if s.team1 != 'TBD' %}
+                                <a href="{{ url_for('team.team_page', team_name=s.team1) }}" style="color: #e0e0e0; text-decoration: none; font-size: 1.1em; display: flex; align-items: center; gap: 8px;" onmouseover="this.style.color='#4CAF50'" onmouseout="this.style.color='#e0e0e0'">
+                                    <span>{% if s.team1_seed %}<span style="color: #888; font-size: 0.9em;">({{ s.team1_seed }}) </span>{% endif %}{{ s.team1 }}</span>
+                                    <img src="{{ url_for('static', filename='teams/' + s.team1 + '.png') }}" style="width: 28px; height: 28px; object-fit: contain;" alt="{{ s.team1 }}">
+                                </a>
+                                {% else %}
+                                <span style="color: #666; font-style: italic; font-size: 1.1em;">TBD</span>
+                                <div style="width: 28px; height: 28px; background-color: #333; border-radius: 50%;"></div>
+                                {% endif %}
+                            </div>
+                            <div style="font-weight: 900; font-size: 1.3em; color: {% if s.team1 == 'TBD' or s.team2 == 'TBD' %}#666{% else %}#4CAF50{% endif %}; min-width: 60px; text-align: center;">
+                                {% if s.team1 != 'TBD' and s.team2 != 'TBD' %}
+                                <a href="{{ url_for('team.playoff_series', season=current_season, team1=s.team1, team2=s.team2) }}" style="text-decoration: none; color: inherit; transition: opacity 0.2s;" onmouseover="this.style.opacity='0.7'" onmouseout="this.style.opacity='1'">{{ s.team1_wins }}-{{ s.team2_wins }}</a>
+                                {% else %}0-0{% endif %}
+                            </div>
+                            <div style="flex: 1; text-align: left; padding-left: 15px; display: flex; align-items: center; gap: 8px;">
+                                {% if s.team2 != 'TBD' %}
+                                <a href="{{ url_for('team.team_page', team_name=s.team2) }}" style="color: #e0e0e0; text-decoration: none; font-size: 1.1em; display: flex; align-items: center; gap: 8px;" onmouseover="this.style.color='#4CAF50'" onmouseout="this.style.color='#e0e0e0'">
+                                    <img src="{{ url_for('static', filename='teams/' + s.team2 + '.png') }}" style="width: 28px; height: 28px; object-fit: contain;" alt="{{ s.team2 }}">
+                                    <span>{{ s.team2 }}{% if s.team2_seed %} <span style="color: #888; font-size: 0.9em;">({{ s.team2_seed }})</span>{% endif %}</span>
+                                </a>
+                                {% else %}
+                                <div style="width: 28px; height: 28px; background-color: #333; border-radius: 50%;"></div>
+                                <span style="color: #666; font-style: italic; font-size: 1.1em;">TBD</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+
+                {% if west.conference_semis %}
+                <div style="margin-bottom: 35px;">
+                    <h4 style="color: #b0b0b0; font-size: 0.9em; text-transform: uppercase; margin-bottom: 15px; letter-spacing: 1px;">Conference Semifinals</h4>
+                    {% for key in ['upper', 'lower'] %}
+                        {% set s = west.conference_semis.get(key) %}
+                        {% if s %}
+                        <div style="background-color: #2b2b2b; border-radius: 6px; padding: 12px; margin-bottom: 12px;">
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <div style="flex: 1; text-align: right; padding-right: 12px; display: flex; align-items: center; justify-content: flex-end; gap: 8px;">
+                                    {% if s.team1 != 'TBD' %}
+                                    <a href="{{ url_for('team.team_page', team_name=s.team1) }}" style="color: #e0e0e0; text-decoration: none; display: flex; align-items: center; gap: 8px;" onmouseover="this.style.color='#4CAF50'" onmouseout="this.style.color='#e0e0e0'">
+                                        <span>{% if s.team1_seed %}<span style="color: #888; font-size: 0.9em;">({{ s.team1_seed }}) </span>{% endif %}{{ s.team1 }}</span>
+                                        <img src="{{ url_for('static', filename='teams/' + s.team1 + '.png') }}" style="width: 28px; height: 28px; object-fit: contain;" alt="{{ s.team1 }}">
+                                    </a>
+                                    {% else %}<span style="color: #666; font-style: italic;">TBD</span>{% endif %}
+                                </div>
+                                <div style="font-weight: 700; color: {% if s.team1 == 'TBD' or s.team2 == 'TBD' %}#666{% else %}#4CAF50{% endif %}; min-width: 50px; text-align: center;">
+                                    {% if s.team1 != 'TBD' and s.team2 != 'TBD' %}
+                                    <a href="{{ url_for('team.playoff_series', season=current_season, team1=s.team1, team2=s.team2) }}" style="text-decoration: none; color: #4CAF50; transition: opacity 0.2s;" onmouseover="this.style.opacity='0.7'" onmouseout="this.style.opacity='1'">{{ s.team1_wins }}-{{ s.team2_wins }}</a>
+                                    {% else %}vs{% endif %}
+                                </div>
+                                <div style="flex: 1; text-align: left; padding-left: 12px; display: flex; align-items: center; gap: 8px;">
+                                    {% if s.team2 != 'TBD' %}
+                                    <a href="{{ url_for('team.team_page', team_name=s.team2) }}" style="color: #e0e0e0; text-decoration: none; display: flex; align-items: center; gap: 8px;" onmouseover="this.style.color='#4CAF50'" onmouseout="this.style.color='#e0e0e0'">
+                                        <img src="{{ url_for('static', filename='teams/' + s.team2 + '.png') }}" style="width: 28px; height: 28px; object-fit: contain;" alt="{{ s.team2 }}">
+                                        <span>{{ s.team2 }}{% if s.team2_seed %} <span style="color: #888; font-size: 0.9em;">({{ s.team2_seed }})</span>{% endif %}</span>
+                                    </a>
+                                    {% else %}<span style="color: #666; font-style: italic;">TBD</span>{% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                {% endif %}
+
+                {% if west.first_round %}
+                <div style="margin-bottom: 35px;">
+                    <h4 style="color: #b0b0b0; font-size: 0.9em; text-transform: uppercase; margin-bottom: 15px; letter-spacing: 1px;">First Round</h4>
+                    {% for matchup in ['1v8', '4v5', '3v6', '2v7'] %}
+                        {% set s = west.first_round.get(matchup) %}
+                        {% if s %}
+                        <div style="background-color: #2b2b2b; border-radius: 6px; padding: 10px; margin-bottom: 10px;">
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <div style="flex: 1; text-align: right; padding-right: 10px; display: flex; align-items: center; justify-content: flex-end; gap: 8px;">
+                                    {% if s.team1 != 'TBD' %}
+                                    <a href="{{ url_for('team.team_page', team_name=s.team1) }}" style="color: #e0e0e0; text-decoration: none; font-size: 0.95em; display: flex; align-items: center; gap: 8px;" onmouseover="this.style.color='#4CAF50'" onmouseout="this.style.color='#e0e0e0'">
+                                        <span>{% if s.team1_seed %}<span style="color: #888; font-size: 0.9em;">({{ s.team1_seed }}) </span>{% endif %}{{ s.team1 }}</span>
+                                        <img src="{{ url_for('static', filename='teams/' + s.team1 + '.png') }}" style="width: 28px; height: 28px; object-fit: contain;" alt="{{ s.team1 }}">
+                                    </a>
+                                    {% else %}<span style="color: #666; font-style: italic; font-size: 0.95em;">TBD</span><div style="width: 28px; height: 28px; background-color: #333; border-radius: 50%;"></div>{% endif %}
+                                </div>
+                                <div style="font-weight: 700; color: {% if s.team1 == 'TBD' or s.team2 == 'TBD' %}#666{% else %}#4CAF50{% endif %}; min-width: 45px; text-align: center; font-size: 0.95em;">
+                                    {% if s.team1 != 'TBD' and s.team2 != 'TBD' %}<a href="{{ url_for('team.playoff_series', season=current_season, team1=s.team1, team2=s.team2) }}" style="text-decoration: none; color: #4CAF50; transition: opacity 0.2s;" onmouseover="this.style.opacity='0.7'" onmouseout="this.style.opacity='1'">{{ s.team1_wins }}-{{ s.team2_wins }}</a>{% else %}vs{% endif %}
+                                </div>
+                                <div style="flex: 1; text-align: left; padding-left: 10px; display: flex; align-items: center; gap: 8px;">
+                                    {% if s.team2 != 'TBD' %}
+                                    <a href="{{ url_for('team.team_page', team_name=s.team2) }}" style="color: #e0e0e0; text-decoration: none; font-size: 0.95em; display: flex; align-items: center; gap: 8px;" onmouseover="this.style.color='#4CAF50'" onmouseout="this.style.color='#e0e0e0'">
+                                        <img src="{{ url_for('static', filename='teams/' + s.team2 + '.png') }}" style="width: 28px; height: 28px; object-fit: contain;" alt="{{ s.team2 }}">
+                                        <span>{{ s.team2 }}{% if s.team2_seed %} <span style="color: #888; font-size: 0.9em;">({{ s.team2_seed }})</span>{% endif %}</span>
+                                    </a>
+                                    {% else %}<div style="width: 28px; height: 28px; background-color: #333; border-radius: 50%;"></div><span style="color: #666; font-style: italic; font-size: 0.95em;">TBD</span>{% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                {% endif %}
+
+                {% if west.play_in %}
+                <div>
+                    <h4 style="color: #b0b0b0; font-size: 0.9em; text-transform: uppercase; margin-bottom: 15px; letter-spacing: 1px;">Play-In Tournament</h4>
+                    {% for game_key in ['winner_9v10_vs_loser_7v8', '9v10', '7v8'] %}
+                        {% set s = west.play_in.get(game_key) %}
+                        {% if s %}
+                            {% if game_key != 'winner_9v10_vs_loser_7v8' or (west.play_in.get('9v10').winner and west.play_in.get('7v8').winner) %}
+                            <div style="background-color: #2b2b2b; border-radius: 6px; padding: 10px; margin-bottom: 10px;">
+                                <div style="display: flex; justify-content: space-between; align-items: center;">
+                                    <div style="flex: 1; text-align: right; padding-right: 10px; display: flex; align-items: center; justify-content: flex-end; gap: 8px;">
+                                        {% if s.team1 != 'TBD' %}
+                                        <a href="{{ url_for('team.team_page', team_name=s.team1) }}" style="color: #e0e0e0; text-decoration: none; font-size: 0.9em; display: flex; align-items: center; gap: 8px;"><span>{% if s.team1_seed %}<span style="color: #888;">({{ s.team1_seed }}) </span>{% endif %}{{ s.team1 }}</span><img src="{{ url_for('static', filename='teams/' + s.team1 + '.png') }}" style="width: 28px; height: 28px; object-fit: contain;"></a>
+                                        {% else %}<span style="color: #666; font-style: italic;">TBD</span><div style="width: 28px; height: 28px; background-color: #333; border-radius: 50%;"></div>{% endif %}
+                                    </div>
+                                    <div style="font-weight: 700; color: {% if s.winner %}#4CAF50{% else %}#e0e0e0{% endif %}; min-width: 40px; text-align: center; font-size: 0.9em;">
+                                        {% if s.winner and s.team1 != 'TBD' and s.team2 != 'TBD' %}{{ s.team1_wins }}-{{ s.team2_wins }}{% else %}vs{% endif %}
+                                    </div>
+                                    <div style="flex: 1; text-align: left; padding-left: 10px; display: flex; align-items: center; gap: 8px;">
+                                        {% if s.team2 != 'TBD' %}
+                                        <a href="{{ url_for('team.team_page', team_name=s.team2) }}" style="color: #e0e0e0; text-decoration: none; font-size: 0.9em; display: flex; align-items: center; gap: 8px;"><img src="{{ url_for('static', filename='teams/' + s.team2 + '.png') }}" style="width: 28px; height: 28px; object-fit: contain;"><span>{{ s.team2 }}{% if s.team2_seed %} <span style="color: #888;">({{ s.team2_seed }})</span>{% endif %}</span></a>
+                                        {% else %}<div style="width: 28px; height: 28px; background-color: #333; border-radius: 50%;"></div><span style="color: #666; font-style: italic;">TBD</span>{% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+
+        </div>
+
+    {% else %}
+        <p style="text-align: center; color: #888; padding: 60px; font-size: 1.2em;">No playoff data available for this season</p>
+    {% endif %}
+</div>
+
+
+<script>
+function switchView(view) {
+    document.querySelectorAll('.view-content').forEach(content => {
+        content.classList.remove('active');
+    });
+    document.querySelectorAll('.tab-button').forEach(button => {
+        button.classList.remove('active');
+    });
+    document.getElementById(view + '-view').classList.add('active');
+    event.target.classList.add('active');
+}
+</script>
+
+{% endblock %}

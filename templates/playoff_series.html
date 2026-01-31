@@ -1,0 +1,404 @@
+{% extends "base.html" %}
+
+{% block title %}{{ series.team1 }} vs {{ series.team2 }} - {{ season }} Playoffs{% endblock %}
+
+{% block extra_css %}
+<style>
+    .content {
+        padding: 0 !important;
+        border-radius: 0 !important;
+        background-color: #1a1a1a !important;
+        box-shadow: none !important;
+    }
+    
+    .content-inner {
+        padding: 40px 30px;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+    
+    /* --- Series Header Styles --- */
+    .series-header {
+        text-align: center;
+        margin-bottom: 40px;
+        padding: 30px;
+        background-color: #2b2b2b;
+        border-radius: 8px;
+        border: 2px solid #3a3a3a;
+    }
+    
+    .series-title {
+        color: #ffffff;
+        font-size: 2em;
+        font-weight: 900;
+        text-transform: uppercase;
+        margin-bottom: 20px;
+    }
+    
+    .series-score {
+        display: flex;
+        justify-content: space-between; /* Changed from center to space-between for even distribution */
+        align-items: center;
+        max-width: 900px; /* Constrain width to keep teams from being too far apart */
+        margin: 20px auto 0 auto; /* Center the container */
+    }
+    
+    .team-block {
+        text-align: center;
+        flex: 1;       /* Forces equal width */
+        flex-basis: 0; /* Ignores content width (like long names) */
+        padding: 0 10px;
+    }
+    
+    .team-logo-large {
+        width: 80px;
+        height: 80px;
+        object-fit: contain;
+        margin-bottom: 15px;
+    }
+    
+    .team-name-large {
+        color: #e0e0e0;
+        font-size: 1.5em;
+        font-weight: 700;
+        display: block;
+        margin-bottom: 5px;
+    }
+    
+    .team-seed {
+        color: #888;
+        font-size: 1.1em;
+    }
+    
+    .score-display {
+        font-size: 3em;
+        font-weight: 900;
+        color: #4CAF50;
+        padding: 0 20px;
+        white-space: nowrap; /* Prevents score from breaking lines */
+    }
+    
+    .series-status {
+        margin-top: 20px;
+        padding: 15px;
+        background-color: rgba(76, 175, 80, 0.1);
+        border-radius: 5px;
+        color: #4CAF50;
+        font-size: 1.2em;
+        font-weight: 700;
+    }
+    
+    /* --- Games List Styles --- */
+    .games-list {
+        background-color: #2b2b2b;
+        border-radius: 8px;
+        padding: 25px;
+        border: 2px solid #3a3a3a;
+    }
+    
+    .games-list h3 {
+        color: #ffffff;
+        font-size: 1.5em;
+        font-weight: 900;
+        text-transform: uppercase;
+        margin-bottom: 25px;
+        border-bottom: 2px solid #3a3a3a;
+        padding-bottom: 15px;
+    }
+    
+    .game-item {
+        background-color: #1f1f1f;
+        border-radius: 6px;
+        padding: 20px;
+        margin-bottom: 15px;
+        border: 1px solid #3a3a3a;
+        transition: all 0.2s;
+    }
+    
+    .game-item:hover {
+        background-color: #252525;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    }
+    
+    .game-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 15px;
+    }
+    
+    .game-number {
+        color: #888;
+        font-size: 0.9em;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+    
+    .game-date {
+        color: #b0b0b0;
+        font-size: 0.9em;
+    }
+    
+    .game-matchup {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 20px;
+    }
+    
+    .game-team {
+        flex: 1;        /* Ensure equal width for game rows too */
+        flex-basis: 0;  /* Ignore content length */
+        display: flex;
+        flex-direction: column;
+        color: #e0e0e0;
+    }
+    
+    .team-identity {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        margin-bottom: 10px;
+    }
+
+    .game-team.winner .team-identity {
+        font-weight: 700;
+        color: #ffffff;
+    }
+    
+    .game-team-logo {
+        width: 35px;
+        height: 35px;
+        object-fit: contain;
+    }
+    
+    .game-score-block {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .game-score {
+        font-size: 2em;
+        font-weight: 800;
+        min-width: 50px;
+        text-align: center;
+    }
+    
+    .game-score.winner-score {
+        color: #4CAF50;
+    }
+    
+    .game-score.loser-score {
+        color: #888;
+    }
+
+    /* Central MVP Container */
+    .game-center-result {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-width: 180px;
+    }
+
+    .team-leaders {
+        font-size: 0.8em;
+        color: #999;
+        line-height: 1.4;
+    }
+
+    .leader-stat {
+        display: block;
+        white-space: nowrap;
+    }
+
+    .leader-name {
+        color: #ddd;
+        font-weight: 500;
+    }
+    
+    .view-boxscore {
+        display: inline-block;
+        margin-top: 15px;
+        padding: 8px 16px;
+        background-color: #3a3a3a;
+        color: #e0e0e0;
+        text-decoration: none;
+        border-radius: 5px;
+        font-size: 0.9em;
+        transition: all 0.2s;
+    }
+    
+    .view-boxscore:hover {
+        background-color: #4a4a4a;
+        transform: translateX(5px);
+    }
+
+    .mvp-label {
+        font-size: 0.8em;
+        font-weight: 900;
+        color: #ffb300;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        margin-bottom: 3px;
+    }
+
+    .mvp-name {
+        font-size: 1.1em;
+        color: #ffffff;
+        font-weight: 800;
+    }
+
+    /* --- Back Arrow Button Styles --- */
+    .back-arrow-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 40px;
+        margin-bottom: 20px;
+    }
+
+    .back-arrow-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background-color: #2b2b2b;
+        border: 2px solid #3a3a3a;
+        color: #ffffff;
+        transition: all 0.2s ease;
+        cursor: pointer;
+        text-decoration: none;
+    }
+
+    .back-arrow-btn:hover {
+        background-color: #ffffff;
+        color: #1a1a1a;
+        border-color: #ffffff;
+        transform: translateY(-2px);
+    }
+
+    .back-arrow-icon {
+        width: 24px;
+        height: 24px;
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 2;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="content-inner">
+    
+    <div class="series-header">
+        <div class="series-title">{{ season }} Playoffs</div>
+        
+        <div class="series-score">
+            <div class="team-block">
+                <img src="{{ url_for('static', filename='teams/' + series.team1 + '.png') }}" alt="{{ series.team1 }}" class="team-logo-large">
+                <span class="team-name-large">{{ series.team1 }}</span>
+                {% if series.team1_seed %}<span class="team-seed">Seed #{{ series.team1_seed }}</span>{% endif %}
+            </div>
+            
+            <div class="score-display">
+                {{ series.team1_wins }} - {{ series.team2_wins }}
+            </div>
+            
+            <div class="team-block">
+                <img src="{{ url_for('static', filename='teams/' + series.team2 + '.png') }}" alt="{{ series.team2 }}" class="team-logo-large">
+                <span class="team-name-large">{{ series.team2 }}</span>
+                {% if series.team2_seed %}<span class="team-seed">Seed #{{ series.team2_seed }}</span>{% endif %}
+            </div>
+        </div>
+        
+        {% if series.winner %}
+        <div class="series-status">
+            {{ series.winner }} wins the series {{ series.team1_wins }}-{{ series.team2_wins }}
+        </div>
+        {% elif series.games|length > 0 %}
+        <div class="series-status">
+            Series tied {{ series.team1_wins }}-{{ series.team2_wins }}
+        </div>
+        {% endif %}
+    </div>
+    
+    <div class="games-list">
+        <h3>Games</h3>
+        
+        {% if series.games %}
+            {% for game in series.games|reverse %}
+            <div class="game-item">
+                <div class="game-header">
+                    <span class="game-number">Game {{ series.games|length - loop.index0 }}</span>
+                    <span class="game-date">{{ game.date }}</span>
+                </div>
+                
+                <div class="game-matchup">
+                    <div class="game-team {% if game.away == game.winner %}winner{% endif %}">
+                        <div class="team-identity">
+                            <img src="{{ url_for('static', filename='teams/' + game.away + '.png') }}" alt="{{ game.away }}" class="game-team-logo">
+                            <span>{{ game.away }}</span>
+                        </div>
+                        <div class="team-leaders">
+                            <span class="leader-stat">Points Leader: <span class="leader-name">{{ game.away_leaders.points.player }}</span> - {{ game.away_leaders.points.value }}</span>
+                            <span class="leader-stat">Rebounds Leader: <span class="leader-name">{{ game.away_leaders.rebounds.player }}</span> - {{ game.away_leaders.rebounds.value }}</span>
+                            <span class="leader-stat">Assists Leader: <span class="leader-name">{{ game.away_leaders.assists.player }}</span> - {{ game.away_leaders.assists.value }}</span>
+                        </div>
+                    </div>
+    
+                    <div class="game-center-result">
+                        <div class="game-score-block">
+                            <span class="game-score {% if game.away == game.winner %}winner-score{% else %}loser-score{% endif %}">{{ game.away_score }}</span>
+                            <span style="color: #666; margin: 0 10px; font-size: 1.2em;">-</span>
+                            <span class="game-score {% if game.home == game.winner %}winner-score{% else %}loser-score{% endif %}">{{ game.home_score }}</span>
+                        </div>
+        
+                        {% if game.mvp %}
+                        <div style="margin-top: 10px; text-align: center;">
+                            <div class="mvp-label">🏆 Game MVP</div>
+                            <div class="mvp-name">{{ game.mvp.name }}</div>
+                        </div>
+                        {% endif %}
+                    </div>
+    
+                    <div class="game-team {% if game.home == game.winner %}winner{% endif %}" style="align-items: flex-end;">
+                        <div class="team-identity" style="justify-content: flex-end;">
+                            <span>{{ game.home }}</span>
+                            <img src="{{ url_for('static', filename='teams/' + game.home + '.png') }}" alt="{{ game.home }}" class="game-team-logo">
+                        </div>
+                        <div class="team-leaders" style="text-align: right;">
+                            <span class="leader-stat"><span class="leader-name">{{ game.home_leaders.points.player }}</span> - {{ game.home_leaders.points.value }} :Points Leader</span>
+                            <span class="leader-stat"><span class="leader-name">{{ game.home_leaders.rebounds.player }}</span> - {{ game.home_leaders.rebounds.value }} :Rebounds Leader</span>
+                            <span class="leader-stat"><span class="leader-name">{{ game.home_leaders.assists.player }}</span> - {{ game.home_leaders.assists.value }} :Assists Leader</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <a href="{{ url_for('team.game_boxscore', game_id=game.game_id, team_name=game.home) }}" class="view-boxscore">
+                    View Box Score →
+                </a>
+            </div>
+            {% endfor %}
+        {% else %}
+            <p style="color: #888; text-align: center; padding: 40px;">No games played yet in this series</p>
+        {% endif %}
+    </div>
+    
+    <div class="back-arrow-container">
+        <a href="{{ url_for('team.league_standings', season=season) }}" class="back-arrow-btn" aria-label="Back to Playoff Bracket">
+            <svg class="back-arrow-icon" viewBox="0 0 24 24">
+                <line x1="19" y1="12" x2="5" y2="12"></line>
+                <polyline points="12 19 5 12 12 5"></polyline>
+            </svg>
+        </a>
+    </div>
+    
+</div>
+{% endblock %}

@@ -1,0 +1,707 @@
+{% extends "base.html" %}
+
+{# contract color logic (same as finances.html) #}
+{% macro get_color_class(ctc) %}
+    {% set code = ctc|default(0)|float|int %}
+
+    {% if code == 1 %}
+        contract-red
+    {% elif code == 2 %}
+        contract-blue
+    {% elif code == 3 %}
+        contract-green
+    {% else %}
+        contract-active
+    {% endif %}
+{% endmacro %}
+
+{# format salary as $X,XXX,XXX #}
+{% macro format_salary(amount) %}
+    {%- if amount %}${{ "{:,.0f}".format(amount) }}{% endif -%}
+{% endmacro %}
+
+{% block title %}{{ player_name }} - Stats{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* dark theme base */
+    .content {
+        background-color: #1a1a1a !important;
+        padding: 30px;
+        border-radius: 0 !important;
+    }
+
+    h2 { color: #ffffff; border-bottom-color: #3a3a3a; }
+
+    /* player header */
+    .player-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 25px;
+        background-color: #2b2b2b;
+        padding: 20px;
+        border: 1px solid #3a3a3a;
+        margin-bottom: 30px;
+        border-radius: 0 !important;
+        position: relative;
+    }
+
+    .player-headshot {
+        width: 150px;
+        height: 200px;
+        object-fit: cover;
+        display: block;
+        border: 1px solid #3a3a3a;
+        background-color: #1a1a1a;
+    }
+
+    .player-info-container {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .player-info-container h1 {
+        margin: 0 0 10px 0;
+        font-size: 2.5em;
+        color: #ffffff;
+        line-height: 1;
+        font-weight: bold;
+    }
+
+    /* awards grid on the right */
+    .header-awards-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+        align-content: flex-start;
+        min-width: 260px;
+    }
+
+    .award-box {
+        background: linear-gradient(180deg, #d4af37, #b8860b);
+        color: #000;
+        font-weight: bold;
+        text-transform: uppercase;
+        width: 200px;
+        height: 35px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 5px;
+        font-size: 0.75em;
+        border: 1px solid #8a6608;
+        border-radius: 4px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.4);
+        cursor: help;
+        transition: transform 0.1s;
+    }
+
+    .award-box:hover {
+        transform: translateY(-1px);
+        background: linear-gradient(180deg, #eac758, #c6920e);
+    }
+
+    .award-count { font-size: 1.1em; font-weight: 900; }
+    .award-label { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+    /* player details */
+    .player-details p {
+        margin: 4px 0;
+        color: #cccccc;
+        font-size: 0.95em;
+        line-height: 1.4;
+    }
+
+    .player-details strong { color: #ffffff; font-weight: bold; }
+    .player-details a { color: #ffffff !important; text-decoration: none; }
+    .player-details a:hover { text-decoration: underline; color: #e0e0e0 !important; }
+
+    @media (max-width: 900px) {
+        .player-header { flex-wrap: wrap; }
+        .header-awards-container {
+            width: 100%;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            margin-top: 15px;
+        }
+    }
+
+    /* layout */
+    .player-container { display: flex; gap: 20px; }
+    .main-content { flex: 1; }
+
+    .sidebar {
+        width: 250px;
+        background-color: #2b2b2b;
+        padding: 20px;
+        border-radius: 0 !important;
+        position: sticky;
+        top: 20px;
+        height: fit-content;
+        border: 1px solid #3a3a3a;
+    }
+    .sidebar h3 { color: #ffffff; margin-bottom: 15px; font-size: 1.2em; }
+    .sidebar ul { list-style: none; padding: 0; }
+    .sidebar li { margin: 8px 0; }
+    .sidebar a {
+        color: #b0b0b0;
+        text-decoration: none;
+        padding: 8px 12px;
+        display: block;
+        border-radius: 0 !important;
+        transition: background-color 0.2s;
+    }
+    .sidebar a:hover { background-color: #3a3a3a; color: #ffffff; }
+
+    /* game logs */
+    .game-log-section { display: none; margin-top: 40px; }
+    .game-log-section.active { display: block; }
+    .game-log-section th, .game-log-section td { text-align: center; }
+    .game-log-section th:nth-child(3), .game-log-section td:nth-child(3) { text-align: left; }
+
+    .career-row { background-color: #3a3a3a !important; font-weight: bold; border-top: 2px solid #4a4a4a; }
+    .career-row td { background-color: #3a3a3a !important; color: #ffffff; }
+
+    /* toggle buttons */
+    .stat-section { margin-top: 40px; }
+    .table-title { color: #ffffff; margin-bottom: 5px; font-size: 1.5em; }
+    .toggle-container { display: flex; margin-bottom: -1px; margin-left: 0; }
+    .toggle-btn {
+        border: 1px solid #3a3a3a;
+        border-bottom: none;
+        padding: 8px 20px;
+        cursor: pointer;
+        background: #2b2b2b;
+        font-size: 0.85em;
+        font-weight: bold;
+        color: #b0b0b0;
+        transition: all 0.2s;
+        border-radius: 0 !important;
+        margin-right: 0;
+    }
+    .toggle-btn:hover { background: #3a3a3a; color: #ffffff; }
+    .toggle-btn.active { background: #555; color: white; border-color: #555; }
+
+    /* tables */
+    table {
+        background-color: #2b2b2b;
+        border: 1px solid #3a3a3a;
+        border-radius: 0 !important;
+        width: 100%;
+        border-collapse: collapse;
+        border-spacing: 0;
+    }
+    th {
+        background-color: #555 !important;
+        color: white;
+        border-color: #4a4a4a;
+        padding: 10px;
+        text-align: center;
+    }
+    tbody tr { background-color: #2b2b2b; }
+    tbody tr:nth-child(even) { background-color: #323232; }
+    td {
+        background-color: inherit;
+        color: #e0e0e0;
+        border-color: #3a3a3a;
+        padding: 8px;
+        text-align: center;
+        border: 1px solid #3a3a3a;
+    }
+    th:first-child, td:first-child,
+    th:nth-child(2), td:nth-child(2) { background-color: inherit; text-align: left; }
+    tr:hover td { background-color: inherit; color: #e0e0e0 !important; }
+
+    /* career highs cards */
+    .career-highs-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 15px;
+        margin-top: 15px;
+    }
+    .career-high-card {
+        background-color: #2b2b2b;
+        border: 1px solid #3a3a3a;
+        border-radius: 0 !important;
+        padding: 15px;
+        text-align: center;
+    }
+    .career-high-stat { color: #888; font-size: 0.85em; text-transform: uppercase; margin-bottom: 5px; }
+    .career-high-value { color: #ffffff; font-size: 1.8em; font-weight: bold; }
+    .career-high-meta { color: #666; font-size: 0.75em; margin-top: 5px; }
+
+    /* contract table */
+    .contract-section { margin-top: 30px; }
+
+    .contract-section h3 {
+        color: #ffffff;
+        font-size: 1.5em;
+        margin-bottom: 15px;
+    }
+
+    .contract-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.9em;
+        background-color: #2b2b2b;
+        border: 1px solid #3a3a3a;
+    }
+
+    .contract-table th {
+        background-color: #555 !important;
+        color: white;
+        padding: 10px 15px;
+        text-align: center;
+        font-weight: normal;
+        border: 1px solid #3a3a3a;
+    }
+
+    .contract-table td {
+        background-color: #2b2b2b;
+        padding: 10px 15px;
+        text-align: center;
+        font-family: 'Consolas', 'Monaco', monospace;
+        border: 1px solid #3a3a3a;
+    }
+
+    /* contract colors */
+    .contract-table td.contract-active { color: #ffffff !important; }
+    .contract-table td.contract-red { color: #ef4444 !important; }
+    .contract-table td.contract-blue { color: #3b82f6 !important; }
+    .contract-table td.contract-green { color: #22c55e !important; }
+</style>
+{% endblock %}
+
+{% block content %}
+
+{# ordinal numbers macro (1st, 2nd, 3rd etc) #}
+{% macro ordinal(num) -%}
+    {%- set n = num | int -%}
+    {{ n }}{% if n % 10 == 1 and n % 100 != 11 %}st{% elif n % 10 == 2 and n % 100 != 12 %}nd{% elif n % 10 == 3 and n % 100 != 13 %}rd{% else %}th{% endif %}
+{%- endmacro %}
+
+{# fallback data if player not defined #}
+{% if player is not defined %}
+    {% set player = {
+        'id': '0',
+        'image_url': 'https://placehold.co/150x200?text=No+Data',
+        'position': 'G',
+        'team': 'TM',
+        'birthdate': '2000-01-01',
+        'draft': { 'year': '2000', 'round': '1', 'pick': '1' },
+        'awards_summary': {}
+    } %}
+{% endif %}
+
+<div class="player-header">
+    <img src="https://cdn.nba.com/headshots/nba/latest/1040x760/{{ player.id }}.png" alt="{{ player_name }}" class="player-headshot" onerror="this.src='https://placehold.co/150x200?text=No+Image';">
+
+    <div class="player-info-container">
+        <h1>{{ player_name }}</h1>
+
+        <div class="player-details">
+            <p>
+                <strong>Team:</strong>
+                <a href="{{ url_for('team.team_page', team_name=player.team) }}">{{ player.team }}</a>
+            </p>
+
+            <p>
+                <strong>Born:</strong>
+                <span class="birthdate-container" data-date="{{ player.birthdate }}">
+                    {{ player.birthdate if player.birthdate else 'N/A' }}
+                </span>
+            </p>
+
+            <p>
+                <strong>Draft:</strong>
+                {% if player.draft_year and player.draft_pick %}
+                    {% set round = 1 if player.draft_pick <= 30 else 2 %}
+                    {{ ordinal(player.draft_pick) }} pick ({{ ordinal(round) }} Round),
+                    <a href="#">{{ player.draft_year }} HH Draft</a>
+                {% elif player.draft and player.draft.year %}
+                    {{ ordinal(player.draft.pick) }} pick ({{ ordinal(player.draft.round) }} Round),
+                    <a href="#">{{ player.draft.year }} HH Draft</a>
+                {% else %}
+                    Undrafted
+                {% endif %}
+            </p>
+        </div>
+    </div>
+
+    {% if player.awards_summary and player.awards_summary|length > 0 %}
+    <div class="header-awards-container">
+        {% for award_name, years_list in player.awards_summary.items() %}
+            <div class="award-box" title="{{ years_list|join(', ') }}">
+                <span class="award-count">{{ years_list|length }}x</span>
+                <span class="award-label">{{ award_name }}</span>
+            </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+</div>
+
+{# contract table #}
+{% if contracts %}
+<div class="contract-section">
+    <h3 class="table-title">Contract</h3>
+    <table class="contract-table">
+        <thead>
+            <tr>
+                {% for contract in contracts %}
+                <th>{{ contract.year }}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                {% for contract in contracts %}
+                <td class="{{ get_color_class(contract.code) }}">
+                    {{ format_salary(contract.amount) }}
+                </td>
+                {% endfor %}
+            </tr>
+        </tbody>
+    </table>
+</div>
+{% endif %}
+
+{# stat table macro #}
+{% macro render_stat_table(id, title, reg_list, playoff_list, reg_career, playoff_career, type) %}
+<div id="{{ id }}-section" class="stat-section">
+    <h3 class="table-title">{{ title }}</h3>
+    <div class="toggle-container">
+        <button class="toggle-btn active" onclick="toggleTable('{{ id }}', 'reg', this)">Regular Season</button>
+        <button class="toggle-btn" onclick="toggleTable('{{ id }}', 'playoff', this)">Playoffs</button>
+    </div>
+    <table class="sortable" id="table-{{ id }}">
+        <thead>
+            <tr>
+                <th>Season</th><th>Team</th><th>G</th><th>GS</th>
+                {% if type != 'per36' %}<th>MP</th>{% endif %}
+                <th>FG</th><th>FGA</th><th>FG%</th>
+                <th>3P</th><th>3PA</th><th>3P%</th>
+                <th>2P</th><th>2PA</th><th>2P%</th>
+                <th>eFG%</th><th>FT</th><th>FTA</th><th>FT%</th><th>TS%</th>
+                <th>RB</th><th>AST</th><th>STL</th><th>BLK</th><th>TOV</th><th>PTS</th>
+            </tr>
+        </thead>
+        <tbody class="tbody-reg">
+            {% for season_data in reg_list %}
+            <tr>
+                <td>{{ season_data[type].season }}</td>
+                <td>{{ season_data[type].team }}</td>
+                <td>{{ season_data[type].g }}</td>
+                <td>{{ season_data[type].gs }}</td>
+                {% if type != 'per36' %}<td>{{ season_data[type].mp }}</td>{% endif %}
+                <td>{{ season_data[type].fg }}</td><td>{{ season_data[type].fga }}</td><td>{{ season_data[type].fg_pct }}</td>
+                <td>{{ season_data[type].tp }}</td><td>{{ season_data[type].tpa }}</td><td>{{ season_data[type].tp_pct }}</td>
+                <td>{{ season_data[type].two_p }}</td><td>{{ season_data[type].two_pa }}</td><td>{{ season_data[type].two_p_pct }}</td>
+                <td>{{ season_data[type].efg }}</td><td>{{ season_data[type].ft }}</td><td>{{ season_data[type].fta }}</td><td>{{ season_data[type].ft_pct }}</td><td>{{ season_data[type].ts }}</td>
+                <td>{{ season_data[type].rb }}</td><td>{{ season_data[type].ast }}</td><td>{{ season_data[type].stl }}</td><td>{{ season_data[type].blk }}</td><td>{{ season_data[type].tov }}</td><td>{{ season_data[type].pts }}</td>
+            </tr>
+            {% endfor %}
+            <tr class="career-row">
+                <td>{{ reg_career.season }}</td><td></td><td>{{ reg_career.g }}</td><td>{{ reg_career.gs }}</td>
+                {% if type != 'per36' %}<td>{{ reg_career.mp }}</td>{% endif %}
+                <td>{{ reg_career.fg }}</td><td>{{ reg_career.fga }}</td><td>{{ reg_career.fg_pct }}</td>
+                <td>{{ reg_career.tp }}</td><td>{{ reg_career.tpa }}</td><td>{{ reg_career.tp_pct }}</td>
+                <td>{{ reg_career.two_p }}</td><td>{{ reg_career.two_pa }}</td><td>{{ reg_career.two_p_pct }}</td>
+                <td>{{ reg_career.efg }}</td><td>{{ reg_career.ft }}</td><td>{{ reg_career.fta }}</td><td>{{ reg_career.ft_pct }}</td><td>{{ reg_career.ts }}</td>
+                <td>{{ reg_career.rb }}</td><td>{{ reg_career.ast }}</td><td>{{ reg_career.stl }}</td><td>{{ reg_career.blk }}</td><td>{{ reg_career.tov }}</td><td>{{ reg_career.pts }}</td>
+            </tr>
+        </tbody>
+        <tbody class="tbody-playoff" style="display: none;">
+            {% for season_data in playoff_list %}
+            <tr>
+                <td>{{ season_data[type].season }}</td>
+                <td>{{ season_data[type].team }}</td>
+                <td>{{ season_data[type].g }}</td>
+                <td>{{ season_data[type].gs }}</td>
+                {% if type != 'per36' %}<td>{{ season_data[type].mp }}</td>{% endif %}
+                <td>{{ season_data[type].fg }}</td><td>{{ season_data[type].fga }}</td><td>{{ season_data[type].fg_pct }}</td>
+                <td>{{ season_data[type].tp }}</td><td>{{ season_data[type].tpa }}</td><td>{{ season_data[type].tp_pct }}</td>
+                <td>{{ season_data[type].two_p }}</td><td>{{ season_data[type].two_pa }}</td><td>{{ season_data[type].two_p_pct }}</td>
+                <td>{{ season_data[type].efg }}</td><td>{{ season_data[type].ft }}</td><td>{{ season_data[type].fta }}</td><td>{{ season_data[type].ft_pct }}</td><td>{{ season_data[type].ts }}</td>
+                <td>{{ season_data[type].rb }}</td><td>{{ season_data[type].ast }}</td><td>{{ season_data[type].stl }}</td><td>{{ season_data[type].blk }}</td><td>{{ season_data[type].tov }}</td><td>{{ season_data[type].pts }}</td>
+            </tr>
+            {% endfor %}
+            <tr class="career-row">
+                <td>{{ playoff_career.season }}</td><td></td><td>{{ playoff_career.g }}</td><td>{{ playoff_career.gs }}</td>
+                {% if type != 'per36' %}<td>{{ playoff_career.mp }}</td>{% endif %}
+                <td>{{ playoff_career.fg }}</td><td>{{ playoff_career.fga }}</td><td>{{ playoff_career.fg_pct }}</td>
+                <td>{{ playoff_career.tp }}</td><td>{{ playoff_career.tpa }}</td><td>{{ playoff_career.tp_pct }}</td>
+                <td>{{ playoff_career.two_p }}</td><td>{{ playoff_career.two_pa }}</td><td>{{ playoff_career.two_p_pct }}</td>
+                <td>{{ playoff_career.efg }}</td><td>{{ playoff_career.ft }}</td><td>{{ playoff_career.fta }}</td><td>{{ playoff_career.ft_pct }}</td><td>{{ playoff_career.ts }}</td>
+                <td>{{ playoff_career.rb }}</td><td>{{ playoff_career.ast }}</td><td>{{ playoff_career.stl }}</td><td>{{ playoff_career.blk }}</td><td>{{ playoff_career.tov }}</td><td>{{ playoff_career.pts }}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+{% endmacro %}
+
+{# career highs macro #}
+{% macro render_career_highs(id, title, reg_highs, playoff_highs) %}
+<div id="{{ id }}-section" class="stat-section">
+    <h3 class="table-title">{{ title }}</h3>
+    <div class="toggle-container">
+        <button class="toggle-btn active" onclick="toggleCareerHighs('{{ id }}', 'reg', this)">Regular Season</button>
+        <button class="toggle-btn" onclick="toggleCareerHighs('{{ id }}', 'playoff', this)">Playoffs</button>
+    </div>
+    <div class="career-highs-reg" style="display: block;">
+        <div class="career-highs-grid">
+            <div class="career-high-card">
+                <div class="career-high-stat">Points</div>
+                <div class="career-high-value">{{ reg_highs.points.value if reg_highs.points else '-' }}</div>
+                {% if reg_highs.points %}<div class="career-high-meta">vs {{ reg_highs.points.opponent }} ({{ reg_highs.points.date }})</div>{% endif %}
+            </div>
+            <div class="career-high-card">
+                <div class="career-high-stat">Rebounds</div>
+                <div class="career-high-value">{{ reg_highs.rebounds.value if reg_highs.rebounds else '-' }}</div>
+                {% if reg_highs.rebounds %}<div class="career-high-meta">vs {{ reg_highs.rebounds.opponent }} ({{ reg_highs.rebounds.date }})</div>{% endif %}
+            </div>
+            <div class="career-high-card">
+                <div class="career-high-stat">Assists</div>
+                <div class="career-high-value">{{ reg_highs.assists.value if reg_highs.assists else '-' }}</div>
+                {% if reg_highs.assists %}<div class="career-high-meta">vs {{ reg_highs.assists.opponent }} ({{ reg_highs.assists.date }})</div>{% endif %}
+            </div>
+            <div class="career-high-card">
+                <div class="career-high-stat">Steals</div>
+                <div class="career-high-value">{{ reg_highs.steals.value if reg_highs.steals else '-' }}</div>
+                {% if reg_highs.steals %}<div class="career-high-meta">vs {{ reg_highs.steals.opponent }} ({{ reg_highs.steals.date }})</div>{% endif %}
+            </div>
+            <div class="career-high-card">
+                <div class="career-high-stat">Blocks</div>
+                <div class="career-high-value">{{ reg_highs.blocks.value if reg_highs.blocks else '-' }}</div>
+                {% if reg_highs.blocks %}<div class="career-high-meta">vs {{ reg_highs.blocks.opponent }} ({{ reg_highs.blocks.date }})</div>{% endif %}
+            </div>
+            <div class="career-high-card">
+                <div class="career-high-stat">3-Pointers</div>
+                <div class="career-high-value">{{ reg_highs.three_pointers.value if reg_highs.three_pointers else '-' }}</div>
+                {% if reg_highs.three_pointers %}<div class="career-high-meta">vs {{ reg_highs.three_pointers.opponent }} ({{ reg_highs.three_pointers.date }})</div>{% endif %}
+            </div>
+            <div class="career-high-card">
+                <div class="career-high-stat">Free Throws</div>
+                <div class="career-high-value">{{ reg_highs.free_throws.value if reg_highs.free_throws else '-' }}</div>
+                {% if reg_highs.free_throws %}<div class="career-high-meta">vs {{ reg_highs.free_throws.opponent }} ({{ reg_highs.free_throws.date }})</div>{% endif %}
+            </div>
+            <div class="career-high-card">
+                <div class="career-high-stat">Field Goals</div>
+                <div class="career-high-value">{{ reg_highs.field_goals.value if reg_highs.field_goals else '-' }}</div>
+                {% if reg_highs.field_goals %}<div class="career-high-meta">vs {{ reg_highs.field_goals.opponent }} ({{ reg_highs.field_goals.date }})</div>{% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="career-highs-playoff" style="display: none;">
+        <div class="career-highs-grid">
+            <div class="career-high-card">
+                <div class="career-high-stat">Points</div>
+                <div class="career-high-value">{{ playoff_highs.points.value if playoff_highs.points else '-' }}</div>
+                {% if playoff_highs.points %}<div class="career-high-meta">vs {{ playoff_highs.points.opponent }} ({{ playoff_highs.points.date }})</div>{% endif %}
+            </div>
+            <div class="career-high-card">
+                <div class="career-high-stat">Rebounds</div>
+                <div class="career-high-value">{{ playoff_highs.rebounds.value if playoff_highs.rebounds else '-' }}</div>
+                {% if playoff_highs.rebounds %}<div class="career-high-meta">vs {{ playoff_highs.rebounds.opponent }} ({{ playoff_highs.rebounds.date }})</div>{% endif %}
+            </div>
+            <div class="career-high-card">
+                <div class="career-high-stat">Assists</div>
+                <div class="career-high-value">{{ playoff_highs.assists.value if playoff_highs.assists else '-' }}</div>
+                {% if playoff_highs.assists %}<div class="career-high-meta">vs {{ playoff_highs.assists.opponent }} ({{ playoff_highs.assists.date }})</div>{% endif %}
+            </div>
+            <div class="career-high-card">
+                <div class="career-high-stat">Steals</div>
+                <div class="career-high-value">{{ playoff_highs.steals.value if playoff_highs.steals else '-' }}</div>
+                {% if playoff_highs.steals %}<div class="career-high-meta">vs {{ playoff_highs.steals.opponent }} ({{ playoff_highs.steals.date }})</div>{% endif %}
+            </div>
+            <div class="career-high-card">
+                <div class="career-high-stat">Blocks</div>
+                <div class="career-high-value">{{ playoff_highs.blocks.value if playoff_highs.blocks else '-' }}</div>
+                {% if playoff_highs.blocks %}<div class="career-high-meta">vs {{ playoff_highs.blocks.opponent }} ({{ playoff_highs.blocks.date }})</div>{% endif %}
+            </div>
+            <div class="career-high-card">
+                <div class="career-high-stat">3-Pointers</div>
+                <div class="career-high-value">{{ playoff_highs.three_pointers.value if playoff_highs.three_pointers else '-' }}</div>
+                {% if playoff_highs.three_pointers %}<div class="career-high-meta">vs {{ playoff_highs.three_pointers.opponent }} ({{ playoff_highs.three_pointers.date }})</div>{% endif %}
+            </div>
+            <div class="career-high-card">
+                <div class="career-high-stat">Free Throws</div>
+                <div class="career-high-value">{{ playoff_highs.free_throws.value if playoff_highs.free_throws else '-' }}</div>
+                {% if playoff_highs.free_throws %}<div class="career-high-meta">vs {{ playoff_highs.free_throws.opponent }} ({{ playoff_highs.free_throws.date }})</div>{% endif %}
+            </div>
+            <div class="career-high-card">
+                <div class="career-high-stat">Field Goals</div>
+                <div class="career-high-value">{{ playoff_highs.field_goals.value if playoff_highs.field_goals else '-' }}</div>
+                {% if playoff_highs.field_goals %}<div class="career-high-meta">vs {{ playoff_highs.field_goals.opponent }} ({{ playoff_highs.field_goals.date }})</div>{% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endmacro %}
+
+<div class="player-container">
+    <div class="main-content">
+        {% if stats_by_season and stats_by_season|length > 0 %}
+        {{ render_stat_table('averages', 'Per-Game Averages', stats_by_season, playoff_stats_by_season, career_averages, playoff_career_averages, 'averages') }}
+        {{ render_stat_table('totals', 'Season Totals', stats_by_season, playoff_stats_by_season, career_totals, playoff_career_totals, 'totals') }}
+        {{ render_stat_table('per36', 'Per 36 Minutes', stats_by_season, playoff_stats_by_season, career_per36, playoff_career_per36, 'per36') }}
+
+        {{ render_career_highs('career-highs', 'Career Highs', career_highs, playoff_career_highs) }}
+        {% else %}
+        <div class="stat-section">
+            <h3 class="table-title">Statistics</h3>
+            <p style="color: #888; padding: 20px; background-color: #2b2b2b; border: 1px solid #3a3a3a;">No game statistics available yet.</p>
+        </div>
+        {% endif %}
+
+        {% for season, games in game_logs.items() %}
+        <div id="gamelog-{{ season }}" class="game-log-section">
+            <h3 class="table-title">{{ season }} Game Log</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Date</th><th>Team</th><th>Opponent</th><th>Result</th><th>GS</th><th>MP</th>
+                        <th>FG</th><th>FGA</th><th>FG%</th><th>3P</th><th>3PA</th><th>3P%</th>
+                        <th>FT</th><th>FTA</th><th>FT%</th><th>TS%</th><th>RB</th><th>AST</th><th>STL</th><th>BLK</th><th>TOV</th><th>PTS</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for game in games %}
+                    <tr onclick="window.location.href='{{ url_for('team.game_boxscore', game_id=game.game_id, team_name=game.team) }}'" style="cursor: pointer;">
+                        <td>{{ game.date }}</td><td>{{ game.team }}</td><td>{{ game.location }} {{ game.opponent }}</td>
+                        <td>
+                            {% if game.team_score > game.opp_score %}
+                                <span style="color: green;">W {{ game.team_score }}-{{ game.opp_score }}</span>
+                            {% else %}
+                                <span style="color: red;">L {{ game.team_score }}-{{ game.opp_score }}</span>
+                            {% endif %}
+                        </td>
+                        <td>{{ '*' if game.started else '' }}</td><td>{{ game.minutes }}</td>
+                        <td>{{ game.fg_made }}</td><td>{{ game.fg_att }}</td><td>{{ "%.1f"|format((game.fg_made / game.fg_att * 100) if game.fg_att > 0 else 0) }}</td>
+                        <td>{{ game.tp_made }}</td><td>{{ game.tp_att }}</td><td>{{ "%.1f"|format((game.tp_made / game.tp_att * 100) if game.tp_att > 0 else 0) }}</td>
+                        <td>{{ game.ft_made }}</td><td>{{ game.ft_att }}</td><td>{{ "%.1f"|format((game.ft_made / game.ft_att * 100) if game.ft_att > 0 else 0) }}</td>
+                        <td>{{ "%.1f"|format((game.points / (2 * (game.fg_att + 0.44 * game.ft_att)) * 100) if (game.fg_att + game.ft_att) > 0 else 0) }}</td>
+                        <td>{{ game.rebounds }}</td><td>{{ game.assists }}</td><td>{{ game.steals }}</td><td>{{ game.blocks }}</td><td>{{ game.turnovers }}</td><td>{{ game.points }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="sidebar">
+        <h3>Navigation</h3>
+        <ul>
+            <li><a href="#" onclick="showHome(); return false;">Home</a></li>
+        </ul>
+        {% if game_logs and game_logs|length > 0 %}
+        <h3 style="margin-top: 30px;">Game Logs</h3>
+        <ul>
+            {% for season in game_logs.keys()|sort(reverse=True) %}
+            <li><a href="#" onclick="showGameLog('{{ season }}'); return false;">{{ season }}</a></li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        <div style="margin-top: 30px;">
+            <a href="/" style="color: #ffffff; text-decoration: none;">← Back to Home</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// date and age formatter
+document.addEventListener('DOMContentLoaded', function() {
+    const dateContainer = document.querySelector('.birthdate-container');
+    if (dateContainer) {
+        const rawDate = dateContainer.getAttribute('data-date');
+        if (rawDate && rawDate !== 'None') {
+            const birthDate = new Date(rawDate);
+            if (!isNaN(birthDate)) {
+                const options = { year: 'numeric', month: 'long', day: 'numeric' };
+                const formattedDate = birthDate.toLocaleDateString('en-US', options);
+
+                // calc age
+                const today = new Date();
+                let age = today.getFullYear() - birthDate.getFullYear();
+                const m = today.getMonth() - birthDate.getMonth();
+                if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+                    age--;
+                }
+
+                dateContainer.textContent = `${formattedDate} (Age: ${age})`;
+            }
+        }
+    }
+});
+
+function toggleTable(sectionId, mode, btn) {
+    const section = document.getElementById(sectionId + '-section');
+    const regBody = section.querySelector('.tbody-reg');
+    const playoffBody = section.querySelector('.tbody-playoff');
+    section.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    if (mode === 'reg') {
+        regBody.style.display = 'table-row-group';
+        playoffBody.style.display = 'none';
+    } else {
+        regBody.style.display = 'none';
+        playoffBody.style.display = 'table-row-group';
+    }
+}
+
+function toggleCareerHighs(sectionId, mode, btn) {
+    const section = document.getElementById(sectionId + '-section');
+    const regDiv = section.querySelector('.career-highs-reg');
+    const playoffDiv = section.querySelector('.career-highs-playoff');
+    section.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    if (mode === 'reg') {
+        regDiv.style.display = 'block';
+        playoffDiv.style.display = 'none';
+    } else {
+        regDiv.style.display = 'none';
+        playoffDiv.style.display = 'block';
+    }
+}
+
+function showHome() {
+    document.getElementById('averages-section').style.display = 'block';
+    document.getElementById('totals-section').style.display = 'block';
+    document.getElementById('per36-section').style.display = 'block';
+    document.getElementById('career-highs-section').style.display = 'block';
+
+    document.querySelectorAll('.game-log-section').forEach(el => el.classList.remove('active'));
+}
+
+function showGameLog(season) {
+    document.querySelectorAll('.stat-section').forEach(el => el.style.display = 'none');
+
+    document.querySelectorAll('.game-log-section').forEach(el => el.classList.remove('active'));
+    document.getElementById('gamelog-' + season).classList.add('active');
+}
+
+// sorting
+document.querySelectorAll('th').forEach((header, index) => {
+    header.addEventListener('click', function() {
+        const table = this.closest('table');
+        const tbody = Array.from(table.querySelectorAll('tbody')).find(b => b.style.display !== 'none');
+        if (!tbody) return;
+        const rows = Array.from(tbody.querySelectorAll('tr:not(.career-row)'));
+        const careerRow = tbody.querySelector('.career-row');
+        rows.sort((a, b) => {
+            const aValue = a.cells[index].textContent.trim();
+            const bValue = b.cells[index].textContent.trim();
+            const aNum = parseFloat(aValue.replace('%', ''));
+            const bNum = parseFloat(bValue.replace('%', ''));
+            if (!isNaN(aNum) && !isNaN(bNum)) return bNum - aNum;
+            return aValue.localeCompare(bValue);
+        });
+        rows.forEach(row => tbody.appendChild(row));
+        if (careerRow) tbody.appendChild(careerRow);
+    });
+});
+</script>
+{% endblock %}

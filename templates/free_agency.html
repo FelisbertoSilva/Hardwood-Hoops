@@ -1,0 +1,369 @@
+{% extends "base.html" %}
+
+{% block title %}Free Agency - Hardwood Hoops{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* --- DARK THEME BASE --- */
+    .content {
+        background-color: #1a1a1a !important;
+        padding: 30px;
+        border-radius: 0 !important;
+    }
+
+    /* --- PAGE HEADER --- */
+    .page-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 30px;
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+
+    .page-title {
+        color: #ffffff;
+        font-size: 2em;
+        margin: 0;
+    }
+
+    /* --- SECTION CONTAINER --- */
+    .section-container {
+        margin-bottom: 40px;
+    }
+
+    .section-header {
+        background-color: #2b2b2b;
+        padding: 15px 20px;
+        border: 1px solid #3a3a3a;
+        margin-bottom: 0;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .section-header h2 {
+        margin: 0;
+        font-size: 1.4em;
+        color: #ffffff;
+    }
+
+    .section-header .count-badge {
+        background-color: #3a3a3a;
+        color: #888;
+        padding: 4px 12px;
+        border-radius: 12px;
+        font-size: 0.85em;
+    }
+
+    /* --- FREE AGENTS TABLE --- */
+    .free-agents-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.9em;
+        background-color: #2b2b2b;
+    }
+
+    .free-agents-table th {
+        background-color: #1a1a1a !important;
+        color: #888 !important;
+        border: none !important;
+        padding: 10px 12px;
+        text-align: left;
+        font-weight: normal;
+        font-size: 0.95em;
+        cursor: default;
+        pointer-events: none;
+        user-select: none;
+    }
+
+    .free-agents-table th:first-child {
+        width: 50px;
+        text-align: center;
+    }
+
+    .free-agents-table th.salary-col,
+    .free-agents-table td.salary-col {
+        text-align: right;
+        padding-right: 20px;
+    }
+
+    .free-agents-table td {
+        background-color: #1a1a1a !important;
+        border: none !important;
+        padding: 8px 12px;
+        text-align: left;
+    }
+
+    .free-agents-table td:first-child {
+        text-align: center;
+        color: #888 !important;
+        font-weight: bold;
+    }
+
+    .free-agents-table td.salary-col {
+        font-family: 'Consolas', 'Monaco', monospace;
+        color: #ffffff !important;
+    }
+
+    .free-agents-table tbody tr {
+        border-bottom: 1px solid #2b2b2b;
+    }
+
+    .free-agents-table tbody tr:hover td {
+        background-color: #252525 !important;
+    }
+
+    /* Player Link */
+    .player-link {
+        color: #ffffff;
+        text-decoration: none;
+    }
+
+    .player-link:hover {
+        text-decoration: underline;
+        color: #e0e0e0;
+    }
+
+    /* Team Link */
+    .team-link {
+        color: #ffffff;
+        text-decoration: none;
+        font-size: 0.9em;
+    }
+
+    .team-link:hover {
+        color: #e0e0e0;
+        text-decoration: underline;
+    }
+
+    /* --- EMPTY STATE --- */
+    .empty-section {
+        background-color: #1a1a1a;
+        color: #666;
+        font-style: italic;
+        padding: 30px;
+        text-align: center;
+        border: 1px solid #3a3a3a;
+        border-top: none;
+    }
+
+    /* --- TWO COLUMN LAYOUT FOR CURRENT FREE AGENTS --- */
+    .current-fa-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 0;
+        background-color: #1a1a1a;
+        border: 1px solid #3a3a3a;
+        border-top: none;
+    }
+
+    .current-fa-item {
+        padding: 10px 15px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid #2b2b2b;
+    }
+
+    .current-fa-item:hover {
+        background-color: #252525;
+    }
+
+    .current-fa-rating {
+        color: #888;
+        font-weight: bold;
+        min-width: 30px;
+        text-align: center;
+    }
+
+    /* --- OPTION TYPE INDICATORS --- */
+    .option-indicator {
+        font-size: 0.75em;
+        padding: 2px 8px;
+        border-radius: 4px;
+        margin-left: 10px;
+    }
+
+    .option-team {
+        background-color: #ef444433;
+        color: #ef4444;
+    }
+
+    .option-player {
+        background-color: #3b82f633;
+        color: #3b82f6;
+    }
+
+    /* --- RESPONSIVE --- */
+    @media (max-width: 768px) {
+        .page-header {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .current-fa-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .free-agents-table {
+            font-size: 0.8em;
+        }
+
+        .free-agents-table th.team-col,
+        .free-agents-table td.team-col {
+            display: none;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+
+<div class="page-header">
+    <h1 class="page-title">Free Agency 2025/26</h1>
+</div>
+
+<!-- CURRENT FREE AGENTS -->
+<div class="section-container">
+    <div class="section-header">
+        <h2>Current Free Agents</h2>
+        <span class="count-badge">{{ current_free_agents|length }} players</span>
+    </div>
+    {% if current_free_agents %}
+    <div class="current-fa-grid">
+        {% for player in current_free_agents %}
+        <div class="current-fa-item">
+            <a href="{{ url_for('player.player_page', player_name=player.name) }}" class="player-link">
+                {{ player.name }}
+            </a>
+            <span class="current-fa-rating">{% if player.rating %}{{ player.rating }}{% else %}-{% endif %}</span>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="empty-section">No current free agents</div>
+    {% endif %}
+</div>
+
+<!-- UPCOMING FREE AGENTS -->
+<div class="section-container">
+    <div class="section-header">
+        <h2>Upcoming Free Agents</h2>
+        <span class="count-badge">{{ upcoming_free_agents|length }} players</span>
+    </div>
+    {% if upcoming_free_agents %}
+    <table class="free-agents-table">
+        <thead>
+            <tr>
+                <th></th>
+                <th>Player</th>
+                <th class="team-col">Team</th>
+                <th class="salary-col">2025/26 Salary</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for player in upcoming_free_agents %}
+            <tr>
+                <td>{% if player.rating %}{{ player.rating }}{% endif %}</td>
+                <td>
+                    <a href="{{ url_for('player.player_page', player_name=player.name) }}" class="player-link">
+                        {{ player.name }}
+                    </a>
+                </td>
+                <td class="team-col">
+                    <a href="{{ url_for('finances.finances_page', team_name=player.team) }}" class="team-link">
+                        {{ player.team }}
+                    </a>
+                </td>
+                <td class="salary-col">{{ format_salary(player.salary) }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <div class="empty-section">No upcoming free agents</div>
+    {% endif %}
+</div>
+
+<!-- PLAYER OPTIONS -->
+<div class="section-container">
+    <div class="section-header">
+        <h2>Player Options</h2>
+        <span class="count-badge">{{ player_options|length }} players</span>
+    </div>
+    {% if player_options %}
+    <table class="free-agents-table">
+        <thead>
+            <tr>
+                <th></th>
+                <th>Player</th>
+                <th class="team-col">Team</th>
+                <th class="salary-col">Option Value</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for player in player_options %}
+            <tr>
+                <td>{% if player.rating %}{{ player.rating }}{% endif %}</td>
+                <td>
+                    <a href="{{ url_for('player.player_page', player_name=player.name) }}" class="player-link">
+                        {{ player.name }}
+                    </a>
+                </td>
+                <td class="team-col">
+                    <a href="{{ url_for('finances.finances_page', team_name=player.team) }}" class="team-link">
+                        {{ player.team }}
+                    </a>
+                </td>
+                <td class="salary-col">{{ format_salary(player.salary) }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <div class="empty-section">No player options</div>
+    {% endif %}
+</div>
+
+<!-- TEAM OPTIONS -->
+<div class="section-container">
+    <div class="section-header">
+        <h2>Team Options</h2>
+        <span class="count-badge">{{ team_options|length }} players</span>
+    </div>
+    {% if team_options %}
+    <table class="free-agents-table">
+        <thead>
+            <tr>
+                <th></th>
+                <th>Player</th>
+                <th class="team-col">Team</th>
+                <th class="salary-col">Option Value</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for player in team_options %}
+            <tr>
+                <td>{% if player.rating %}{{ player.rating }}{% endif %}</td>
+                <td>
+                    <a href="{{ url_for('player.player_page', player_name=player.name) }}" class="player-link">
+                        {{ player.name }}
+                    </a>
+                </td>
+                <td class="team-col">
+                    <a href="{{ url_for('finances.finances_page', team_name=player.team) }}" class="team-link">
+                        {{ player.team }}
+                    </a>
+                </td>
+                <td class="salary-col">{{ format_salary(player.salary) }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <div class="empty-section">No team options</div>
+    {% endif %}
+</div>
+
+{% endblock %}

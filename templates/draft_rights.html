@@ -1,0 +1,247 @@
+{% extends "base.html" %}
+
+{% block title %}Draft Rights - Hardwood Hoops{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* --- DARK THEME BASE --- */
+    .content {
+        background-color: #1a1a1a !important;
+        padding: 30px;
+        border-radius: 0 !important;
+    }
+
+    /* --- PAGE HEADER --- */
+    .page-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 25px;
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+
+    .page-title {
+        color: #ffffff;
+        font-size: 2em;
+        margin: 0;
+    }
+
+    .page-subtitle {
+        color: #888;
+        font-size: 1em;
+        margin-top: 5px;
+    }
+
+    /* --- DRAFT TABLE --- */
+    .draft-table-container {
+        overflow-x: auto;
+        background-color: #2b2b2b;
+        border: 1px solid #3a3a3a;
+    }
+
+    .draft-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.85em;
+        table-layout: fixed;
+    }
+
+    .draft-table th {
+        background-color: #1a1a1a !important;
+        color: #888 !important;
+        border: none !important;
+        padding: 12px 8px;
+        text-align: center;
+        font-weight: normal;
+        font-size: 0.9em;
+        cursor: default;
+        pointer-events: none;
+        user-select: none;
+        border-bottom: 2px solid #3a3a3a !important;
+    }
+
+    .draft-table th.team-col {
+        text-align: left;
+        padding-left: 15px;
+        width: 200px;
+    }
+
+    .draft-table th.year-header {
+        border-left: 2px solid #3a3a3a !important;
+        padding: 8px 4px;
+    }
+
+    .draft-table th.round-header {
+        font-size: 0.8em;
+        padding: 6px 4px;
+        color: #666 !important;
+        width: 70px;
+    }
+
+    .draft-table td {
+        background-color: #1a1a1a !important;
+        border: none !important;
+        padding: 8px 6px;
+        text-align: center;
+        vertical-align: middle;
+        width: 70px;
+    }
+
+    .draft-table td:first-child {
+        text-align: left;
+        padding-left: 15px;
+        font-weight: 500;
+        width: 200px;
+    }
+
+    .draft-table td.year-start {
+        border-left: 2px solid #2b2b2b !important;
+    }
+
+    .draft-table tbody tr {
+        border-bottom: 1px solid #2b2b2b;
+    }
+
+    .draft-table tbody tr:hover td {
+        background-color: #252525 !important;
+    }
+
+    /* --- TEAM NAME LINK --- */
+    .team-link {
+        color: #ffffff;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .team-link:hover {
+        text-decoration: underline;
+        color: #e0e0e0;
+    }
+
+    .team-logo-small {
+        width: 24px;
+        height: 24px;
+        object-fit: contain;
+    }
+
+    /* --- PICK CELL --- */
+    .pick-cell {
+        position: relative;
+    }
+
+    .pick-abbrev {
+        font-weight: 600;
+        font-size: 0.9em;
+    }
+
+    /* Own pick - white */
+    .pick-own .pick-abbrev {
+        color: #ffffff;
+    }
+
+    /* Traded pick - team color */
+    .pick-traded .pick-abbrev {
+        /* Color set inline via style */
+    }
+
+    /* Condition - inline after abbreviation */
+    .pick-condition {
+        font-size: 0.7em;
+        color: #888;
+        margin-left: 3px;
+    }
+
+    /* Tooltip for full condition text */
+    .pick-cell[title] {
+        cursor: help;
+    }
+
+    /* --- RESPONSIVE --- */
+    @media (max-width: 900px) {
+        .page-header {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .draft-table {
+            font-size: 0.75em;
+        }
+
+        .draft-table th.team-col,
+        .draft-table td:first-child {
+            width: 150px;
+        }
+
+        .draft-table th.round-header,
+        .draft-table td {
+            width: 55px;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+
+<div class="page-header">
+    <h1 class="page-title">Draft Rights</h1>
+</div>
+
+<div class="draft-table-container">
+    <table class="draft-table">
+        <thead>
+            <tr>
+                <th rowspan="2" class="team-col">Team</th>
+                <th colspan="2" class="year-header">2026</th>
+                <th colspan="2" class="year-header">2027</th>
+                <th colspan="2" class="year-header">2028</th>
+                <th colspan="2" class="year-header">2029</th>
+            </tr>
+            <tr>
+                <th class="round-header year-start">1st</th>
+                <th class="round-header">2nd</th>
+                <th class="round-header year-start">1st</th>
+                <th class="round-header">2nd</th>
+                <th class="round-header year-start">1st</th>
+                <th class="round-header">2nd</th>
+                <th class="round-header year-start">1st</th>
+                <th class="round-header">2nd</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for team_data in draft_data %}
+            <tr>
+                <td>
+                    <a href="{{ url_for('team.team_page', team_name=team_data.team) }}" class="team-link">
+                        <img src="{{ url_for('static', filename='teams/' + team_data.team + '.png') }}"
+                             alt="{{ team_data.team }}"
+                             class="team-logo-small"
+                             onerror="this.style.display='none'">
+                        {{ team_data.team }}
+                    </a>
+                </td>
+
+                {% for pick_key in ['1Y26', '2Y26', '1Y27', '2Y27', '1Y28', '2Y28', '1Y29', '2Y29'] %}
+                    {% set pick = team_data.picks[pick_key] %}
+                    {% set is_year_start = pick_key in ['1Y26', '1Y27', '1Y28', '1Y29'] %}
+                    {% set is_traded = pick.owner and pick.owner != team_data.team %}
+
+                    <td class="pick-cell {{ 'year-start' if is_year_start else '' }}" {% if pick.condition %}title="{{ pick.condition }}"{% endif %}>
+                        {% if pick.owner %}
+                            <span class="{{ 'pick-traded' if is_traded else 'pick-own' }}">
+                                <span class="pick-abbrev" {% if is_traded %}style="color: {{ get_color(pick.owner) }};"{% endif %}>{{ get_abbrev(pick.owner) }}</span>{% if pick.condition %}<span class="pick-condition">{{ pick.condition }}</span>{% endif %}
+                            </span>
+                        {% else %}
+                            <span class="pick-own">-</span>
+                        {% endif %}
+                    </td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}

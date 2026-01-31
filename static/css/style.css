@@ -1,0 +1,349 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f4f4f4;
+}
+
+header .container {
+    max-width: 100%;
+    padding: 0;
+}
+
+header {
+    background: none;
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    background-color: #989898;
+}
+
+
+.header-banner {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+
+
+nav {
+    background-color: #000000;
+    padding: 10px 0;
+    margin-bottom: 20px;
+}
+
+.nav-container {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    padding-left: 20px;
+}
+
+.nav-logo {
+    height: 40px;
+    width: auto;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: flex-start;
+    gap: 30px;
+    margin: 0;
+}
+
+nav a {
+    color: rgb(255, 255, 255);
+    text-decoration: none;
+    font-size: 1.1em;
+    padding: 5px 15px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+nav a:hover {
+    background-color: #2c3e50;
+}
+
+.content {
+    background-color: #989898;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+h2 {
+    color: #2c3e50;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+}
+
+table {
+    width: auto;
+    min-width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+    margin: 20px 0;
+    font-size: 0.75em;
+    background-color: white;
+}
+
+th, td {
+    padding: 4px 5px;
+    text-align: right;
+    border: 1px solid #ccc;
+    white-space: nowrap;
+}
+
+th:first-child, td:first-child {
+    text-align: left;
+    position: sticky;
+    left: 0;
+    background-color: inherit;
+    z-index: 1;
+    font-weight: normal;
+}
+
+th:nth-child(2), td:nth-child(2) {
+    text-align: left;
+    position: sticky;
+    left: 70px;
+    background-color: inherit;
+    z-index: 1;
+}
+
+th {
+    background-color: #555;
+    color: white;
+    font-weight: bold;
+    font-size: 0.95em;
+    cursor: pointer;
+    user-select: none;
+    position: sticky;
+    top: 0;
+    z-index: 2;
+}
+
+th:first-child, th:nth-child(2) {
+    z-index: 3;
+    background-color: #555;
+}
+
+tbody tr {
+    background-color: #fff;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #f8f8f8;
+}
+
+tbody tr td {
+    background-color: inherit;
+}
+
+.career-row {
+    background-color: #e0e0e0 !important;
+    font-weight: bold;
+    border-top: 2px solid #000;
+}
+
+.player-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.player-card {
+    background-color: #ecf0f1;
+    padding: 15px;
+    border-radius: 5px;
+    text-align: center;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.player-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.player-card a {
+    color: #2c3e50;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+.stats-section {
+    margin: 40px 0;
+}
+
+.record {
+    font-size: 1.5em;
+    color: #27ae60;
+    font-weight: bold;
+    margin: 20px 0;
+}
+
+/* Página de jogadores */
+.player-container {
+    display: flex;
+    gap: 0;
+    max-width: 100%;
+}
+
+nav {
+    margin-bottom: 0;
+}
+
+body {
+    background-color: #989898;
+}
+
+nav {
+    border-bottom: 0px solid #2c3e50;
+}
+
+nav {
+    margin-bottom: 0;
+}
+
+.sidebar {
+    width: 180px;
+    min-width: 180px;
+    background-color: #f5f5f5;
+    padding: 15px 10px;
+    border-right: 1px solid #ccc;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+    flex-shrink: 0;
+    order: 0;
+}
+
+.main-content {
+    flex: 1;
+    min-width: 0;
+    padding-left: 15px;
+    order: 1;
+    overflow-x: auto;
+}
+
+.sidebar h3 {
+    color: #000;
+    margin-bottom: 8px;
+    margin-top: 15px;
+    font-size: 0.9em;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.sidebar h3:first-child {
+    margin-top: 0;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 15px;
+}
+
+.sidebar li {
+    margin: 3px 0;
+}
+
+.sidebar a {
+    color: #00538c;
+    text-decoration: none;
+    padding: 4px 6px;
+    display: block;
+    font-size: 0.85em;
+    transition: background-color 0.2s;
+}
+
+.sidebar a:hover {
+    background-color: #e8e8e8;
+    text-decoration: underline;
+}
+
+.sidebar h3 {
+    color: #2c3e50;
+    margin-bottom: 15px;
+    font-size: 1.2em;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar li {
+    margin: 8px 0;
+}
+
+.sidebar a {
+    color: #2c3e50;
+    text-decoration: none;
+    padding: 8px 12px;
+    display: block;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+}
+
+.sidebar a:hover {
+    background-color: #bdc3c7;
+}
+
+.game-log-section {
+    display: none;
+    margin-top: 40px;
+}
+
+.game-log-section.active {
+    display: block;
+}
+
+.career-row {
+    background-color: #f8f9fa;
+    font-weight: bold;
+    border-top: 2px solid #2c3e50;
+}
+
+.season-header {
+    background-color: #34495e;
+    color: white;
+    font-size: 1.1em;
+    padding: 10px;
+    margin-top: 30px;
+    border-radius: 5px;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    margin-top: 40px;
+    padding: 20px;
+    color: #000000;
+}
+
+/* Não mexer */
+@media (max-width: 768px) {
+    .player-container {
+        flex-direction: column;
+    }
+    
+    .sidebar {
+        width: 100%;
+        position: relative;
+    }
+}

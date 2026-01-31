@@ -1,0 +1,363 @@
+{% extends "base.html" %}
+
+{% block title %}All Team Stats - BoxToData{% endblock %}
+
+{% block extra_css %}
+<style>
+/* --- Page Layout Overrides --- */
+.content {
+    padding: 0 !important;
+    background-color: #1a1a1a !important;
+    
+    /* !!! THE FIX IS HERE !!! */
+    /* This overrides the 'border-radius: 8px' from your style.css */
+    border-radius: 0 !important; 
+    box-shadow: none !important;
+}
+
+.content-inner {
+    padding: 40px 30px;
+    max-width: 1800px;
+    margin: 0 auto;
+    font-family: 'Roboto', sans-serif;
+    min-height: 100vh;
+}
+
+/* --- Filters Section --- */
+.filters-container {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    align-items: flex-end;
+}
+
+.filter-group {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-width: 150px;
+}
+
+.filter-label {
+    font-size: 0.75em;
+    font-weight: 900;
+    color: #888;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.filter-select {
+    background-color: #2b2b2b;
+    color: #ffffff;
+    border: 1px solid #444;
+    padding: 10px 15px;
+    font-size: 0.95em;
+    font-weight: 600;
+    cursor: pointer;
+    outline: none;
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 15px center;
+    background-size: 14px;
+    border-radius: 0 !important; 
+}
+
+.filter-select:hover {
+    border-color: #666;
+}
+
+/* --- Data Table Styles --- */
+.table-container {
+    width: 100%;
+    overflow-x: auto;
+    background-color: #1a1a1a;
+    border: 1px solid #333;
+    margin-bottom: 40px;
+    border-radius: 0 !important;
+}
+
+.stats-table {
+    width: 100%;
+    border-collapse: collapse; 
+    border-spacing: 0;
+    background-color: #1a1a1a;
+    color: #ffffff;
+    font-size: 0.9em;
+    min-width: 1200px;
+    border-radius: 0 !important;
+}
+
+/* Header Styles */
+.stats-table thead {
+    background-color: #2b2b2b;
+}
+
+.stats-table th {
+    padding: 15px 10px;
+    text-align: center;
+    font-weight: 800;
+    color: #ffffff;
+    text-transform: uppercase;
+    font-size: 0.8em;
+    letter-spacing: 0.5px;
+    border: 1px solid #333; 
+    background-color: #2b2b2b; 
+    white-space: nowrap;
+    border-radius: 0 !important;
+}
+
+.stats-table th.col-team {
+    text-align: left;
+    padding-left: 15px;
+    min-width: 200px;
+}
+
+/* Body Styles */
+.stats-table tbody tr {
+    background-color: #1a1a1a;
+}
+
+.stats-table td {
+    padding: 12px 10px;
+    text-align: center;
+    border: 1px solid #333;
+    color: #cccccc;
+    background-color: #1a1a1a;
+}
+
+.stats-table tr:hover td {
+    background-color: #1a1a1a !important;
+    color: #cccccc !important;
+}
+
+.col-team { 
+    text-align: left; 
+    display: flex; 
+    align-items: center; 
+    gap: 12px; 
+    border-right: 1px solid #333;
+}
+
+.team-logo-small { 
+    width: 24px; 
+    height: 24px; 
+    object-fit: contain;
+    display: inline-block; 
+    flex-shrink: 0;
+} 
+
+.team-link { 
+    color: #ffffff; 
+    text-decoration: none; 
+    font-weight: 700; 
+}
+
+.team-link:hover { 
+    color: #ffffff; 
+    text-decoration: underline;
+    text-decoration-thickness: 3px; 
+    text-decoration-color: #ffffff;
+    text-underline-offset: 4px;
+}
+
+/* --- Back Arrow Button --- */
+.back-arrow-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 40px;
+}
+
+.back-arrow-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: #2b2b2b;
+    border: 2px solid #3a3a3a;
+    color: #ffffff;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.back-arrow-btn:hover {
+    background-color: #ffffff;
+    color: #1a1a1a;
+    border-color: #ffffff;
+    transform: translateY(-2px);
+}
+
+.back-arrow-icon {
+    width: 24px;
+    height: 24px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="content-inner">
+    
+    <div class="filters-container">
+        <div class="filter-group">
+            <label class="filter-label">Season</label>
+            <select class="filter-select" id="season-select">
+                {% for s in available_seasons %}
+                <option value="{{ s }}" {% if s == current_season %}selected{% endif %}>{{ s }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="filter-group">
+            <label class="filter-label">Season Type</label>
+            <select class="filter-select" id="season-type-select">
+                <option value="regular" {% if season_type == 'regular' %}selected{% endif %}>Regular Season</option>
+                <option value="playoffs" {% if season_type == 'playoffs' %}selected{% endif %}>Playoffs</option>
+            </select>
+        </div>
+        <div class="filter-group">
+            <label class="filter-label">Per Mode</label>
+            <select class="filter-select" id="per-mode-select">
+                <option value="per_game" {% if per_mode == 'per_game' %}selected{% endif %}>Per Game</option>
+                <option value="totals" {% if per_mode == 'totals' %}selected{% endif %}>Totals</option>
+            </select>
+        </div>
+        <div class="filter-group">
+            <label class="filter-label">Season Segment</label>
+            <select class="filter-select" id="season-segment-select">
+                <option value="all" {% if season_segment == 'all' %}selected{% endif %}>All Season Segments</option>
+                <option value="last5" {% if season_segment == 'last5' %}selected{% endif %}>Last 5 Games</option>
+                <option value="last10" {% if season_segment == 'last10' %}selected{% endif %}>Last 10 Games</option>
+                <option value="pre_allstar" {% if season_segment == 'pre_allstar' %}selected{% endif %}>Pre All-Star</option>
+                <option value="post_allstar" {% if season_segment == 'post_allstar' %}selected{% endif %}>Post All-Star</option>
+                <option disabled>--- Months ---</option>
+                <option value="nov" {% if season_segment == 'nov' %}selected{% endif %}>November</option>
+                <option value="dec" {% if season_segment == 'dec' %}selected{% endif %}>December</option>
+                <option value="jan" {% if season_segment == 'jan' %}selected{% endif %}>January</option>
+                <option value="feb" {% if season_segment == 'feb' %}selected{% endif %}>February</option>
+                <option value="mar" {% if season_segment == 'mar' %}selected{% endif %}>March</option>
+                <option value="apr" {% if season_segment == 'apr' %}selected{% endif %}>April</option>
+                <option value="may" {% if season_segment == 'may' %}selected{% endif %}>May</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="table-container">
+        <table class="stats-table">
+            <thead>
+                <tr>
+                    <th class="col-team">TEAM</th>
+                    <th>GP</th>
+                    <th>W</th>
+                    <th>L</th>
+                    <th>WIN%</th>
+                    
+                    <th>PTS</th>
+                    <th>FGM</th>
+                    <th>FGA</th>
+                    <th>FG%</th>
+                    <th>3PM</th>
+                    <th>3PA</th>
+                    <th>3P%</th>
+                    <th>FTM</th>
+                    <th>FTA</th>
+                    <th>FT%</th>
+                    
+                    <th>REB</th>
+                    <th>AST</th>
+                    <th>TOV</th>
+                    <th>STL</th>
+                    <th>BLK</th>
+                    
+                    <th>+/-</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if team_stats %}
+                    {% for team in team_stats %}
+                    <tr>
+                        <td class="col-team">
+                            <img src="{{ url_for('static', filename='teams/' + team.team_name + '.png') }}" 
+                                 alt="{{ team.team_name }}" 
+                                 class="team-logo-small">
+                            
+                            <a href="{{ url_for('team.team_page', team_name=team.team_name) }}" class="team-link">{{ team.team_name }}</a>
+                        </td>
+                        <td>{{ team.gp }}</td>
+                        <td>{{ team.wins }}</td>
+                        <td>{{ team.losses }}</td>
+                        <td>{{ "%.3f"|format(team.win_pct) }}</td>
+                        
+                        <td>{{ team.pts }}</td>
+                        <td>{{ team.fgm }}</td>
+                        <td>{{ team.fga }}</td>
+                        <td>{{ team.fg_pct }}</td>
+                        <td>{{ team.tpm }}</td>
+                        <td>{{ team.tpa }}</td>
+                        <td>{{ team.tp_pct }}</td>
+                        <td>{{ team.ftm }}</td>
+                        <td>{{ team.fta }}</td>
+                        <td>{{ team.ft_pct }}</td>
+                        
+                        <td>{{ team.reb }}</td>
+                        <td>{{ team.ast }}</td>
+                        <td>{{ team.tov }}</td>
+                        <td>{{ team.stl }}</td>
+                        <td>{{ team.blk }}</td>
+                        
+                        <td>{{ "%+.1f"|format(team.plus_minus) if team.plus_minus >= 0 else "%.1f"|format(team.plus_minus) }}</td>
+                    </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="21" style="text-align: center; padding: 40px;">No team statistics available for the selected filters.</td>
+                    </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="back-arrow-container">
+        <a href="{{ url_for('home.home') }}" class="back-arrow-btn" aria-label="Back to Home">
+            <svg class="back-arrow-icon" viewBox="0 0 24 24">
+                <line x1="19" y1="12" x2="5" y2="12"></line>
+                <polyline points="12 19 5 12 12 5"></polyline>
+            </svg>
+        </a>
+    </div>
+</div>
+
+<script>
+// Filter change handlers
+document.addEventListener('DOMContentLoaded', function() {
+    const seasonSelect = document.getElementById('season-select');
+    const seasonTypeSelect = document.getElementById('season-type-select');
+    const perModeSelect = document.getElementById('per-mode-select');
+    const seasonSegmentSelect = document.getElementById('season-segment-select');
+    
+    function updatePage() {
+        const season = seasonSelect.value;
+        const seasonType = seasonTypeSelect.value;
+        const perMode = perModeSelect.value;
+        const seasonSegment = seasonSegmentSelect.value;
+        
+        const url = `/stats/teams/${season}?season_type=${seasonType}&per_mode=${perMode}&season_segment=${seasonSegment}`;
+        window.location.href = url;
+    }
+    
+    seasonSelect.addEventListener('change', updatePage);
+    seasonTypeSelect.addEventListener('change', updatePage);
+    perModeSelect.addEventListener('change', updatePage);
+    seasonSegmentSelect.addEventListener('change', updatePage);
+});
+</script>
+{% endblock %}

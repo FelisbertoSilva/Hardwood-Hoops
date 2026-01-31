@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}BoxToData - Basketball Stats{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <header>
+        <div class="container">
+            <img src="{{ url_for('static', filename='images/banner.jpeg') }}" alt="BoxToData Banner" class="header-banner">
+        </div>
+    </header>
+
+    <!-- main navigation -->
+    <nav>
+      <div class="nav-container">
+        <img src="{{ url_for('static', filename='images/logo.jpg') }}" alt="BoxToData Logo" class="nav-logo">
+            <ul>
+                <li><a href="{{ url_for('home.home') }}">Home</a></li>
+                <li><a href="{{ url_for('team.league_standings') }}">League</a></li>
+                <li><a href="{{ url_for('stats.stats') }}">Stats</a></li>
+                <li><a href="{{ url_for('records.records_page') }}">Records</a></li>
+                <li><a href="{{ url_for('finances.finances_page') }}">Finances</a></li>
+                <li><a href="{{ url_for('free_agency.free_agency_page') }}">Free Agency</a></li>
+                <li><a href="{{ url_for('transactions.transactions_page') }}">Transactions</a></li>
+                <li><a href="{{ url_for('draft.draft_rights_page') }}">Draft Rights</a></li>
+                <li><a href="{{ url_for('rules.rules_page') }}">Rules</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+      <div class="content">
+            {% block content %}{% endblock %}
+      </div>
+    </div>
+
+    <footer>
+        <p>&copy;Hardwood Hoops</p>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/tables.js') }}"></script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

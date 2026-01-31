@@ -1,0 +1,454 @@
+{% extends "base.html" %}
+
+{% block title %}All Player Stats - BoxToData{% endblock %}
+
+{% block extra_css %}
+<style>
+/* --- Page Layout Overrides --- */
+.content {
+    padding: 0 !important;
+    background-color: #1a1a1a !important;
+    border-radius: 0 !important; 
+    box-shadow: none !important;
+}
+
+.content-inner {
+    padding: 40px 30px;
+    max-width: 1800px;
+    margin: 0 auto;
+    font-family: 'Roboto', sans-serif;
+    min-height: 100vh;
+}
+
+/* --- Filters Section --- */
+.filters-container {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    align-items: flex-end;
+}
+
+.filter-group {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-width: 150px;
+}
+
+.filter-label {
+    font-size: 0.75em;
+    font-weight: 900;
+    color: #888;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.filter-select {
+    background-color: #2b2b2b;
+    color: #ffffff;
+    border: 1px solid #444;
+    padding: 10px 15px;
+    font-size: 0.95em;
+    font-weight: 600;
+    cursor: pointer;
+    outline: none;
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 15px center;
+    background-size: 14px;
+    border-radius: 0 !important; 
+}
+
+.filter-select:hover {
+    border-color: #666;
+}
+
+/* --- Data Table Styles --- */
+.table-container {
+    width: 100%;
+    overflow-x: auto;
+    background-color: #1a1a1a;
+    border: 1px solid #333;
+    margin-bottom: 20px;
+    border-radius: 0 !important;
+}
+
+.stats-table {
+    width: 100%;
+    border-collapse: collapse; 
+    border-spacing: 0;
+    background-color: #1a1a1a;
+    color: #ffffff;
+    font-size: 0.9em;
+    min-width: 1400px;
+    border-radius: 0 !important;
+}
+
+/* Header Styles */
+.stats-table thead {
+    background-color: #2b2b2b;
+}
+
+.stats-table th {
+    padding: 15px 10px;
+    text-align: center;
+    font-weight: 800;
+    color: #ffffff;
+    text-transform: uppercase;
+    font-size: 0.8em;
+    letter-spacing: 0.5px;
+    border: 1px solid #333;
+    background-color: #2b2b2b;
+    white-space: nowrap;
+    border-radius: 0 !important;
+    cursor: pointer;
+    user-select: none;
+    transition: background-color 0.2s ease;
+}
+
+.stats-table th:hover {
+    background-color: #3a3a3a;
+}
+
+.stats-table th.sorted {
+    background-color: #3a3a3a;
+}
+
+.sort-indicator {
+    margin-left: 5px;
+    font-size: 0.7em;
+}
+
+/* Force Left Alignment for Player Column */
+.stats-table th.col-player, 
+.stats-table td.col-player {
+    text-align: left !important;
+    padding-left: 20px !important;
+    min-width: 220px;
+}
+
+/* Body Styles */
+.stats-table tbody tr {
+    background-color: #1a1a1a;
+}
+
+.stats-table td {
+    padding: 12px 10px;
+    text-align: center;
+    border: 1px solid #333;
+    color: #cccccc;
+    background-color: #1a1a1a;
+}
+
+.stats-table tr:hover td {
+    background-color: #1a1a1a !important;
+    color: #cccccc !important;
+}
+
+.player-link { 
+    color: #ffffff; 
+    text-decoration: none; 
+    font-weight: 700; 
+}
+
+.player-link:hover { 
+    color: #ffffff; 
+    text-decoration: underline;
+    text-decoration-thickness: 3px; 
+    text-decoration-color: #ffffff;
+    text-underline-offset: 4px;
+}
+
+/* --- Pagination --- */
+.pagination-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px 0 40px 0;
+    gap: 10px;
+}
+
+.pagination-btn {
+    padding: 10px 20px;
+    background-color: #2b2b2b;
+    color: #ffffff;
+    border: 2px solid #3a3a3a;
+    font-size: 0.95em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border-radius: 0 !important;
+}
+
+.pagination-btn:hover:not(:disabled) {
+    background-color: #ffffff;
+    color: #1a1a1a;
+    border-color: #ffffff;
+}
+
+.pagination-btn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+.pagination-info {
+    color: #888;
+    font-size: 0.95em;
+    font-weight: 600;
+}
+
+/* --- Back Arrow Button --- */
+.back-arrow-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 40px;
+}
+
+.back-arrow-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: #2b2b2b;
+    border: 2px solid #3a3a3a;
+    color: #ffffff;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.back-arrow-btn:hover {
+    background-color: #ffffff;
+    color: #1a1a1a;
+    border-color: #ffffff;
+    transform: translateY(-2px);
+}
+
+.back-arrow-icon {
+    width: 24px;
+    height: 24px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="content-inner">
+    
+    <div class="filters-container">
+        <div class="filter-group">
+            <label class="filter-label">Season</label>
+            <select class="filter-select" id="season-select">
+                {% for s in available_seasons %}
+                <option value="{{ s }}" {% if s == current_season %}selected{% endif %}>{{ s }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="filter-group">
+            <label class="filter-label">Season Type</label>
+            <select class="filter-select" id="season-type-select">
+                <option value="regular" {% if season_type == 'regular' %}selected{% endif %}>Regular Season</option>
+                <option value="playoffs" {% if season_type == 'playoffs' %}selected{% endif %}>Playoffs</option>
+            </select>
+        </div>
+        <div class="filter-group">
+            <label class="filter-label">Per Mode</label>
+            <select class="filter-select" id="per-mode-select">
+                <option value="per_game" {% if per_mode == 'per_game' %}selected{% endif %}>Per Game</option>
+                <option value="totals" {% if per_mode == 'totals' %}selected{% endif %}>Totals</option>
+            </select>
+        </div>
+        <div class="filter-group">
+            <label class="filter-label">Season Segment</label>
+            <select class="filter-select" id="season-segment-select">
+                <option value="all" {% if season_segment == 'all' %}selected{% endif %}>All Season Segments</option>
+                <option value="last5" {% if season_segment == 'last5' %}selected{% endif %}>Last 5 Games</option>
+                <option value="last10" {% if season_segment == 'last10' %}selected{% endif %}>Last 10 Games</option>
+                <option value="pre_allstar" {% if season_segment == 'pre_allstar' %}selected{% endif %}>Pre All-Star</option>
+                <option value="post_allstar" {% if season_segment == 'post_allstar' %}selected{% endif %}>Post All-Star</option>
+                <option disabled>--- Months ---</option>
+                <option value="nov" {% if season_segment == 'nov' %}selected{% endif %}>November</option>
+                <option value="dec" {% if season_segment == 'dec' %}selected{% endif %}>December</option>
+                <option value="jan" {% if season_segment == 'jan' %}selected{% endif %}>January</option>
+                <option value="feb" {% if season_segment == 'feb' %}selected{% endif %}>February</option>
+                <option value="mar" {% if season_segment == 'mar' %}selected{% endif %}>March</option>
+                <option value="apr" {% if season_segment == 'apr' %}selected{% endif %}>April</option>
+                <option value="may" {% if season_segment == 'may' %}selected{% endif %}>May</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="table-container">
+        <table class="stats-table">
+            <thead>
+                <tr>
+                    <th class="col-player {% if sort_by == 'player_name' %}sorted{% endif %}" onclick="sortBy('player_name')">PLAYER<span class="sort-indicator">{% if sort_by == 'player_name' %}{{ '▲' if sort_order == 'asc' else '▼' }}{% endif %}</span></th>
+                    <th class="{% if sort_by == 'team' %}sorted{% endif %}" onclick="sortBy('team')">TEAM<span class="sort-indicator">{% if sort_by == 'team' %}{{ '▲' if sort_order == 'asc' else '▼' }}{% endif %}</span></th>
+                    <th class="{% if sort_by == 'gp' %}sorted{% endif %}" onclick="sortBy('gp')">GP<span class="sort-indicator">{% if sort_by == 'gp' %}{{ '▲' if sort_order == 'asc' else '▼' }}{% endif %}</span></th>
+                    <th class="{% if sort_by == 'min' %}sorted{% endif %}" onclick="sortBy('min')">MIN<span class="sort-indicator">{% if sort_by == 'min' %}{{ '▲' if sort_order == 'asc' else '▼' }}{% endif %}</span></th>
+                    <th class="{% if sort_by == 'pts' %}sorted{% endif %}" onclick="sortBy('pts')">PTS<span class="sort-indicator">{% if sort_by == 'pts' %}{{ '▲' if sort_order == 'asc' else '▼' }}{% endif %}</span></th>
+                    <th class="{% if sort_by == 'fgm' %}sorted{% endif %}" onclick="sortBy('fgm')">FGM<span class="sort-indicator">{% if sort_by == 'fgm' %}{{ '▲' if sort_order == 'asc' else '▼' }}{% endif %}</span></th>
+                    <th class="{% if sort_by == 'fga' %}sorted{% endif %}" onclick="sortBy('fga')">FGA<span class="sort-indicator">{% if sort_by == 'fga' %}{{ '▲' if sort_order == 'asc' else '▼' }}{% endif %}</span></th>
+                    <th class="{% if sort_by == 'fg_pct' %}sorted{% endif %}" onclick="sortBy('fg_pct')">FG%<span class="sort-indicator">{% if sort_by == 'fg_pct' %}{{ '▲' if sort_order == 'asc' else '▼' }}{% endif %}</span></th>
+                    <th class="{% if sort_by == 'tpm' %}sorted{% endif %}" onclick="sortBy('tpm')">3PM<span class="sort-indicator">{% if sort_by == 'tpm' %}{{ '▲' if sort_order == 'asc' else '▼' }}{% endif %}</span></th>
+                    <th class="{% if sort_by == 'tpa' %}sorted{% endif %}" onclick="sortBy('tpa')">3PA<span class="sort-indicator">{% if sort_by == 'tpa' %}{{ '▲' if sort_order == 'asc' else '▼' }}{% endif %}</span></th>
+                    <th class="{% if sort_by == 'tp_pct' %}sorted{% endif %}" onclick="sortBy('tp_pct')">3P%<span class="sort-indicator">{% if sort_by == 'tp_pct' %}{{ '▲' if sort_order == 'asc' else '▼' }}{% endif %}</span></th>
+                    <th class="{% if sort_by == 'ftm' %}sorted{% endif %}" onclick="sortBy('ftm')">FTM<span class="sort-indicator">{% if sort_by == 'ftm' %}{{ '▲' if sort_order == 'asc' else '▼' }}{% endif %}</span></th>
+                    <th class="{% if sort_by == 'fta' %}sorted{% endif %}" onclick="sortBy('fta')">FTA<span class="sort-indicator">{% if sort_by == 'fta' %}{{ '▲' if sort_order == 'asc' else '▼' }}{% endif %}</span></th>
+                    <th class="{% if sort_by == 'ft_pct' %}sorted{% endif %}" onclick="sortBy('ft_pct')">FT%<span class="sort-indicator">{% if sort_by == 'ft_pct' %}{{ '▲' if sort_order == 'asc' else '▼' }}{% endif %}</span></th>
+                    <th class="{% if sort_by == 'reb' %}sorted{% endif %}" onclick="sortBy('reb')">REB<span class="sort-indicator">{% if sort_by == 'reb' %}{{ '▲' if sort_order == 'asc' else '▼' }}{% endif %}</span></th>
+                    <th class="{% if sort_by == 'ast' %}sorted{% endif %}" onclick="sortBy('ast')">AST<span class="sort-indicator">{% if sort_by == 'ast' %}{{ '▲' if sort_order == 'asc' else '▼' }}{% endif %}</span></th>
+                    <th class="{% if sort_by == 'tov' %}sorted{% endif %}" onclick="sortBy('tov')">TOV<span class="sort-indicator">{% if sort_by == 'tov' %}{{ '▲' if sort_order == 'asc' else '▼' }}{% endif %}</span></th>
+                    <th class="{% if sort_by == 'stl' %}sorted{% endif %}" onclick="sortBy('stl')">STL<span class="sort-indicator">{% if sort_by == 'stl' %}{{ '▲' if sort_order == 'asc' else '▼' }}{% endif %}</span></th>
+                    <th class="{% if sort_by == 'blk' %}sorted{% endif %}" onclick="sortBy('blk')">BLK<span class="sort-indicator">{% if sort_by == 'blk' %}{{ '▲' if sort_order == 'asc' else '▼' }}{% endif %}</span></th>
+                </tr>
+            </thead>
+            <tbody id="player-table-body">
+                {% if player_stats %}
+                    {% for player in player_stats %}
+                    <tr class="player-row" data-index="{{ loop.index0 }}">
+                        <td class="col-player">
+                            <a href="{{ url_for('player.player_page', player_name=player.player_name) }}" class="player-link">{{ player.player_name }}</a>
+                        </td>
+                        <td>{{ player.team }}</td>
+                        <td>{{ player.gp }}</td>
+                        <td>{{ "%.1f"|format(player.min) }}</td>
+                        <td>{{ player.pts }}</td>
+                        <td>{{ player.fgm }}</td>
+                        <td>{{ player.fga }}</td>
+                        <td>{{ player.fg_pct }}</td>
+                        <td>{{ player.tpm }}</td>
+                        <td>{{ player.tpa }}</td>
+                        <td>{{ player.tp_pct }}</td>
+                        <td>{{ player.ftm }}</td>
+                        <td>{{ player.fta }}</td>
+                        <td>{{ player.ft_pct }}</td>
+                        <td>{{ player.reb }}</td>
+                        <td>{{ player.ast }}</td>
+                        <td>{{ player.tov }}</td>
+                        <td>{{ player.stl }}</td>
+                        <td>{{ player.blk }}</td>
+                    </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="19" style="text-align: center; padding: 40px;">No player statistics available for the selected filters.</td>
+                    </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+
+    {% if player_stats %}
+    <div class="pagination-container">
+        <button class="pagination-btn" id="prev-btn" onclick="changePage(-1)">← Previous</button>
+        <span class="pagination-info" id="page-info"></span>
+        <button class="pagination-btn" id="next-btn" onclick="changePage(1)">Next →</button>
+    </div>
+    {% endif %}
+
+    <div class="back-arrow-container">
+        <a href="{{ url_for('home.home') }}" class="back-arrow-btn" aria-label="Back to Home">
+            <svg class="back-arrow-icon" viewBox="0 0 24 24">
+                <line x1="19" y1="12" x2="5" y2="12"></line>
+                <polyline points="12 19 5 12 12 5"></polyline>
+            </svg>
+        </a>
+    </div>
+</div>
+
+<script>
+// Current sort state from server
+const currentSortBy = '{{ sort_by }}';
+const currentSortOrder = '{{ sort_order }}';
+
+// Filter change handlers
+document.addEventListener('DOMContentLoaded', function() {
+    const seasonSelect = document.getElementById('season-select');
+    const seasonTypeSelect = document.getElementById('season-type-select');
+    const perModeSelect = document.getElementById('per-mode-select');
+    const seasonSegmentSelect = document.getElementById('season-segment-select');
+
+    function updatePage() {
+        const season = seasonSelect.value;
+        const seasonType = seasonTypeSelect.value;
+        const perMode = perModeSelect.value;
+        const seasonSegment = seasonSegmentSelect.value;
+
+        const url = `/stats/players/${season}?season_type=${seasonType}&per_mode=${perMode}&season_segment=${seasonSegment}&sort_by=${currentSortBy}&sort_order=${currentSortOrder}`;
+        window.location.href = url;
+    }
+
+    seasonSelect.addEventListener('change', updatePage);
+    seasonTypeSelect.addEventListener('change', updatePage);
+    perModeSelect.addEventListener('change', updatePage);
+    seasonSegmentSelect.addEventListener('change', updatePage);
+
+    initPagination();
+});
+
+function sortBy(column) {
+    const seasonSelect = document.getElementById('season-select');
+    const seasonTypeSelect = document.getElementById('season-type-select');
+    const perModeSelect = document.getElementById('per-mode-select');
+    const seasonSegmentSelect = document.getElementById('season-segment-select');
+
+    const season = seasonSelect.value;
+    const seasonType = seasonTypeSelect.value;
+    const perMode = perModeSelect.value;
+    const seasonSegment = seasonSegmentSelect.value;
+
+    // Toggle sort order if clicking the same column, otherwise default to desc
+    let newSortOrder = 'desc';
+    if (column === currentSortBy) {
+        newSortOrder = currentSortOrder === 'desc' ? 'asc' : 'desc';
+    }
+
+    const url = `/stats/players/${season}?season_type=${seasonType}&per_mode=${perMode}&season_segment=${seasonSegment}&sort_by=${column}&sort_order=${newSortOrder}`;
+    window.location.href = url;
+}
+
+const PLAYERS_PER_PAGE = 25;
+let currentPage = 1;
+let totalPlayers = 0;
+
+function initPagination() {
+    const rows = document.querySelectorAll('.player-row');
+    totalPlayers = rows.length;
+    if (totalPlayers === 0) return;
+    showPage(1);
+}
+
+function showPage(page) {
+    const rows = document.querySelectorAll('.player-row');
+    const totalPages = Math.ceil(totalPlayers / PLAYERS_PER_PAGE);
+    currentPage = Math.max(1, Math.min(page, totalPages));
+    const start = (currentPage - 1) * PLAYERS_PER_PAGE;
+    const end = start + PLAYERS_PER_PAGE;
+    
+    rows.forEach((row, index) => {
+        row.style.display = (index >= start && index < end) ? '' : 'none';
+    });
+    
+    const pageInfo = document.getElementById('page-info');
+    pageInfo.textContent = `Showing ${start + 1}-${Math.min(end, totalPlayers)} of ${totalPlayers}`;
+    
+    document.getElementById('prev-btn').disabled = currentPage === 1;
+    document.getElementById('next-btn').disabled = currentPage === totalPages;
+}
+
+function changePage(delta) {
+    showPage(currentPage + delta);
+}
+</script>
+{% endblock %}

@@ -1,0 +1,443 @@
+{% extends "base.html" %}
+
+{% block title %}{{ display_name|default(team_name) }} - {{ season }} Season{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* --- DARK THEME BASE --- */
+    .content {
+        background-color: #1a1a1a !important;
+        padding: 30px;
+        border-radius: 0 !important;
+    }
+
+    /* --- SEASON HEADER --- */
+    .season-header {
+        display: flex;
+        align-items: center;
+        gap: 25px;
+        background-color: #2b2b2b;
+        padding: 25px;
+        border: 1px solid #3a3a3a;
+        margin-bottom: 30px;
+        border-radius: 0 !important;
+    }
+
+    .team-logo {
+        width: 100px;
+        height: 100px;
+        object-fit: contain;
+        flex-shrink: 0;
+    }
+
+    .season-info-container {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .season-header h2 {
+        margin: 0;
+        font-size: 2.2em;
+        color: #ffffff;
+        line-height: 1;
+        font-weight: bold;
+    }
+
+    .season-details p {
+        margin: 4px 0;
+        color: #cccccc;
+        font-size: 1em;
+        line-height: 1.4;
+    }
+
+    .season-details strong {
+        color: #ffffff;
+    }
+
+    /* --- GAMES TABLE --- */
+    .games-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.9em;
+        background-color: #2b2b2b;
+        border: none;
+    }
+
+    .games-table th {
+        background-color: #555 !important;
+        color: white;
+        padding: 12px 10px;
+        text-align: center;
+        font-weight: bold;
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        border: none !important;
+        border-left: 1px solid #666 !important;
+        border-right: 1px solid #666 !important;
+        border-bottom: 2px solid #333 !important;
+    }
+
+    .games-table th:first-child {
+        border-left: none !important;
+    }
+
+    .games-table th:last-child {
+        border-right: none !important;
+    }
+
+    .games-table th:nth-child(2) {
+        text-align: left;
+    }
+
+    .games-table td {
+        padding: 12px 10px;
+        text-align: center;
+        background-color: #2b2b2b !important;
+        color: #e0e0e0 !important;
+        border: none !important;
+        border-left: 1px solid #444 !important;
+        border-right: 1px solid #444 !important;
+        border-bottom: 1px solid #333 !important;
+    }
+
+    .games-table td:first-child {
+        border-left: none !important;
+    }
+
+    .games-table td:last-child {
+        border-right: none !important;
+    }
+
+    .games-table td:nth-child(1),
+    .games-table th:nth-child(1) {
+        background-color: #252525 !important;
+    }
+
+    .games-table tbody tr:nth-child(even) td {
+        background-color: #323232 !important;
+    }
+
+    .games-table tbody tr:nth-child(even) td:nth-child(1) {
+        background-color: #2a2a2a !important;
+    }
+
+    .games-table tbody tr:hover td {
+        background-color: #3a3a3a !important;
+        color: #ffffff !important;
+        cursor: pointer;
+    }
+
+    .opponent-cell {
+        text-align: left !important;
+        font-weight: 500;
+    }
+
+    .win-cell {
+        color: #4ade80;
+        font-weight: bold;
+        font-size: 1.1em;
+    }
+
+    .loss-cell {
+        color: #f87171;
+        font-weight: bold;
+        font-size: 1.1em;
+    }
+
+    .score-link {
+        color: #ffffff;
+        text-decoration: none;
+        font-weight: 600;
+    }
+
+    .score-link:hover {
+        text-decoration: underline;
+        color: #e0e0e0;
+    }
+
+    /* --- PLAYOFF SECTION --- */
+    .playoff-section {
+        margin-top: 40px;
+    }
+
+    .playoff-section h3 {
+        color: #ffffff;
+        margin-bottom: 20px;
+        font-size: 1.5em;
+        border-bottom: 2px solid #3a3a3a;
+        padding-bottom: 10px;
+    }
+
+    .playoff-series-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 20px;
+    }
+
+    .series-card {
+        background-color: #2b2b2b;
+        border: 1px solid #3a3a3a;
+        padding: 20px;
+        text-decoration: none;
+        display: block;
+        transition: all 0.2s ease;
+    }
+
+    .series-card:hover {
+        background-color: #353535;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    .series-card.won {
+        border-left: 4px solid #22c55e;
+    }
+
+    .series-card.lost {
+        border-left: 4px solid #ef4444;
+    }
+
+    .series-card.champion {
+        border: 2px solid #d4af37;
+        background: linear-gradient(135deg, #2b2b2b 0%, #3a3520 100%);
+    }
+
+    .series-card.champion:hover {
+        background: linear-gradient(135deg, #353535 0%, #4a4525 100%);
+    }
+
+    .series-round {
+        font-size: 0.8em;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: #888;
+        margin-bottom: 8px;
+        font-weight: 600;
+    }
+
+    .series-matchup {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        margin-bottom: 12px;
+    }
+
+    .series-opponent-logo {
+        width: 50px;
+        height: 50px;
+        object-fit: contain;
+    }
+
+    .series-opponent-name {
+        color: #ffffff;
+        font-size: 1.1em;
+        font-weight: 600;
+    }
+
+    .series-result {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .series-score {
+        font-size: 1.5em;
+        font-weight: bold;
+        color: #ffffff;
+    }
+
+    .series-outcome {
+        font-size: 0.85em;
+        font-weight: bold;
+        padding: 4px 10px;
+    }
+
+    .series-outcome.won {
+        background-color: #22c55e;
+        color: #000;
+    }
+
+    .series-outcome.lost {
+        background-color: #ef4444;
+        color: #fff;
+    }
+
+    .series-outcome.champion {
+        background: linear-gradient(180deg, #d4af37, #b8860b);
+        color: #000;
+    }
+
+    .no-playoffs {
+        background-color: #2b2b2b;
+        border: 1px solid #3a3a3a;
+        padding: 30px;
+        text-align: center;
+        color: #666;
+        font-style: italic;
+    }
+
+    /* --- Back Arrow Button --- */
+    .back-arrow-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 40px 0;
+    }
+
+    .back-arrow-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background-color: #2b2b2b;
+        border: 2px solid #3a3a3a;
+        color: #ffffff;
+        transition: all 0.2s ease;
+        cursor: pointer;
+        text-decoration: none;
+    }
+
+    .back-arrow-btn:hover {
+        background-color: #ffffff;
+        color: #1a1a1a;
+        border-color: #ffffff;
+        transform: translateY(-2px);
+    }
+
+    .back-arrow-icon {
+        width: 24px;
+        height: 24px;
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 2;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+    }
+
+    /* --- RESPONSIVE --- */
+    @media (max-width: 900px) {
+        .season-header {
+            flex-wrap: wrap;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+
+<div class="season-header">
+    <img src="{{ url_for('static', filename='teams/' + (display_name|default(team_name)) + '.png') }}"
+         alt="{{ display_name|default(team_name) }}"
+         class="team-logo"
+         onerror="this.src='{{ url_for('static', filename='teams/' + team_name + '.png') }}';">
+
+    <div class="season-info-container">
+        <h2>{{ display_name|default(team_name) }}</h2>
+        <div class="season-details">
+            <p><strong>Season:</strong> {{ season }}</p>
+            <p><strong>Record:</strong> {{ wins }}-{{ losses }} ({{ "%.3f"|format(wins / (wins + losses)) if (wins + losses) > 0 else 0 }})</p>
+        </div>
+    </div>
+</div>
+
+<table class="games-table">
+    <thead>
+        <tr>
+            <th>Date</th>
+            <th>Opponent</th>
+            <th>Result</th>
+            <th>Score</th>
+            <th>Box Score</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for game in games %}
+        <tr>
+            <td>{{ game.game_date }}</td>
+            <td class="opponent-cell">
+                {% if game.home_team == team_name %}
+                    vs {{ game.away_team }}
+                {% else %}
+                    @ {{ game.home_team }}
+                {% endif %}
+            </td>
+            <td>
+                {% if game.win == 1 %}
+                    <span class="win-cell">W</span>
+                {% else %}
+                    <span class="loss-cell">L</span>
+                {% endif %}
+            </td>
+            <td>
+                {% if game.home_team == team_name %}
+                    <strong>{{ game.home_score }}</strong> - {{ game.away_score }}
+                {% else %}
+                    <strong>{{ game.away_score }}</strong> - {{ game.home_score }}
+                {% endif %}
+            </td>
+            <td>
+                <a href="{{ url_for('team.game_boxscore', game_id=game.game_id, team_name=team_name) }}" class="score-link">
+                    View Stats
+                </a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<!-- Playoff Series Section -->
+<div class="playoff-section">
+    <h3>Playoff Results</h3>
+    {% if playoff_results %}
+    <div class="playoff-series-grid">
+        {% for result in playoff_results %}
+        <a href="{{ url_for('team.playoff_series', season=season, team1=team_name, team2=result.opponent) }}"
+           class="series-card {% if result.won == true and result.round == 'NBA Finals' %}champion{% elif result.won == true %}won{% elif result.won == false %}lost{% endif %}">
+            <div class="series-round">{{ result.round }}</div>
+            <div class="series-matchup">
+                <img src="{{ url_for('static', filename='teams/' + result.opponent + '.png') }}"
+                     alt="{{ result.opponent }}"
+                     class="series-opponent-logo"
+                     onerror="this.src='https://placehold.co/50x50?text=?';">
+                <span class="series-opponent-name">vs {{ result.opponent }}</span>
+            </div>
+            <div class="series-result">
+                <span class="series-score">{{ result.team_wins }}-{{ result.opp_wins }}</span>
+                {% if result.won == true and result.round == 'NBA Finals' %}
+                <span class="series-outcome champion">🏆 CHAMPION</span>
+                {% elif result.won == true %}
+                <span class="series-outcome won">WIN</span>
+                {% elif result.won == false %}
+                <span class="series-outcome lost">LOSS</span>
+                {% else %}
+                <span class="series-outcome">IN PROGRESS</span>
+                {% endif %}
+            </div>
+        </a>
+        {% endfor %}
+    </div>
+    {% elif standing and standing <= 10 %}
+    <div class="no-playoffs">
+        No playoff games played yet this season
+    </div>
+    {% else %}
+    <div class="no-playoffs">
+        Did not qualify for playoffs
+    </div>
+    {% endif %}
+</div>
+
+<div class="back-arrow-container">
+    <a href="{{ url_for('team.team_page', team_name=team_name) }}" class="back-arrow-btn" aria-label="Back to {{ team_name }}">
+        <svg class="back-arrow-icon" viewBox="0 0 24 24">
+            <line x1="19" y1="12" x2="5" y2="12"></line>
+            <polyline points="12 19 5 12 12 5"></polyline>
+        </svg>
+    </a>
+</div>
+
+{% endblock %}

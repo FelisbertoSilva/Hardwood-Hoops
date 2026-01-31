@@ -1,0 +1,265 @@
+{% extends "base.html" %}
+
+{# color class macro - handles contract type codes #}
+{% macro get_color_class(ctc) %}
+    {% set code = ctc|default(0)|float|int %}
+    {% if code == 1 %}
+        contract-red
+    {% elif code == 2 %}
+        contract-blue
+    {% elif code == 3 %}
+        contract-green
+    {% else %}
+        contract-active
+    {% endif %}
+{% endmacro %}
+
+{% block title %}Finances - {{ team_name }}{% endblock %}
+
+{% block extra_css %}
+<style>
+/* dark theme */
+.content {
+    background-color: #1a1a1a !important;
+    padding: 30px;
+    border-radius: 0 !important;
+}
+
+/* page header */
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    flex-wrap: wrap; gap: 15px;
+}
+.page-title { color: #ffffff; font-size: 2em; margin: 0; }
+
+/* cap info box */
+.cap-info-header {
+    background-color: #2b2b2b;
+    padding: 15px 20px;
+    border: 1px solid #3a3a3a;
+    margin-bottom: 20px;
+    display: flex;
+    gap: 40px;
+    flex-wrap: wrap;
+}
+.cap-item { display: flex; flex-direction: column; }
+.cap-label { color: #888; font-size: 0.85em; margin-bottom: 2px; }
+.cap-value { color: #ffffff; font-size: 1.1em; font-weight: bold; }
+
+/* team selector dropdown */
+.team-selector { display: flex; align-items: center; gap: 10px; }
+.team-selector select {
+    padding: 10px 15px;
+    font-size: 1em;
+    border: 1px solid #3a3a3a;
+    background-color: #2b2b2b;
+    color: #ffffff;
+    cursor: pointer;
+    font-weight: 500;
+    min-width: 250px;
+}
+.team-selector select:hover { background-color: #353535; border-color: #4a4a4a; }
+.team-selector select:focus { outline: none; border-color: #666; }
+
+/* team header with logo */
+.team-header {
+    display: flex; align-items: center; gap: 20px;
+    background-color: #2b2b2b;
+    padding: 20px;
+    border: 1px solid #3a3a3a;
+    margin-bottom: 20px;
+}
+.team-logo { width: 80px; height: 80px; object-fit: contain; flex-shrink: 0; }
+.team-info h2 { margin: 0; font-size: 1.8em; color: #ffffff; }
+
+/* contracts table */
+.contracts-table {
+    width: 100%; border-collapse: collapse;
+    font-size: 0.9em; background-color: #2b2b2b;
+}
+.contracts-table th {
+    background-color: #1a1a1a !important;
+    color: #888 !important;
+    border: none !important;
+    padding: 10px 12px;
+    text-align: center;
+    font-weight: normal;
+    font-size: 0.95em;
+    cursor: default;
+    pointer-events: none;
+    user-select: none;
+}
+.contracts-table th:first-child { text-align: left; width: 30px; }
+.contracts-table th:nth-child(2) { text-align: left; }
+
+.contracts-table td {
+    background-color: #1a1a1a !important;
+    border: none !important;
+    padding: 8px 12px; text-align: center;
+    font-family: 'Consolas', 'Monaco', monospace;
+}
+.contracts-table td:first-child {
+    text-align: center; color: #888 !important; font-weight: bold;
+}
+.contracts-table td:nth-child(2) { text-align: left; font-family: inherit; }
+
+.contracts-table tbody tr { border-bottom: 1px solid #2b2b2b; }
+.contracts-table tbody tr:hover td { background-color: #252525 !important; }
+
+/* bird rights */
+.bird-indicator { color: #888; margin-left: 5px; }
+
+.player-link { color: #ffffff; text-decoration: none; }
+.player-link:hover { text-decoration: underline; color: #e0e0e0; }
+
+/* contract colors */
+.contracts-table td.contract-active { color: #ffffff !important; }
+.contracts-table td.contract-red { color: #ef4444 !important; }
+.contracts-table td.contract-blue { color: #3b82f6 !important; }
+.contracts-table td.contract-green { color: #22c55e !important; }
+.contracts-table td.contract-empty { color: #444 !important; }
+
+/* totals */
+.totals-row td {
+    background-color: #2b2b2b !important;
+    border-top: 2px solid #3a3a3a !important;
+    font-weight: bold; padding-top: 12px;
+    color: #ffffff !important;
+}
+
+/* cap summary rows */
+.cap-summary-row td {
+    background-color: #2b2b2b !important;
+    padding: 6px 12px; border: none !important;
+}
+.cap-summary-row td:nth-child(2) { color: #888 !important; font-family: inherit; }
+
+.cap-positive { color: #22c55e !important; }
+.cap-negative { color: #ef4444 !important; }
+
+.empty-roster-row {
+    color: #666; font-style: italic;
+    padding: 20px; text-align: center;
+}
+
+/* responsive */
+@media (max-width: 900px) {
+    .page-header { flex-direction: column; align-items: flex-start; }
+    .cap-info-header { flex-direction: column; gap: 15px; }
+    .contracts-table { font-size: 0.8em; }
+}
+</style>
+{% endblock %}
+
+{% block content %}
+
+<div class="page-header">
+    <h1 class="page-title">Hardwood Hoops 2025/26</h1>
+    <div class="team-selector">
+        <select id="team-select" onchange="changeTeam()">
+            {% for team in teams %}
+            <option value="{{ team }}" {% if team == team_name %}selected{% endif %}>
+                {{ team }}
+            </option>
+            {% endfor %}
+        </select>
+    </div>
+</div>
+
+<div class="cap-info-header">
+    <div class="cap-item">
+        <span class="cap-label">Salary Cap:</span>
+        <span class="cap-value">{{ format_salary(salary_cap) }}</span>
+    </div>
+    <div class="cap-item">
+        <span class="cap-label">Hard Cap:</span>
+        <span class="cap-value">{{ format_salary(hard_cap) }}</span>
+    </div>
+</div>
+
+<div class="team-header">
+    <img src="{{ url_for('static', filename='teams/' + team_name + '.png') }}"
+         alt="{{ team_name }}" class="team-logo"
+         onerror="this.src='https://placehold.co/80x80?text=No+Logo';">
+    <div class="team-info">
+        <h2>{{ team_name }}</h2>
+    </div>
+</div>
+
+<table class="contracts-table">
+    <thead>
+        <tr>
+            <th></th>
+            <th>Player</th>
+            <th>2025/26</th>
+            <th>2026/27</th>
+            <th>2027/28</th>
+            <th>2028/29</th>
+            <th>2029/30</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% if players %}
+            {% for player in players %}
+            <tr>
+                <td>{% if player.rating %}{{ player.rating }}{% endif %}</td>
+                <td>
+                    <a href="{{ url_for('player.player_page', player_name=player.name) }}" class="player-link">{{ player.name }}</a>
+                    {% if player.birds %}<span class="bird-indicator">{{ '*' * player.birds }}</span>{% endif %}
+                </td>
+                {% for ct, ctc in player.contracts %}
+                    <td class="{{ get_color_class(ctc) if ct else 'contract-empty' }}">
+                        {{ format_salary(ct) if ct else '' }}
+                    </td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+
+            <tr class="totals-row">
+                <td></td>
+                <td>Totals:</td>
+                {% for total in totals %}
+                <td>{{ format_salary(total) if total else '' }}</td>
+                {% endfor %}
+            </tr>
+
+            <tr class="cap-summary-row">
+                <td></td>
+                <td>Salary Cap:</td>
+                {% for total in totals %}
+                    {% set space = salary_cap - (total or 0) %}
+                    <td class="{% if space >= 0 %}cap-positive{% else %}cap-negative{% endif %}">
+                        {{ format_salary_diff(total or 0, salary_cap) }}
+                    </td>
+                {% endfor %}
+            </tr>
+
+            <tr class="cap-summary-row">
+                <td></td>
+                <td>Hard Cap:</td>
+                {% for total in totals %}
+                    {% set space = hard_cap - (total or 0) %}
+                    <td class="{% if space >= 0 %}cap-positive{% else %}cap-negative{% endif %}">
+                        {{ format_salary_diff(total or 0, hard_cap) }}
+                    </td>
+                {% endfor %}
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7" class="empty-roster-row">No contract data available for this team</td>
+            </tr>
+        {% endif %}
+    </tbody>
+</table>
+
+<script>
+function changeTeam() {
+    const team = document.getElementById('team-select').value;
+    window.location.href = '/finances/' + encodeURIComponent(team);
+}
+</script>
+
+{% endblock %}

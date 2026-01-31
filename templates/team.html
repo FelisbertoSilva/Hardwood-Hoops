@@ -1,0 +1,549 @@
+{% extends "base.html" %}
+
+{% block title %}{{ team_name }} - Team Page{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* dark theme */
+    .content {
+        background-color: #1a1a1a !important;
+        padding: 30px;
+        border-radius: 0 !important;
+    }
+
+    /* team header section */
+    .team-header {
+        display: flex;
+        align-items: center;
+        gap: 25px;
+        background-color: #2b2b2b;
+        padding: 25px;
+        border: 1px solid #3a3a3a;
+        margin-bottom: 30px;
+        border-radius: 0 !important;
+    }
+
+    .team-logo {
+        width: 120px;
+        height: 120px;
+        object-fit: contain;
+        flex-shrink: 0;
+    }
+
+    .team-info-container {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .team-header h2 {
+        margin: 0;
+        font-size: 2.5em;
+        color: #ffffff;
+        line-height: 1;
+        font-weight: bold;
+    }
+
+    .team-details p {
+        margin: 2px 0 0 0;
+        color: #cccccc;
+        font-size: 1em;
+        line-height: 1.4;
+    }
+
+    /* championship trophies */
+    .titles-container {
+        display: flex;
+        gap: 4px;
+        margin-top: 6px;
+        flex-wrap: wrap;
+    }
+
+    .title-trophy {
+        font-size: 1.2em;
+        cursor: default;
+        transition: transform 0.15s ease;
+    }
+    .title-trophy:hover { transform: scale(1.2); }
+
+    .team-details strong { color: #ffffff; }
+
+    /* sections */
+    .section { margin-bottom: 40px; }
+
+    .section h3 {
+        color: #ffffff;
+        margin-bottom: 15px;
+        font-size: 1.5em;
+        border-bottom: 2px solid #3a3a3a;
+        padding-bottom: 10px;
+    }
+
+    /* table styles */
+    table {
+        background-color: #2b2b2b !important;
+        border: none;
+        border-radius: 0 !important;
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    th {
+        background-color: #555 !important;
+        color: white !important;
+        border-left: 1px solid #666 !important;
+        border-right: 1px solid #666 !important;
+        border-top: none !important;
+        border-bottom: 2px solid #333 !important;
+        padding: 10px;
+        text-align: center;
+        font-weight: bold;
+    }
+    th:first-child { border-left: none !important; }
+    th:last-child { border-right: none !important; }
+
+    td {
+        background-color: #2b2b2b !important;
+        color: #e0e0e0 !important;
+        border-left: 1px solid #444 !important;
+        border-right: 1px solid #444 !important;
+        border-top: none !important;
+        border-bottom: 1px solid #333 !important;
+        padding: 8px 10px;
+        text-align: center;
+    }
+    td:first-child { border-left: none !important; }
+    td:last-child { border-right: none !important; }
+
+    th:first-child, td:first-child { background-color: #252525 !important; }
+
+    /* season records table - left align first col */
+    .season-records-table th:first-child,
+    .season-records-table td:first-child { text-align: left; }
+
+    /* roster table - left align player names */
+    .roster-table th:first-child,
+    .roster-table td:first-child { text-align: left; }
+
+    .roster-table th:not(:first-child),
+    .roster-table td:not(:first-child) { text-align: center; }
+
+    tbody tr:nth-child(even) td { background-color: #323232 !important; }
+    tbody tr:nth-child(even) td:first-child { background-color: #2a2a2a !important; }
+    tbody tr:hover td { background-color: #3a3a3a !important; color: #ffffff !important; }
+
+    /* reset styles */
+    .roster-table td,
+    .season-records-table td { background-color: #2b2b2b !important; }
+
+    .roster-table tbody tr:nth-child(even) td,
+    .season-records-table tbody tr:nth-child(even) td { background-color: #323232 !important; }
+
+    .roster-table td:first-child,
+    .season-records-table td:first-child { background-color: #252525 !important; }
+
+    .roster-table tbody tr:nth-child(even) td:first-child,
+    .season-records-table tbody tr:nth-child(even) td:first-child { background-color: #2a2a2a !important; }
+
+    .roster-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.9em;
+        margin-bottom: 20px;
+    }
+
+    .player-link {
+        color: #ffffff;
+        text-decoration: none;
+        font-weight: 500;
+    }
+    .player-link:hover { text-decoration: underline; color: #e0e0e0; }
+
+    .season-records-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.9em;
+        margin-bottom: 20px;
+    }
+
+    /* view button */
+    .view-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background-color: #3a3a3a;
+        border: 1px solid #555;
+        color: #ffffff;
+        transition: all 0.2s ease;
+        cursor: pointer;
+        text-decoration: none;
+    }
+    .view-btn:hover {
+        background-color: #ffffff;
+        color: #1a1a1a;
+        border-color: #ffffff;
+        transform: translateY(-1px);
+    }
+    .view-btn svg {
+        width: 16px; height: 16px;
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 2;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+    }
+
+    /* standing badges */
+    .standing-badge {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 28px; height: 28px;
+        background: linear-gradient(180deg, #555, #444);
+        color: #ffffff;
+        font-weight: bold;
+        font-size: 0.85em;
+        border: 1px solid #666;
+    }
+    .standing-badge.top-seed {
+        background: linear-gradient(180deg, #d4af37, #b8860b);
+        color: #000;
+        border-color: #8a6608;
+    }
+
+    /* playoff result chips */
+    .playoff-results {
+        display: flex;
+        gap: 6px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .playoff-chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        padding: 3px 8px;
+        font-size: 0.75em;
+        font-weight: 600;
+        border: 1px solid #3a3a3a;
+        background-color: #2b2b2b;
+        color: #cccccc;
+    }
+    .playoff-chip.won {
+        background: linear-gradient(180deg, #22c55e, #16a34a);
+        color: #000;
+        border-color: #15803d;
+    }
+    .playoff-chip.lost {
+        background: linear-gradient(180deg, #ef4444, #dc2626);
+        color: #fff;
+        border-color: #b91c1c;
+    }
+    .playoff-chip.champion {
+        background: linear-gradient(180deg, #d4af37, #b8860b);
+        color: #000;
+        border-color: #8a6608;
+    }
+    .playoff-chip .series-score { font-weight: 800; }
+
+    .draft-picks-info {
+        padding: 20px;
+        background-color: #2b2b2b;
+        border: 1px solid #3a3a3a;
+        border-radius: 0 !important;
+        text-align: center;
+        color: #888888;
+        font-style: italic;
+    }
+
+    .back-link-container {
+        margin-top: 30px;
+        padding-top: 20px;
+        border-top: 1px solid #3a3a3a;
+    }
+    .back-link { color: #ffffff; text-decoration: none; font-size: 1.1em; }
+    .back-link:hover { text-decoration: underline; color: #e0e0e0; }
+
+    /* roster controls */
+    .roster-controls {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 15px;
+        gap: 15px;
+        flex-wrap: wrap;
+    }
+
+    .roster-title {
+        color: #ffffff;
+        font-size: 1.5em;
+        border-bottom: none;
+        padding-bottom: 0;
+        margin: 0;
+    }
+
+    .roster-filters { display: flex; gap: 10px; align-items: center; }
+
+    .season-selector select {
+        padding: 8px 12px;
+        font-size: 0.95em;
+        border: 1px solid #3a3a3a;
+        background-color: #2b2b2b;
+        color: #ffffff;
+        cursor: pointer;
+        font-weight: 500;
+        transition: all 0.2s;
+    }
+    .season-selector select:hover { background-color: #353535; border-color: #4a4a4a; }
+    .season-selector select:focus { outline: none; border-color: #666; }
+
+    .season-type-toggle {
+        display: flex;
+        border: 1px solid #3a3a3a;
+        overflow: hidden;
+    }
+
+    .season-type-toggle .toggle-btn {
+        padding: 8px 16px;
+        font-size: 0.85em;
+        font-weight: 600;
+        background-color: #2b2b2b;
+        color: #888;
+        border: none;
+        cursor: pointer;
+        transition: all 0.2s;
+        text-decoration: none;
+    }
+    .season-type-toggle .toggle-btn:hover { background-color: #353535; color: #ccc; }
+    .season-type-toggle .toggle-btn.active { background-color: #4a4a4a; color: #ffffff; }
+
+    @media (max-width: 900px) {
+        .team-header { flex-wrap: wrap; }
+        .roster-controls { flex-direction: column; align-items: flex-start; }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+
+<div class="team-header">
+    <img src="{{ url_for('static', filename='teams/' + display_name + '.png') }}"
+         alt="{{ display_name }}"
+         class="team-logo"
+         onerror="this.src='{{ url_for('static', filename='teams/' + team_name + '.png') }}';">
+
+    <div class="team-info-container">
+        <h2>{{ display_name }}</h2>
+        {% if franchise_names|length > 1 %}
+        <p style="color: #888; font-size: 0.85em; margin-top: 2px;">
+            Formerly: {% for name in franchise_names if name != display_name %}{{ name }}{% if not loop.last %}, {% endif %}{% endfor %}
+        </p>
+        {% endif %}
+        <div class="team-details">
+            <p><strong>All-Time Record:</strong> {{ total_wins }}-{{ total_losses }}</p>
+            {% set championships = [] %}
+            {% for season, history in season_history.items() %}
+                {% if history.playoff_results %}
+                    {% for result in history.playoff_results %}
+                        {% if result.won == true and result.round == 'Finals' %}
+                            {% set _ = championships.append(season) %}
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+            {% endfor %}
+            {% if championships %}
+            <div class="titles-container">
+                {% for year in championships|sort %}
+                <span class="title-trophy" title="{{ year }}">🏆</span>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<div class="section">
+    <div class="roster-controls">
+        <h3 class="roster-title">Roster</h3>
+        <div class="roster-filters">
+            <div class="season-selector">
+                <select id="roster-season-select" onchange="updateRoster()">
+                    {% for season in available_seasons %}
+                    <option value="{{ season }}" {% if season == current_roster_season %}selected{% endif %}>
+                        {{ season }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="season-type-toggle">
+                <a href="{{ url_for('team.team_page', team_name=team_name, roster_season=current_roster_season, season_type='regular') }}"
+                   class="toggle-btn {% if season_type == 'regular' %}active{% endif %}">Regular</a>
+                <a href="{{ url_for('team.team_page', team_name=team_name, roster_season=current_roster_season, season_type='playoffs') }}"
+                   class="toggle-btn {% if season_type == 'playoffs' %}active{% endif %}">Playoffs</a>
+            </div>
+        </div>
+    </div>
+    {% if roster %}
+    <table class="roster-table">
+        <thead>
+            <tr>
+                <th>Player</th>
+                <th>GP</th>
+                <th>GS</th>
+                <th>MPG</th>
+                <th>PPG</th>
+                <th>RPG</th>
+                <th>APG</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for player in roster %}
+            <tr>
+                <td>
+                    <a href="{{ url_for('player.player_page', player_name=player.player_name) }}" class="player-link">
+                        {{ player.player_name }}
+                    </a>
+                </td>
+                <td>{{ player.games_played }}</td>
+                <td>{{ player.games_started }}</td>
+                <td>{{ player.mpg }}</td>
+                <td>{{ player.ppg }}</td>
+                <td>{{ player.rpg }}</td>
+                <td>{{ player.apg }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p style="color: #7f8c8d; font-style: italic;">No roster data available for {{ season_type }} season.</p>
+    {% endif %}
+</div>
+
+<script>
+function updateRoster() {
+    const season = document.getElementById('roster-season-select').value;
+    const seasonType = '{{ season_type }}';
+    window.location.href = '{{ url_for("team.team_page", team_name=team_name) }}?roster_season=' + season + '&season_type=' + seasonType;
+}
+</script>
+
+<div class="section">
+    <h3>Season History</h3>
+    <table class="season-records-table">
+        <thead>
+            <tr>
+                <th>Season</th>
+                <th>Record</th>
+                <th>Standings</th>
+                <th>Playoff Results</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for record in season_records %}
+            {% set history = season_history.get(record.season, {}) %}
+            {% set season_display_name = get_display_name_for_season(team_name, record.season) %}
+            <tr>
+                <td>{{ record.season }}{% if season_display_name != display_name %}<br><span style="font-size: 0.8em; color: #888;">as {{ season_display_name }}</span>{% endif %}</td>
+                <td><strong>{{ record.wins }}</strong>-{{ record.losses }}</td>
+                <td>
+                    {% if history.standing %}
+                    <span class="standing-badge {% if history.standing == 1 %}top-seed{% endif %}">
+                        {{ history.standing }}
+                    </span>
+                    {% else %}
+                    -
+                    {% endif %}
+                </td>
+                <td>
+                    {% if history.playoff_results %}
+                    <div class="playoff-results">
+                        {% for result in history.playoff_results %}
+                        {% if result.won == true and result.round == 'Finals' %}
+                        <span class="playoff-chip champion" title="{{ result.round }} vs {{ result.opponent }}">
+                            🏆 Champion
+                        </span>
+                        {% elif result.won == true %}
+                        <span class="playoff-chip won" title="{{ result.round }} vs {{ result.opponent }}">
+                            {{ result.round }}: <span class="series-score">W {{ result.team_wins }}-{{ result.opp_wins }}</span>
+                        </span>
+                        {% elif result.won == false %}
+                        <span class="playoff-chip lost" title="{{ result.round }} vs {{ result.opponent }}">
+                            {{ result.round }}: <span class="series-score">L {{ result.team_wins }}-{{ result.opp_wins }}</span>
+                        </span>
+                        {% else %}
+                        <span class="playoff-chip" title="{{ result.round }} vs {{ result.opponent }}">
+                            {{ result.round }}: <span class="series-score">{{ result.team_wins }}-{{ result.opp_wins }}</span>
+                        </span>
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                    {% elif history.standing and history.standing > 10 %}
+                    <span style="color: #666; font-style: italic;">Missed Playoffs</span>
+                    {% elif history.standing %}
+                    <span style="color: #666; font-style: italic;">-</span>
+                    {% else %}
+                    -
+                    {% endif %}
+                </td>
+                <td>
+                    <a href="{{ url_for('team.team_season', team_name=team_name, season=record.season) }}" class="view-btn" aria-label="View {{ record.season }} season">
+                        <svg viewBox="0 0 24 24">
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                            <polyline points="12 5 19 12 12 19"></polyline>
+                        </svg>
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<div class="section">
+    <h3>Future Draft Picks</h3>
+    {% if draft_picks %}
+    <table class="roster-table">
+        <thead>
+            <tr>
+                <th>Year</th>
+                <th>Round</th>
+                <th>Original Team</th>
+                <th>Conditions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for pick in draft_picks %}
+            <tr>
+                <td>{{ pick.year }}</td>
+                <td>{{ pick.round }}</td>
+                <td>
+                    {% if pick.is_own_pick %}
+                    <span style="color: #888;">Own Pick</span>
+                    {% else %}
+                    <a href="{{ url_for('team.team_page', team_name=pick.original_team) }}" class="player-link">{{ pick.original_team }}</a>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if pick.condition %}
+                    <span style="font-size: 0.85em; color: #aaa;">{{ pick.condition }}</span>
+                    {% else %}
+                    -
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <div class="draft-picks-info">
+        No future draft picks owned
+    </div>
+    {% endif %}
+</div>
+
+{% endblock %}

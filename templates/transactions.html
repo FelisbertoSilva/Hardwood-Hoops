@@ -1,0 +1,565 @@
+{% extends "base.html" %}
+
+{% block title %}Transactions - Hardwood Hoops{% endblock %}
+
+{% block extra_css %}
+<style>
+    .content {
+        padding: 0 !important;
+        background-color: #1a1a1a !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+    }
+
+    .content-inner {
+        padding: 40px 30px;
+        max-width: 1400px;
+        margin: 0 auto;
+    }
+
+    /* --- Page Header with Season Selector --- */
+    .page-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 30px;
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+
+    .page-title {
+        color: #ffffff;
+        font-size: 2em;
+        font-weight: 900;
+        text-transform: uppercase;
+        margin: 0;
+    }
+
+    .season-selector {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .season-selector label {
+        color: #888;
+        font-size: 0.9em;
+    }
+
+    .season-selector select {
+        background-color: #2b2b2b;
+        color: #ffffff;
+        border: 2px solid #3a3a3a;
+        border-radius: 6px;
+        padding: 10px 15px;
+        font-size: 1em;
+        font-weight: 600;
+        cursor: pointer;
+        outline: none;
+    }
+
+    .season-selector select:hover {
+        border-color: #555;
+    }
+
+    .season-selector select:focus {
+        border-color: #ffffff;
+    }
+
+    /* --- Tab Navigation --- */
+    .transactions-tabs {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        gap: 0;
+        margin-bottom: 40px;
+    }
+
+    .tab-btn {
+        flex: 1;
+        max-width: 250px;
+        padding: 15px 0;
+        font-size: 1.1em;
+        font-weight: 900;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        outline: none;
+        background-color: #2b2b2b;
+        color: #ffffff;
+        border: 2px solid #3a3a3a;
+    }
+
+    .tab-btn:first-child {
+        border-radius: 8px 0 0 8px;
+        border-right: 1px solid #3a3a3a;
+    }
+
+    .tab-btn:last-child {
+        border-radius: 0 8px 8px 0;
+        border-left: 1px solid #3a3a3a;
+    }
+
+    .tab-btn:not(.active):hover {
+        background-color: #353535;
+    }
+
+    .tab-btn.active {
+        background-color: #ffffff;
+        color: #1a1a1a;
+        border-color: #ffffff;
+        box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+        z-index: 1;
+    }
+
+    /* --- Tab Content --- */
+    .tab-content {
+        display: none;
+        opacity: 0;
+        transition: opacity 0.3s ease-in-out;
+    }
+
+    .tab-content.active {
+        display: block;
+        opacity: 1;
+    }
+
+    /* --- Section Styling --- */
+    .section-title {
+        color: #ffffff;
+        font-size: 1.4em;
+        font-weight: 900;
+        text-transform: uppercase;
+        margin: 0 0 20px 0;
+    }
+
+    /* --- Transaction Cards --- */
+    .transactions-list {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .transaction-card {
+        background-color: #2b2b2b;
+        border: 1px solid #3a3a3a;
+        border-radius: 8px;
+        overflow: hidden;
+    }
+
+    .transaction-header {
+        background-color: #1f1f1f;
+        padding: 12px 20px;
+        border-bottom: 1px solid #3a3a3a;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .transaction-date {
+        color: #888;
+        font-size: 0.9em;
+    }
+
+    .transaction-body {
+        padding: 15px 20px;
+    }
+
+    /* --- Trade Specific Styling --- */
+    .trade-movement {
+        display: flex;
+        align-items: center;
+        padding: 10px 0;
+        border-bottom: 1px solid #333;
+    }
+
+    .trade-movement:last-child {
+        border-bottom: none;
+    }
+
+    .trade-player {
+        color: #ffffff;
+        font-weight: 600;
+        flex: 1;
+    }
+
+    .trade-player a {
+        color: #ffffff;
+        text-decoration: none;
+    }
+
+    .trade-player a:hover {
+        text-decoration: underline;
+    }
+
+    .trade-arrow {
+        color: #888;
+        margin: 0 15px;
+        font-size: 1.2em;
+    }
+
+    .trade-teams {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        flex: 2;
+    }
+
+    .trade-team {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: #e0e0e0;
+    }
+
+    .team-logo-small {
+        width: 24px;
+        height: 24px;
+        object-fit: contain;
+    }
+
+    /* --- Signing Specific Styling --- */
+    .signing-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 15px 20px;
+        border-bottom: 1px solid #333;
+    }
+
+    .signing-row:last-child {
+        border-bottom: none;
+    }
+
+    .signing-row:nth-child(even) {
+        background-color: #272727;
+    }
+
+    .signing-info {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .signing-player {
+        color: #ffffff;
+        font-weight: 600;
+    }
+
+    .signing-player a {
+        color: #ffffff;
+        text-decoration: none;
+    }
+
+    .signing-player a:hover {
+        text-decoration: underline;
+    }
+
+    .signing-team {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: #888;
+    }
+
+    .signing-details {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .signing-contract {
+        color: #4CAF50;
+        font-weight: 600;
+    }
+
+    .signing-date {
+        color: #666;
+        font-size: 0.85em;
+    }
+
+    /* --- Release Specific Styling --- */
+    .release-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 15px 20px;
+        border-bottom: 1px solid #333;
+    }
+
+    .release-row:last-child {
+        border-bottom: none;
+    }
+
+    .release-row:nth-child(even) {
+        background-color: #272727;
+    }
+
+    .release-info {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .release-player {
+        color: #ffffff;
+        font-weight: 600;
+    }
+
+    .release-player a {
+        color: #ffffff;
+        text-decoration: none;
+    }
+
+    .release-player a:hover {
+        text-decoration: underline;
+    }
+
+    .release-team {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: #888;
+    }
+
+    .release-date {
+        color: #666;
+        font-size: 0.85em;
+    }
+
+    /* --- Empty State --- */
+    .no-data {
+        text-align: center;
+        padding: 40px 20px;
+        color: #666;
+        font-style: italic;
+        background-color: #2b2b2b;
+        border-radius: 8px;
+        border: 1px solid #3a3a3a;
+    }
+
+    /* --- Responsive --- */
+    @media (max-width: 900px) {
+        .transactions-tabs {
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .tab-btn {
+            max-width: none;
+            border-radius: 8px !important;
+            border: 2px solid #3a3a3a !important;
+        }
+
+        .trade-movement {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .trade-teams {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 5px;
+        }
+
+        .trade-arrow {
+            transform: rotate(90deg);
+            margin: 5px 0;
+        }
+
+        .signing-row,
+        .release-row {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 10px;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="content-inner">
+
+    <div class="page-header">
+        <h1 class="page-title">Transactions</h1>
+        <div class="season-selector">
+            <label for="season-select">Season:</label>
+            <select id="season-select" onchange="changeSeason(this.value)">
+                {% for s in available_seasons %}
+                <option value="{{ s }}" {% if s == season %}selected{% endif %}>
+                    {{ s - 1 }}-{{ (s|string)[-2:] }}
+                </option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+
+    <div class="transactions-tabs">
+        <button class="tab-btn active" id="btn-trades" onclick="switchTab('trades')">Trades</button>
+        <button class="tab-btn" id="btn-offseason" onclick="switchTab('offseason')">Off-Season FA</button>
+        <button class="tab-btn" id="btn-regular" onclick="switchTab('regular')">Regular Season FA</button>
+        <button class="tab-btn" id="btn-releases" onclick="switchTab('releases')">Releases</button>
+    </div>
+
+    <!-- Trades Tab -->
+    <div id="trades" class="tab-content active">
+        {% if trades %}
+        <div class="transactions-list">
+            {% for trade in trades %}
+            <div class="transaction-card">
+                <div class="transaction-header">
+                    <span class="transaction-date">{{ trade.date }}</span>
+                </div>
+                <div class="transaction-body">
+                    {% for player in trade.players %}
+                    <div class="trade-movement">
+                        <span class="trade-player">
+                            <a href="{{ url_for('player.player_page', player_name=player.player_name) }}">{{ player.player_name }}</a>
+                        </span>
+                        <div class="trade-teams">
+                            <span class="trade-team">
+                                <img src="{{ url_for('static', filename='teams/' + player.from_team + '.png') }}"
+                                     alt="{{ player.from_team }}"
+                                     class="team-logo-small"
+                                     onerror="this.style.display='none'">
+                                {{ player.from_team }}
+                            </span>
+                            <span class="trade-arrow">→</span>
+                            <span class="trade-team">
+                                <img src="{{ url_for('static', filename='teams/' + player.to_team + '.png') }}"
+                                     alt="{{ player.to_team }}"
+                                     class="team-logo-small"
+                                     onerror="this.style.display='none'">
+                                {{ player.to_team }}
+                            </span>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="no-data">No trades recorded for this season</div>
+        {% endif %}
+    </div>
+
+    <!-- Off-Season Free Agency Tab -->
+    <div id="offseason" class="tab-content">
+        {% if offseason_signings %}
+        <div class="transaction-card">
+            <div class="transaction-body" style="padding: 0;">
+                {% for signing in offseason_signings %}
+                <div class="signing-row">
+                    <div class="signing-info">
+                        <span class="signing-player">
+                            <a href="{{ url_for('player.player_page', player_name=signing.player_name) }}">{{ signing.player_name }}</a>
+                        </span>
+                        <span class="signing-team">
+                            <img src="{{ url_for('static', filename='teams/' + signing.team + '.png') }}"
+                                 alt="{{ signing.team }}"
+                                 class="team-logo-small"
+                                 onerror="this.style.display='none'">
+                            {{ signing.team }}
+                        </span>
+                    </div>
+                    <div class="signing-details">
+                        {% if signing.years or signing.value %}
+                        <span class="signing-contract">{{ format_contract(signing.years, signing.value) }}</span>
+                        {% endif %}
+                        <span class="signing-date">{{ signing.date }}</span>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% else %}
+        <div class="no-data">No off-season signings recorded for this season</div>
+        {% endif %}
+    </div>
+
+    <!-- Regular Season Free Agency Tab -->
+    <div id="regular" class="tab-content">
+        {% if regular_season_signings %}
+        <div class="transaction-card">
+            <div class="transaction-body" style="padding: 0;">
+                {% for signing in regular_season_signings %}
+                <div class="signing-row">
+                    <div class="signing-info">
+                        <span class="signing-player">
+                            <a href="{{ url_for('player.player_page', player_name=signing.player_name) }}">{{ signing.player_name }}</a>
+                        </span>
+                        <span class="signing-team">
+                            <img src="{{ url_for('static', filename='teams/' + signing.team + '.png') }}"
+                                 alt="{{ signing.team }}"
+                                 class="team-logo-small"
+                                 onerror="this.style.display='none'">
+                            {{ signing.team }}
+                        </span>
+                    </div>
+                    <div class="signing-details">
+                        {% if signing.years or signing.value %}
+                        <span class="signing-contract">{{ format_contract(signing.years, signing.value) }}</span>
+                        {% endif %}
+                        <span class="signing-date">{{ signing.date }}</span>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% else %}
+        <div class="no-data">No regular season signings recorded for this season</div>
+        {% endif %}
+    </div>
+
+    <!-- Releases Tab -->
+    <div id="releases" class="tab-content">
+        {% if releases %}
+        <div class="transaction-card">
+            <div class="transaction-body" style="padding: 0;">
+                {% for release in releases %}
+                <div class="release-row">
+                    <div class="release-info">
+                        <span class="release-player">
+                            <a href="{{ url_for('player.player_page', player_name=release.player_name) }}">{{ release.player_name }}</a>
+                        </span>
+                        <span class="release-team">
+                            <img src="{{ url_for('static', filename='teams/' + release.team + '.png') }}"
+                                 alt="{{ release.team }}"
+                                 class="team-logo-small"
+                                 onerror="this.style.display='none'">
+                            {{ release.team }}
+                        </span>
+                    </div>
+                    <span class="release-date">{{ release.date }}</span>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% else %}
+        <div class="no-data">No releases recorded for this season</div>
+        {% endif %}
+    </div>
+
+</div>
+
+<script>
+function switchTab(tab) {
+    const tabs = ['trades', 'offseason', 'regular', 'releases'];
+
+    tabs.forEach(function(t) {
+        document.getElementById('btn-' + t).classList.remove('active');
+        document.getElementById(t).classList.remove('active');
+    });
+
+    document.getElementById(tab).classList.add('active');
+    document.getElementById('btn-' + tab).classList.add('active');
+}
+
+function changeSeason(season) {
+    window.location.href = '/transactions?season=' + season;
+}
+</script>
+{% endblock %}

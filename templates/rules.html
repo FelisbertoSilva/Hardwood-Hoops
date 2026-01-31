@@ -1,0 +1,615 @@
+{% extends "base.html" %}
+
+{% block title %}Rules - BoxToData{% endblock %}
+
+{% block extra_css %}
+<style>
+/* Override content padding for full-width dark theme */
+.content {
+    padding: 0 !important;
+    background-color: #1a1a1a !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+}
+
+.content-inner {
+    padding: 40px 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Page Title */
+.page-title {
+    font-size: 2em;
+    font-weight: 900;
+    text-transform: uppercase;
+    color: #ffffff;
+    text-align: center;
+    margin-bottom: 40px;
+    letter-spacing: 1px;
+}
+
+/* Rules Sections */
+.rules-section {
+    background-color: #2b2b2b;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    border: 2px solid #3a3a3a;
+    overflow: hidden;
+}
+
+.rules-header {
+    background: linear-gradient(135deg, #2b2b2b 0%, #1f1f1f 100%);
+    padding: 20px 25px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background-color 0.2s;
+    border-bottom: 2px solid #3a3a3a;
+}
+
+.rules-header:hover {
+    background-color: #353535;
+}
+
+.rules-header h2 {
+    margin: 0;
+    font-size: 1.3em;
+    font-weight: 900;
+    text-transform: uppercase;
+    color: #ffffff;
+    letter-spacing: 0.5px;
+}
+
+.rules-header .toggle-icon {
+    font-size: 1.5em;
+    color: #888;
+    transition: transform 0.3s;
+}
+
+.rules-section.active .toggle-icon {
+    transform: rotate(180deg);
+}
+
+.rules-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease-out;
+    background-color: #252525;
+}
+
+.rules-section.active .rules-content {
+    max-height: 5000px;
+    transition: max-height 0.6s ease-in;
+}
+
+.rules-content-inner {
+    padding: 30px 25px;
+}
+
+/* Subsection styling */
+.rules-subsection {
+    margin-bottom: 35px;
+}
+
+.rules-subsection:last-child {
+    margin-bottom: 0;
+}
+
+.rules-subsection h3 {
+    color: #d4af37;
+    font-size: 1.15em;
+    font-weight: 700;
+    margin: 0 0 15px 0;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #3a3a3a;
+}
+
+.rules-subsection h4 {
+    color: #b0b0b0;
+    font-size: 1em;
+    font-weight: 600;
+    margin: 20px 0 10px 0;
+}
+
+.rules-subsection p {
+    color: #b0b0b0;
+    line-height: 1.7;
+    margin: 0 0 12px 0;
+}
+
+.rules-subsection ul, .rules-subsection ol {
+    color: #b0b0b0;
+    line-height: 1.7;
+    margin: 0 0 15px 0;
+    padding-left: 25px;
+}
+
+.rules-subsection li {
+    margin-bottom: 8px;
+}
+
+.rules-subsection strong {
+    color: #e0e0e0;
+}
+
+/* Special callout boxes */
+.rules-callout {
+    background-color: #1f1f1f;
+    border-left: 4px solid #d4af37;
+    padding: 15px 20px;
+    margin: 15px 0;
+    border-radius: 0 8px 8px 0;
+}
+
+.rules-callout p {
+    margin: 0;
+    color: #e0e0e0;
+    font-style: italic;
+}
+
+/* Tables for salary cap info */
+.rules-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 15px 0;
+    background-color: #1f1f1f;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid #3a3a3a;
+}
+
+.rules-table th, .rules-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #3a3a3a;
+    background-color: #1f1f1f;
+}
+
+.rules-table th {
+    background-color: #2b2b2b !important;
+    color: #ffffff;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.85em;
+}
+
+.rules-table td {
+    color: #b0b0b0;
+    background-color: #1f1f1f;
+}
+
+.rules-table tr:last-child td {
+    border-bottom: none;
+}
+
+.rules-table {
+    pointer-events: none;
+    user-select: text;
+}
+
+/* Example process boxes */
+.example-box {
+    background-color: #1f1f1f;
+    border: 1px solid #3a3a3a;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 15px 0;
+}
+
+.example-box h5 {
+    color: #d4af37;
+    margin: 0 0 10px 0;
+    font-size: 0.95em;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .content-inner {
+        padding: 20px 15px;
+    }
+
+    .rules-header {
+        padding: 15px 20px;
+    }
+
+    .rules-header h2 {
+        font-size: 1.1em;
+    }
+
+    .rules-content-inner {
+        padding: 20px 15px;
+    }
+
+    .rules-table {
+        font-size: 0.9em;
+    }
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="content-inner">
+    <h1 class="page-title">Hardwood Hoops League Rules</h1>
+
+    <!-- Section 1: League Guide -->
+    <div class="rules-section active">
+        <div class="rules-header" onclick="toggleSection(this)">
+            <h2>League Guide</h2>
+            <span class="toggle-icon">&#9660;</span>
+        </div>
+        <div class="rules-content">
+            <div class="rules-content-inner">
+
+                <div class="rules-subsection">
+                    <h3>What is Hardwood Hoops?</h3>
+                    <p>Hardwood Hoops is a fantasy basketball league that aims to be as close to the experience of being a real NBA General Manager as possible.</p>
+                    <p>Each team in the league has one GM who builds their team via trading, free agency and drafting rookies.</p>
+                </div>
+
+                <div class="rules-subsection">
+                    <h3>Building a Dynasty takes many years</h3>
+                    <p>Being a General Manager takes patience and planning. Take stock of your team's roster, salary and draft pick situation before deciding how you're going to build your dynasty.</p>
+
+                    <div class="rules-callout">
+                        <p>Don't instantly trade away your best players/draft picks.</p>
+                    </div>
+
+                    <p>In the past new GM's have often arrived, destroyed teams, and then left an empty shell of a team behind them. This damages the health of the entire league and as such we have 5 Trade Committee members, 3 of which must accept any trade you submit before it is allowed to pass.</p>
+                </div>
+
+                <div class="rules-subsection">
+                    <h3>Player Ratings</h3>
+                    <p>Player ratings are based on real-life player performance. Whether or not you're a good GM depends on how good you are at judging NBA talent. The best GMs are able to draft, sign or trade low-value assets for players that develop into superstars.</p>
+                    <p>Player ratings are discussed and updated in the Stock Watch Discussion.</p>
+                </div>
+
+                <div class="rules-subsection">
+                    <h3>How to Build your Team</h3>
+
+                    <h4>1. Trading</h4>
+                    <p>Privately message other GMs with trade offers.</p>
+                    <p>To submit a trade for approval, create a new thread in the Trade Submission Section.</p>
+                    <p>Use other trade threads to see how other GMs submitted their trades.</p>
+
+                    <h4>2. Rookie Draft</h4>
+                    <p>See: Rookie Draft section.</p>
+                    <p>The draft rolls around once a year and contains all the same players that are taken in real-life drafts.</p>
+                    <p>Check out the Draft Rights section to see which draft picks you own.</p>
+
+                    <h4>3. Free Agency</h4>
+                    <p>There are two types of free agency:</p>
+                    <ol>
+                        <li>Regular Season Free Agency (section)</li>
+                        <li>Off Season Free Agency (section)</li>
+                    </ol>
+                    <p>Off Season Free Agency (OSFA) happens at the end of each season, when lots of players contracts expire. This is the time when all the big-name free agents are available. GMs must compete to both re-sign their own players and sign players from other teams all at once.</p>
+                    <p>Any players left over from OSFA enter Regular Season Free Agency. Regular Season free agents can be signed during the season.</p>
+                    <p><strong>You cannot exceed the salary cap when you sign a free agent unless they have played for your team for 3 seasons in a row without leaving.</strong></p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Section 2: Rosters -->
+    <div class="rules-section">
+        <div class="rules-header" onclick="toggleSection(this)">
+            <h2>Rosters</h2>
+            <span class="toggle-icon">&#9660;</span>
+        </div>
+        <div class="rules-content">
+            <div class="rules-content-inner">
+
+                <div class="rules-subsection">
+                    <h3>Hardwood Hoops Rosters</h3>
+                    <p>A team's roster must not exceed 15 players or dip below 12 players at any time during the regular season and playoffs.</p>
+                    <p>A team must maintain at least 8 active (non-injury list) players during the regular season and playoffs.</p>
+                    <p>The only time this rule does not apply is during the off-season. Teams must make sure to amend their rosters to within the set limits again before each season begins.</p>
+                </div>
+
+                <div class="rules-subsection">
+                    <h3>Hardwood Hoops Injuries</h3>
+                    <p>A player who is out for 30 consecutive calendar days or more in the real-life season, for any reason, is placed on our injury reserve on the corresponding in-game date.</p>
+                    <p>A player is removed from our injury reserve on the corresponding in-game date on which he returns in real-life.</p>
+
+                    <div class="example-box">
+                        <h5>Example</h5>
+                        <p>Player A is injured in real-life on March 1. On real-life March 31, Player A has missed 30 consecutive calendar days and thus is considered injured. On HH sim date March 1, Player A is placed on the injury reserve. Player A returns from injury on the real-life date of April 15. On HH sim date April 15, Player A is removed from the injury reserve.</p>
+                    </div>
+
+                    <p>If a player goes out during the real-life playoffs or with less than 30 days remaining in the real-life regular season, the player is not added to the injury reserve.</p>
+                </div>
+
+                <div class="rules-subsection">
+                    <h3>Hardwood Hoops Sim Changes</h3>
+                    <p>General Managers may set their lineups via the google sheet linked in this board. All lineups must abide by the following regulations:</p>
+                    <ul>
+                        <li>A team must start its highest rated active player.</li>
+                        <li>A team must start 2 of its 3 highest rated active players.</li>
+                        <li>A team must start 3 of its 5 highest rated active players.</li>
+                        <li>No starter may be more than 5 rating points below the team's 5th-best active player.</li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Section 3: Trading -->
+    <div class="rules-section">
+        <div class="rules-header" onclick="toggleSection(this)">
+            <h2>Trading</h2>
+            <span class="toggle-icon">&#9660;</span>
+        </div>
+        <div class="rules-content">
+            <div class="rules-content-inner">
+
+                <div class="rules-subsection">
+                    <h3>Hardwood Hoops Trading Regulations</h3>
+                    <ul>
+                        <li>All trades should be submitted in the Trade Submission board for Trade Committee approval.</li>
+                        <li>Keep all trade offers and negotiations limited to Private Messages (PMs) between teams.</li>
+                        <li>If you are over the cap after a trade, your incoming salaries must not exceed 125% (+$100k) of your outgoing salaries. If neither team exceeds the salary cap after a trade, then there is no salary-similarity rule.</li>
+                        <li>No team must exceed more than 15 players in their lineup. If a trade means that a team does exceed this limit, they must first release a player before the deal can be completed. If you are under the minimum roster limit, you must sign the correct number of players before the deal can go through.</li>
+                        <li>Trading of draft picks is allowed up to a maximum of four years in the future. A team's own first round picks may not be traded or swapped in consecutive years.</li>
+                        <li>If you do not own your draft pick in the following year, you cannot trade your current year's draft pick until the Rookie Draft begins.</li>
+                        <li>Trades must be approved by the Trade Committee.</li>
+                        <li>Free Agents signed during Off Season Free Agency cannot be traded until December 15 (in sim) following their signing. Queuing trades in anticipation of December 15 is not allowed.</li>
+                        <li>GMs cannot change their mind about a trade once they've posted the trade thread or replied with an acceptance.</li>
+                        <li>Trades continue using current-year salaries until the Rosters page progresses to the next season. Trades may be posted and queued using next-year salaries once the Rookie Draft begins. However, these trades will not be processed until after salaries progress. Hard Cap and MLE implications will therefore be assessed utilizing the pre-trade salaries. Any queued trade involving a current-year first round draft pick will need to add the salary for the pick to the trade.</li>
+                    </ul>
+                </div>
+
+                <div class="rules-subsection">
+                    <h3>Hardwood Hoops Trade Deadline</h3>
+                    <p>The Hardwood Hoops trade deadline is April 1st (in-game date). Trading resumes after the playoffs conclude for all non-expiring contract players.</p>
+                    <ul>
+                        <li>Players who's contracts are expiring may not be traded after the trade deadline and until they sign a new contract.</li>
+                        <li>Any Team Options traded after the trade deadline will be automatically picked up and converted to guaranteed salary.</li>
+                        <li>Player Options cannot be traded after the trade deadline. Any Player Option subsequently accepted by the player becomes immediately tradeable.</li>
+                        <li>RFAs cannot be traded after the trade deadline.</li>
+                    </ul>
+                </div>
+
+                <div class="rules-subsection">
+                    <h3>Hardwood Hoops Draft Pick Protections</h3>
+                    <p>Trading of draft picks is allowed up to a maximum of four years in the future. A team's own first round picks may not be traded or swapped in consecutive years.</p>
+                    <p>When trading a first round draft pick, a GM may include any of the following protection levels:</p>
+                    <ul>
+                        <li>Top 4 Protected</li>
+                        <li>Top 14 Protected</li>
+                        <li>Swapped Most Favorable (owner of this pick has the option to swap with another team)</li>
+                        <li>Swapped Least Favorable (another team holds the option to swap this pick)</li>
+                        <li>Unprotected</li>
+                    </ul>
+
+                    <h4>Regulations</h4>
+                    <ul>
+                        <li>Teams cannot trade future picks not already in their possession. Picks are not assured until the draft lottery of that year.</li>
+                        <li>If the team giving up the protected pick meets the requirements to keep their pick, they will then forfeit their next years draft pick to the other team.</li>
+                        <li>Picks can only have one protection associated to them.</li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Section 4: Free Agency -->
+    <div class="rules-section">
+        <div class="rules-header" onclick="toggleSection(this)">
+            <h2>Free Agency</h2>
+            <span class="toggle-icon">&#9660;</span>
+        </div>
+        <div class="rules-content">
+            <div class="rules-content-inner">
+
+                <div class="rules-subsection">
+                    <h3>Hardwood Hoops Regular Season Free Agency</h3>
+                    <h4>General Regulations</h4>
+                    <ul>
+                        <li>Regular Season Free Agency ("RSFA") extends from the day of the first game of the regular season year until the first day of the playoffs.</li>
+                        <li>Contracts that GMs create in regular season free agency are limited to being between 1 and 4 years in length.</li>
+                        <li>You may not sign a free agent if the signing takes your team over the salary cap. The only exception to this is if it is to the league minimum salary.</li>
+                        <li>The maximum amount that a contract can increase or decrease each year is by 7.5% of the initial offer or the league minimum salary.</li>
+                        <li>If your team has the maximum of 15 players on it's roster you may not bid for free agents.</li>
+                        <li>You must wait one month before a signed free agent can be traded or released. For players signed in RSFA during the off-season, this one month countdown begins on the first day of the regular season.</li>
+                        <li>A player must be created before they can be signed. If a player is not on the Free Agent list and you wish to sign them, first post a player creation thread in the Stock Watch Discussion. Once the player has been created and added to the Free Agents list they can be bid upon.</li>
+                        <li>Regular Season Free Agency can continue during Off Season Free Agency.</li>
+                        <li>Negotiations for a player must be performed with the assigned Player Agent for that player.</li>
+                    </ul>
+                </div>
+
+                <div class="rules-subsection">
+                    <h3>Hardwood Hoops Off-Season Free Agency</h3>
+                    <h4>General Regulations</h4>
+                    <ul>
+                        <li>Off-Season Free Agency ("OSFA") extends from the day of salary progression (typically July 1st) until the start of the regular season.</li>
+                        <li>Negotiations for all players during OSFA must be performed with the assigned Player Agent for that player.</li>
+                        <li>Contracts cannot be longer than 4 years in length (unless Bird Rights).</li>
+                        <li>The maximum an offered salary can increase/decrease per year is by 7.5% of the initial offer or the league minimum salary.</li>
+                        <li>Contracts may only contain one Player or Team Option. Options can only exist in the final year of a contract.</li>
+                        <li>Players signed during Off Season Free Agency cannot be traded until December 15th of the regular season following their signing.</li>
+                    </ul>
+                </div>
+
+                <div class="rules-subsection">
+                    <h3>Hardwood Hoops Bird Rights</h3>
+                    <p>Bird Rights allow a team to exceed the Salary Cap when re-signing a player during Off-Season Free Agency (note that teams are still subject to Hard Cap constraints).</p>
+                    <p>Bird Rights are automatically granted to any player who enters into a contract of 3 or more years, or spends 3 consecutive seasons with the same team. Starting with the 2026 offseason, the wording will be modified as follows: A team possesses the Bird Rights to a player if that player has not changed teams via free agency in the two preceding off season free agency periods.</p>
+                    <p>All rookies automatically receive bird rights regardless of contract length.</p>
+                    <p>Bird Rights are tradeable and stick with the player for the life of his contract.</p>
+                    <p>Bird Rights must be claimed during the designated time period (which will be announced) at the conclusion of the contract.</p>
+                    <p>If a team claims the Bird Rights to one of their players, an amount of money will be placed against that team's salaries before re-signing the player. The amount of money will be equal to a player's previous year's salary, except for rookie scale contracts for which the cap hold will equal the qualifying offer.</p>
+                    <p>If a GM has already claimed Bird Rights but then wishes to renounce them at a later time during the off season, a reply to the original claim thread will suffice to relinquish Bird Rights to a player and clear a cap hold.</p>
+                    <p>Bird Rights are denoted in the Rosters page by a * next to the player's name. A ** means that the bird rights are contingent on the player or GM accepting a player or team option in the final year of the contract.</p>
+                </div>
+
+                <div class="rules-subsection">
+                    <h3>Hardwood Hoops Restricted Free Agency</h3>
+                    <h4>General Regulations</h4>
+                    <p>All first round picks will have their fifth year as Qualifying Offer (denoted by green in the Rosters page) and will be subjected to Restricted Free Agency ("RFA"). RFA applies on the year of the Qualifying Offer ("QO") not after the year of the Qualifying Offer.</p>
+                    <p>GMs must claim restricted free agent rights via the Claim RFA Rights board during the designated time period (which will be announced). If a GM claims RFA rights, the QO will act as a cap hold during OSFA.</p>
+                    <p>If a GM does not claim RFA rights, the QO will be removed from the Rosters page and the player will be an unrestricted free agent. GMs may not claim bird rights on players whose RFA rights were not claimed.</p>
+                    <p>GMs may renounce RFA rights at any point during Off-Season Free Agency. Renouncing RFA rights will cause the player to become an unrestricted free agent with Bird Rights. If the GM wishes to remove the Bird Rights cap hold, the GM must renounce the Bird Rights to that player.</p>
+                    <p>A restricted free agent is subject to his current team's Right of First Refusal, meaning that the player can be signed to an offer sheet by another team, but his current team reserves the right to match the offer and keep the player. A GM will get the right of first refusal even if they do not offer a contract to the RFA.</p>
+                    <p>An offer sheet is a contract offer of at least two years made by another team to a restricted free agent.</p>
+                    <p>The player's current team has 48 hours to match the offer once communicated by the Player Agent, or loses the player to the new team.</p>
+                    <p>All RFA negotiation is performed through a Player Agent.</p>
+
+                    <div class="example-box">
+                        <h5>Example Process</h5>
+                        <p><strong>Step 1:</strong> Send in your "Pitch" for a RFA to that player's agent.</p>
+                        <ul>
+                            <li>The Player Agent will let you know that they've received your offer, and they will take into account all of the offers received for the player.</li>
+                            <li>The Player Agent will determine which offer is best. If the best offer is not from the re-signing team, then the Player Agent will sign an Offer Sheet with a new team and communicate the Offer Sheet to the re-signing team.</li>
+                            <li>Unlike UFA, there is no follow up in RFA, once you send in your initial bid, you cannot change it or the pitch.</li>
+                            <li>Make sure to include all relevant factors that the player will want to consider in joining your team, including the contract itself and the No Trade Clause if applicable.</li>
+                        </ul>
+
+                        <p><strong>Step 2:</strong> The owner of that player has the following options:</p>
+                        <ul>
+                            <li>Offer a contract-extension just like any other team but risk signing him to a contract higher than the highest contract offer from another team. In case the player will not re-sign with him, he can still match the offer which that player signed.</li>
+                            <li>Wait for him to sign an offer sheet and decide if he will match it or not (a GM has 48 hours to match).</li>
+                        </ul>
+
+                        <p><strong>Step 3:</strong> The Restricted FA, through the Player Agent, now has three options:</p>
+                        <ul>
+                            <li>Accept the contract-extension of his team.</li>
+                            <li>Sign an offer sheet from another team (note that the original GM has 48 hours to match).</li>
+                            <li>Accept the Qualifying Offer and be an Unrestricted Free Agent in next years offseason.</li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Section 5: Salary and Finances -->
+    <div class="rules-section">
+        <div class="rules-header" onclick="toggleSection(this)">
+            <h2>Salary and Finances</h2>
+            <span class="toggle-icon">&#9660;</span>
+        </div>
+        <div class="rules-content">
+            <div class="rules-content-inner">
+
+                <div class="rules-subsection">
+                    <h3>Hardwood Hoops Salary Cap</h3>
+                    <p>The salary cap is set to mirror the real-life salary cap each season:</p>
+                    <table class="rules-table">
+                        <tr>
+                            <th>Season</th>
+                            <th>Salary Cap</th>
+                            <th>Hard Cap (140%)</th>
+                        </tr>
+                        <tr>
+                            <td>2024/25</td>
+                            <td>$140,588,000</td>
+                            <td>$196,823,200</td>
+                        </tr>
+                        <tr>
+                            <td>2025/26</td>
+                            <td>$154,647,000</td>
+                            <td>$216,505,800</td>
+                        </tr>
+                    </table>
+
+                    <ul>
+                        <li>Trades or signings must not take a team above the Hard Cap. If you are over the Hard Cap every trade or signing must result in your team going back below the Hard Cap.</li>
+                        <li>If your team is over the Hard Cap when salaries progress on the day the Off-season begins, you forfeit the next first round draft pick of your own team that you own.</li>
+                        <li>Team Options cannot be picked up on a player if it takes a team above the Hard Cap.</li>
+                        <li>Teams are allowed to exceed the Hard Cap via cap holds when claiming Bird Rights but cannot re-sign even Bird Rights players if they are over the Hard Cap after the signing.</li>
+                        <li>Player Options are still the decision of the player and may take a team over the Hard Cap.</li>
+                        <li>Minimum contract cap holds are applied to teams with less than 12 players during the off-season so that teams may not exceed the hard cap in order to reach the required roster size.</li>
+                        <li>Starting with the 2025 Draft: Salaries for first round draft picks are added at the conclusion of the first round, which will be prior to the start of Off-season Free Agency, and will factor into Salary Cap and Hard Cap implications of rules listed above.</li>
+                    </ul>
+                </div>
+
+                <div class="rules-subsection">
+                    <h3>Hardwood Hoops League Minimum Contracts</h3>
+                    <p>The league minimum contract is set to mirror the real-life league minimum contract each season:</p>
+                    <table class="rules-table">
+                        <tr>
+                            <th>Season</th>
+                            <th>League Minimum</th>
+                        </tr>
+                        <tr>
+                            <td>2025/26</td>
+                            <td>$1,272,870</td>
+                        </tr>
+                    </table>
+                    <p>The maximum length of a league minimum contract is 2 years.</p>
+                </div>
+
+                <div class="rules-subsection">
+                    <h3>Hardwood Hoops League Maximum Contracts</h3>
+                    <p>The league maximum contract functions as a percentage of the Salary Cap based on number of years playing experience for each player:</p>
+                    <table class="rules-table">
+                        <tr>
+                            <th>Experience</th>
+                            <th>Max %</th>
+                            <th>2024/25 Max</th>
+                        </tr>
+                        <tr>
+                            <td>0 - 6 Years</td>
+                            <td>25%</td>
+                            <td>$35,147,000</td>
+                        </tr>
+                        <tr>
+                            <td>7 - 9 Years</td>
+                            <td>30%</td>
+                            <td>$42,176,400</td>
+                        </tr>
+                        <tr>
+                            <td>10+ Years</td>
+                            <td>35%</td>
+                            <td>$49,205,800</td>
+                        </tr>
+                    </table>
+
+                    <h4>Starting with the 2026 Off-Season:</h4>
+
+                    <p><strong>Rose Rule:</strong> A player entering his 5th season is eligible for a 30% max contract (rather than 25%) from the re-signing team if he meets any of the following criteria (based on IRL awards):</p>
+                    <ul>
+                        <li>The player was named to an All-NBA team in the most recent season, or in two of the past three seasons.</li>
+                        <li>The player was named Defensive Player of the Year in the most recent season, or in two of the past three seasons.</li>
+                        <li>The player was named MVP in any of the past three seasons.</li>
+                    </ul>
+                    <p>The Rose Rule applies only to the re-signing team. Other teams are still limited to 25% max contract offers.</p>
+
+                    <p><strong>Supermax:</strong> A player with 7-9 years of experience is eligible for a 35% max (rather than 30%) from the re-signing team if he meets any of the following criteria (based on IRL awards):</p>
+                    <ul>
+                        <li>The player was named to an All-NBA team in the most recent season, or in two of the past three seasons.</li>
+                        <li>The player was named Defensive Player of the Year in the most recent season, or in two of the past three seasons.</li>
+                        <li>The player was named MVP in any of the past three seasons.</li>
+                    </ul>
+                    <p>The Supermax applies only to the re-signing team. Other teams are still limited to 30% max contract offers.</p>
+                </div>
+
+                <div class="rules-subsection">
+                    <h3>Hardwood Hoops Mid-Level Exception</h3>
+                    <p>The only teams who possess the MLE are teams that are over the Salary Cap, and teams under the cap by an amount less than the MLE on the starting day of Off Season Free Agency. If a team drops below the Salary Cap by an amount more than the MLE on that date then they forfeit their MLE.</p>
+                    <ul>
+                        <li>GMs may use all or part of their Mid Level Exception to sign a player if their team is over the Salary Cap, but not the Hard Cap.</li>
+                        <li>The MLE can be used on multiple players.</li>
+                        <li>The amount of MLE money a team can use resets each season at the start of every Off Season Free Agency. Previous MLE signings have no impact on the amount a team can spend.</li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+function toggleSection(header) {
+    const section = header.parentElement;
+    section.classList.toggle('active');
+}
+</script>
+{% endblock %}

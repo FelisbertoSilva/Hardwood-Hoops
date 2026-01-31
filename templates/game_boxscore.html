@@ -1,0 +1,448 @@
+{% extends "base.html" %}
+
+{% block title %}Game Box Score - {{ game_info.game_date }}{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* Main Page Styling */
+    .content {
+        background-color: #1a1a1a !important;
+        border-radius: 0 !important;
+    }
+
+    /* --- Rounded Card Helper --- */
+    :root {
+        --card-radius: 12px;
+    }
+
+    /* --- HEADER STYLES --- */
+    .game-header {
+        margin-bottom: 30px;
+        /* Added extra bottom padding to accommodate the hanging record */
+        padding: 25px 20px 35px 20px; 
+        background-color: #2b2b2b;
+        border: 1px solid #3a3a3a;
+        border-radius: var(--card-radius) !important;
+    }
+    
+    .game-matchup {
+        display: flex;
+        justify-content: space-between;
+        align-items: center; /* This centers Logo, Name, and Score vertically */
+        width: 100%;
+    }
+
+    /* Container for a team side */
+    .team-side {
+        display: flex;
+        align-items: center;
+        flex: 1; 
+        gap: 15px;
+    }
+
+    .team-side.away { justify-content: flex-start; }
+    .team-side.home { justify-content: flex-end; }
+    
+    /* STACK: Name and Record */
+    .team-info-stack {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        position: relative; /* Necessary for absolute positioning the record */
+    }
+
+    .team-info-stack.away { align-items: flex-start; }
+    .team-info-stack.home { align-items: flex-end; }
+
+    .team-name-large {
+        font-size: 1.6em;
+        font-weight: 800;
+        line-height: 1;
+        color: #e0e0e0;
+        white-space: nowrap; /* Keeps name on one line for better alignment */
+    }
+
+    /* ABSOLUTE POSITIONED RECORD 
+       This removes it from the flex alignment flow so Name aligns perfectly with Score 
+    */
+    .team-record {
+        position: absolute;
+        top: 100%; /* Pushes it exactly below the name */
+        margin-top: 5px; /* Spacing between name and record */
+        font-size: 0.85em;
+        color: #999;
+        font-weight: normal;
+        white-space: nowrap;
+    }
+
+    /* Align record left or right depending on team */
+    .team-info-stack.away .team-record { left: 0; }
+    .team-info-stack.home .team-record { right: 0; }
+
+    .team-score-large {
+        font-size: 2.5em; /* Large score font */
+        font-weight: 800;
+        margin: 0 15px;
+        line-height: 1;
+    }
+    
+    /* Center Stack: Date and @ */
+    .match-center-info {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-width: 120px; /* Increased slightly to prevent cramping */
+        margin: 0 15px;
+    }
+
+    .game-date {
+        color: #b0b0b0;
+        font-size: 1.1em; /* Increased from 0.85em */
+        font-weight: normal;
+        margin-bottom: 5px;
+        letter-spacing: 0.5px;
+    }
+    
+    .vs-text { 
+        color: #666; 
+        font-size: 1.2em; /* Increased from 0.75em */
+        font-weight: bold;
+    }
+    
+    .team-logo-large {
+        width: 65px;
+        height: 65px;
+        object-fit: contain;
+    }
+    
+    /* Colors */
+    .winner-text { color: #4CAF50 !important; }
+    .winner-score { color: #4CAF50; }
+    .loser-text { color: #e0e0e0; }
+    .loser-score { color: #e0e0e0; }
+    
+    /* --- BOX SCORE CONTAINER (UNTOUCHED) --- */
+    .boxscore-section {
+        margin: 40px 0;
+        border-radius: var(--card-radius);
+        overflow: hidden;
+        border: 1px solid #3a3a3a;
+        background-color: #121212;
+    }
+    
+    .team-header {
+        background-color: #1a1a1a;
+        color: white;
+        padding: 15px;
+        font-size: 1.3em;
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        border: none;
+        border-bottom: 1px solid #3a3a3a;
+        border-radius: 0;
+    }
+    
+    .team-header-logo {
+        width: 35px;
+        height: 35px;
+        object-fit: contain;
+    }
+    
+    .boxscore-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.85em;
+        background-color: #121212;
+        color: #e0e0e0;
+        border: none; 
+        margin: 0;
+        border-radius: 0;
+    }
+    
+    .boxscore-table th {
+        background-color: #000000;
+        color: white;
+        padding: 10px 8px;
+        text-align: center;
+        font-weight: bold;
+        border-bottom: 2px solid #3a3a3a;
+    }
+    
+    .boxscore-table th:first-child {
+        text-align: left;
+        min-width: 150px;
+    }
+    
+    .boxscore-table td {
+        background-color: #121212;
+        color: #eeeeee;
+        padding: 8px;
+        border-bottom: 1px solid #333333;
+        text-align: center;
+    }
+    
+    .boxscore-table tbody tr:last-child td {
+        border-bottom: none;
+    }
+    
+    .boxscore-table td:first-child {
+        text-align: left;
+        font-weight: 500;
+        color: #ffffff;
+    }
+    
+    .boxscore-table tbody tr:hover td {
+        background-color: #2a2a2a !important;
+    }
+    
+    .starter-row td {
+        background-color: #121212; 
+    }
+    
+    .pos-indicator {
+        color: #b0b0b0;
+        margin-right: 8px;
+        font-weight: bold;
+        display: inline-block;
+        width: 20px;
+        text-align: center;
+        font-size: 0.9em;
+    }
+    
+    .totals-row td {
+        background-color: #000000 !important;
+        font-weight: bold;
+        border-top: 2px solid #555;
+        color: #ffffff;
+    }
+    
+    .player-link {
+        color: #ffffff;
+        text-decoration: none;
+    }
+    
+    .player-link:hover {
+        color: #ffffff;
+        text-decoration: underline;
+    }
+    
+    .back-arrow-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding-bottom: 40px;
+        margin-top: 40px;
+    }
+
+    .back-arrow-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background-color: #2b2b2b;
+        border: 2px solid #3a3a3a;
+        color: #ffffff;
+        transition: all 0.2s ease;
+        cursor: pointer;
+        text-decoration: none;
+    }
+
+    .back-arrow-btn:hover {
+        background-color: #ffffff;
+        color: #1a1a1a;
+        border-color: #ffffff;
+        transform: translateY(-2px);
+    }
+
+    .back-arrow-icon {
+        width: 24px;
+        height: 24px;
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 2;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="game-header">
+    <div class="game-matchup">
+        
+        <div class="team-side away">
+            <img src="{{ url_for('static', filename='teams/' + game_info.away_team + '.png') }}" alt="{{ game_info.away_team }}" class="team-logo-large">
+            
+            <div class="team-info-stack away">
+                <span class="team-name-large {% if game_info.away_score > game_info.home_score %}winner-text{% else %}loser-text{% endif %}">{{ game_info.away_team }}</span>
+                <span class="team-record">({{ away_record }})</span>
+            </div>
+
+            <span class="team-score-large {% if game_info.away_score > game_info.home_score %}winner-score{% else %}loser-score{% endif %}">{{ game_info.away_score }}</span>
+        </div>
+        
+        <div class="match-center-info">
+            <div class="game-date">{{ game_info.game_date }}</div>
+            <span class="vs-text">@</span>
+        </div>
+
+        <div class="team-side home">
+            <span class="team-score-large {% if game_info.home_score > game_info.away_score %}winner-score{% else %}loser-score{% endif %}">{{ game_info.home_score }}</span>
+            
+            <div class="team-info-stack home">
+                <span class="team-name-large {% if game_info.home_score > game_info.away_score %}winner-text{% else %}loser-text{% endif %}">{{ game_info.home_team }}</span>
+                <span class="team-record">({{ home_record }})</span>
+            </div>
+
+            <img src="{{ url_for('static', filename='teams/' + game_info.home_team + '.png') }}" alt="{{ game_info.home_team }}" class="team-logo-large">
+        </div>
+    </div>
+</div>
+
+{# Identify Home vs Away datasets #}
+{% if team_name == game_info.home_team %}
+    {% set home_team_display = team_name %}
+    {% set home_players = team_players %}
+    {% set home_total = team_total %}
+    {% set away_team_display = opponent %}
+    {% set away_players = opponent_players %}
+    {% set away_total = opponent_total %}
+{% else %}
+    {% set home_team_display = opponent %}
+    {% set home_players = opponent_players %}
+    {% set home_total = opponent_total %}
+    {% set away_team_display = team_name %}
+    {% set away_players = team_players %}
+    {% set away_total = team_total %}
+{% endif %}
+
+{# Configuration for Starters #}
+{% set starter_positions = ['F', 'F', 'C', 'G', 'G'] %}
+{# Indices for reordering 1-5 to 3-2-1-4-5 (0-based: 2, 1, 0, 3, 4) #}
+{% set sort_order = [2, 1, 0, 3, 4] %}
+
+<div class="boxscore-section">
+    <div class="team-header">
+        <img src="{{ url_for('static', filename='teams/' + home_team_display + '.png') }}" class="team-header-logo">
+        {{ home_team_display }}
+    </div>
+    <table class="boxscore-table">
+        <thead>
+            <tr>
+                <th>Player</th><th>Min</th><th>FG</th><th>3PT</th><th>FT</th><th>Reb</th><th>Ast</th><th>Stl</th><th>Blk</th><th>TO</th><th>Pts</th>
+            </tr>
+        </thead>
+        <tbody>
+            {# 1. Render Reordered Starters (Indices 2, 1, 0, 3, 4) #}
+            {% for i in sort_order %}
+                {% if i < home_players|length %}
+                    {% set player = home_players[i] %}
+                    <tr class="starter-row">
+                        <td>
+                            <span class="pos-indicator">{{ starter_positions[loop.index0] }}</span>
+                            <a href="{{ url_for('player.player_page', player_name=player.player_name) }}" class="player-link">{{ player.player_name }}</a>
+                        </td>
+                        <td>{{ player.minutes }}</td>
+                        <td>{{ player.fg_made }}-{{ player.fg_att }}</td>
+                        <td>{{ player.tp_made }}-{{ player.tp_att }}</td>
+                        <td>{{ player.ft_made }}-{{ player.ft_att }}</td>
+                        <td>{{ player.rebounds }}</td><td>{{ player.assists }}</td><td>{{ player.steals }}</td><td>{{ player.blocks }}</td><td>{{ player.turnovers }}</td>
+                        <td><strong>{{ player.points }}</strong></td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
+
+            {# 2. Render Bench (Remaining players from index 5 onwards) #}
+            {% for player in home_players[5:] %}
+            <tr>
+                <td>
+                    <span class="pos-indicator"></span> {# Empty spacer for alignment #}
+                    <a href="{{ url_for('player.player_page', player_name=player.player_name) }}" class="player-link">{{ player.player_name }}</a>
+                </td>
+                <td>{{ player.minutes }}</td>
+                <td>{{ player.fg_made }}-{{ player.fg_att }}</td>
+                <td>{{ player.tp_made }}-{{ player.tp_att }}</td>
+                <td>{{ player.ft_made }}-{{ player.ft_att }}</td>
+                <td>{{ player.rebounds }}</td><td>{{ player.assists }}</td><td>{{ player.steals }}</td><td>{{ player.blocks }}</td><td>{{ player.turnovers }}</td>
+                <td><strong>{{ player.points }}</strong></td>
+            </tr>
+            {% endfor %}
+
+            <tr class="totals-row">
+                <td>TOTALS</td><td>-</td><td>{{ home_total.fg_made }}-{{ home_total.fg_att }}</td><td>{{ home_total.tp_made }}-{{ home_total.tp_att }}</td><td>{{ home_total.ft_made }}-{{ home_total.ft_att }}</td>
+                <td>{{ home_total.rebounds }}</td><td>{{ home_total.assists }}</td><td>{{ home_total.steals }}</td><td>{{ home_total.blocks }}</td><td>{{ home_total.turnovers }}</td>
+                <td><strong>{{ home_total.points }}</strong></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="boxscore-section">
+    <div class="team-header">
+        <img src="{{ url_for('static', filename='teams/' + away_team_display + '.png') }}" class="team-header-logo">
+        {{ away_team_display }}
+    </div>
+    <table class="boxscore-table">
+        <thead>
+            <tr>
+                <th>Player</th><th>Min</th><th>FG</th><th>3PT</th><th>FT</th><th>Reb</th><th>Ast</th><th>Stl</th><th>Blk</th><th>TO</th><th>Pts</th>
+            </tr>
+        </thead>
+        <tbody>
+            {# 1. Render Reordered Starters (Indices 2, 1, 0, 3, 4) #}
+            {% for i in sort_order %}
+                {% if i < away_players|length %}
+                    {% set player = away_players[i] %}
+                    <tr class="starter-row">
+                        <td>
+                            <span class="pos-indicator">{{ starter_positions[loop.index0] }}</span>
+                            <a href="{{ url_for('player.player_page', player_name=player.player_name) }}" class="player-link">{{ player.player_name }}</a>
+                        </td>
+                        <td>{{ player.minutes }}</td>
+                        <td>{{ player.fg_made }}-{{ player.fg_att }}</td>
+                        <td>{{ player.tp_made }}-{{ player.tp_att }}</td>
+                        <td>{{ player.ft_made }}-{{ player.ft_att }}</td>
+                        <td>{{ player.rebounds }}</td><td>{{ player.assists }}</td><td>{{ player.steals }}</td><td>{{ player.blocks }}</td><td>{{ player.turnovers }}</td>
+                        <td><strong>{{ player.points }}</strong></td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
+
+            {# 2. Render Bench #}
+            {% for player in away_players[5:] %}
+            <tr>
+                <td>
+                    <span class="pos-indicator"></span>
+                    <a href="{{ url_for('player.player_page', player_name=player.player_name) }}" class="player-link">{{ player.player_name }}</a>
+                </td>
+                <td>{{ player.minutes }}</td>
+                <td>{{ player.fg_made }}-{{ player.fg_att }}</td>
+                <td>{{ player.tp_made }}-{{ player.tp_att }}</td>
+                <td>{{ player.ft_made }}-{{ player.ft_att }}</td>
+                <td>{{ player.rebounds }}</td><td>{{ player.assists }}</td><td>{{ player.steals }}</td><td>{{ player.blocks }}</td><td>{{ player.turnovers }}</td>
+                <td><strong>{{ player.points }}</strong></td>
+            </tr>
+            {% endfor %}
+
+            <tr class="totals-row">
+                <td>TOTALS</td><td>-</td><td>{{ away_total.fg_made }}-{{ away_total.fg_att }}</td><td>{{ away_total.tp_made }}-{{ away_total.tp_att }}</td><td>{{ away_total.ft_made }}-{{ away_total.ft_att }}</td>
+                <td>{{ away_total.rebounds }}</td><td>{{ away_total.assists }}</td><td>{{ away_total.steals }}</td><td>{{ away_total.blocks }}</td><td>{{ away_total.turnovers }}</td>
+                <td><strong>{{ away_total.points }}</strong></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="back-arrow-container">
+    <a href="javascript:history.back()" class="back-arrow-btn" aria-label="Go Back">
+        <svg class="back-arrow-icon" viewBox="0 0 24 24">
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
+    </a>
+</div>
+{% endblock %}

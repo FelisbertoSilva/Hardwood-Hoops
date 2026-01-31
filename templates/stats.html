@@ -1,0 +1,406 @@
+{% extends "base.html" %}
+
+{% block title %}Stats Leaders - BoxToData{% endblock %}
+
+{% block extra_css %}
+<style>
+/* full width dark theme override */
+.content {
+    padding: 0 !important;
+    background-color: #1a1a1a !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+}
+
+.content-inner {
+    padding: 40px 30px;
+    max-width: 1800px;
+    margin: 0 auto;
+}
+
+/* header */
+.stats-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border: none !important;
+    border-bottom: none !important;
+    box-shadow: none !important;
+    background: none !important;
+}
+
+.stats-header::after, .stats-title::after {
+    display: none !important;
+    content: none !important;
+    border: none !important;
+}
+
+.stats-title {
+    font-size: 1.6em;
+    font-weight: 900;
+    text-transform: uppercase;
+    color: #ffffff;
+    margin: 0;
+    letter-spacing: 0.5px;
+    text-decoration: none !important;
+    border: none !important;
+}
+
+.see-scores-link {
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 1.1em;
+    font-weight: 600;
+    transition: opacity 0.2s;
+}
+.see-scores-link:hover { opacity: 0.8; text-decoration: underline; }
+
+.stats-section { margin-bottom: 80px; }
+
+/* tab buttons */
+.stats-tabs {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    gap: 0;
+    margin-bottom: 40px;
+}
+
+.stats-tab-btn {
+    flex: 1;
+    padding: 15px 0;
+    font-size: 1.4em;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    outline: none;
+    background-color: #2b2b2b;
+    color: #ffffff;
+    border: 2px solid #3a3a3a;
+}
+
+.stats-tab-btn:first-child {
+    border-radius: 8px 0 0 8px;
+    border-right: 1px solid #3a3a3a;
+}
+
+.stats-tab-btn:last-child {
+    border-radius: 0 8px 8px 0;
+    border-left: 1px solid #3a3a3a;
+}
+
+.stats-tab-btn:not(.active):hover { background-color: #353535; }
+
+.stats-tab-btn.active {
+    background-color: #ffffff;
+    color: #1a1a1a;
+    border-color: #ffffff;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+    z-index: 1;
+}
+
+/* view toggle */
+.stats-view {
+    display: none;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+.stats-view.active { display: block; opacity: 1; }
+
+/* grid */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    margin-top: 20px;
+}
+
+.stat-category {
+    background-color: #2b2b2b;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 2px solid #3a3a3a;
+    display: flex;
+    flex-direction: column;
+}
+
+.stat-category h3 {
+    background: linear-gradient(135deg, #2b2b2b 0%, #1f1f1f 100%);
+    color: white;
+    margin: 0;
+    padding: 18px 20px;
+    border-bottom: 2px solid #3a3a3a;
+    font-size: 1.3em;
+    text-transform: uppercase;
+    font-weight: 900;
+    letter-spacing: -0.5px;
+}
+
+.stat-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.stat-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 20px;
+    border-bottom: 1px solid #3a3a3a;
+    color: #e0e0e0;
+}
+.stat-list li:last-child { border-bottom: none; }
+.stat-list li:nth-child(even) { background-color: #272727; }
+.stat-list li:hover { background-color: #333333; }
+
+.stat-left { display: flex; align-items: center; gap: 12px; flex: 1; }
+
+.stat-rank { color: #888; font-weight: bold; font-size: 1em; min-width: 20px; }
+.stat-player { color: #ffffff; font-weight: 600; font-size: 1em; }
+.stat-player a { color: #ffffff; text-decoration: none; }
+.stat-player a:hover { color: #ffffff; text-decoration: underline; }
+.stat-team { color: #888; font-size: 0.85em; font-weight: 500; margin-left: 8px; }
+.stat-value { color: #ffffff; font-weight: bold; font-size: 1.1em; margin-left: 15px; }
+
+.stat-no-data {
+    padding: 30px 20px;
+    text-align: center;
+    color: #666;
+    font-style: italic;
+    font-size: 0.95em;
+    background-color: #2b2b2b;
+}
+
+/* responsive */
+@media (max-width: 1200px) {
+    .stats-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 768px) {
+    .stats-grid { grid-template-columns: 1fr; }
+    .stats-tabs { flex-direction: column; gap: 15px; }
+    .stats-tab-btn {
+        width: 100%;
+        border-radius: 8px !important;
+        border: 2px solid #3a3a3a !important;
+        font-size: 1.1em;
+    }
+    .stats-header { flex-direction: row; align-items: center; }
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="content-inner">
+
+    <div class="stats-section">
+        <div class="stats-header">
+            <h2 class="stats-title">PLAYERS</h2>
+            <a href="{{ url_for('stats.all_player_stats') }}" class="see-scores-link">See All Players Stats</a>
+        </div>
+
+        <div class="stats-tabs">
+            <button class="stats-tab-btn active" id="btn-player-tonight" onclick="switchPlayerStats('tonight')">Tonight's Leaders</button>
+            <button class="stats-tab-btn" id="btn-player-season" onclick="switchPlayerStats('season')">Season Leaders</button>
+        </div>
+
+        <div id="player-tonight" class="stats-view active">
+            <div class="stats-grid">
+                {% set categories = [
+                    ('Points', tonight_leaders.points_per_game),
+                    ('Rebounds', tonight_leaders.rebounds_per_game),
+                    ('Assists', tonight_leaders.assists_per_game),
+                    ('Blocks', tonight_leaders.blocks_per_game),
+                    ('Steals', tonight_leaders.steals_per_game),
+                    ('Field Goal %', tonight_leaders.field_goal_percentage),
+                    ('3-Point Made', tonight_leaders.three_pointers_made),
+                    ('3-Point %', tonight_leaders.three_point_percentage),
+                    ('Free Throw %', tonight_leaders.free_throw_percentage)
+                ] %}
+
+                {% for title, category_data in categories %}
+                <div class="stat-category">
+                    <h3>{{ title }}</h3>
+                    {% if category_data %}
+                    <ol class="stat-list">
+                        {% for player in category_data %}
+                        <li>
+                            <div class="stat-left">
+                                <span class="stat-rank">{{ loop.index }}.</span>
+                                <span class="stat-player">
+                                    <a href="{{ url_for('player.player_page', player_name=player.player_name) }}">{{ player.player_name }}</a>
+                                    <span class="stat-team">{{ player.team }}</span>
+                                </span>
+                            </div>
+                            <span class="stat-value">{{ player.value }}{% if '%' in title %}%{% endif %}</span>
+                        </li>
+                        {% endfor %}
+                    </ol>
+                    {% else %}
+                    <div class="stat-no-data">No Data Available</div>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div id="player-season" class="stats-view">
+            <div class="stats-grid">
+                {% set season_categories = [
+                    ('Points Per Game', leaders.points_per_game),
+                    ('Rebounds Per Game', leaders.rebounds_per_game),
+                    ('Assists Per Game', leaders.assists_per_game),
+                    ('Blocks Per Game', leaders.blocks_per_game),
+                    ('Steals Per Game', leaders.steals_per_game),
+                    ('Field Goal %', leaders.field_goal_percentage),
+                    ('3-Pointers Made', leaders.three_pointers_made),
+                    ('3-Point %', leaders.three_point_percentage),
+                    ('Free Throw %', leaders.free_throw_percentage)
+                ] %}
+
+                {% for title, category_data in season_categories %}
+                <div class="stat-category">
+                    <h3>{{ title }}</h3>
+                    {% if category_data %}
+                    <ol class="stat-list">
+                        {% for player in category_data %}
+                        <li>
+                            <div class="stat-left">
+                                <span class="stat-rank">{{ loop.index }}.</span>
+                                <span class="stat-player">
+                                    <a href="{{ url_for('player.player_page', player_name=player.player_name) }}">{{ player.player_name }}</a>
+                                    <span class="stat-team">{{ player.team }}</span>
+                                </span>
+                            </div>
+                            <span class="stat-value">{{ player.value }}{% if '%' in title %}%{% endif %}</span>
+                        </li>
+                        {% endfor %}
+                    </ol>
+                    {% else %}
+                    <div class="stat-no-data">No Data Available</div>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <div class="stats-section">
+        <div class="stats-header">
+            <h2 class="stats-title">TEAMS</h2>
+            <a href="{{ url_for('team.team_stats_page') }}" class="see-scores-link">See All Team Stats</a>
+        </div>
+
+        <div class="stats-tabs">
+            <button class="stats-tab-btn active" id="btn-team-tonight" onclick="switchTeamStats('tonight')">Tonight's Leaders</button>
+            <button class="stats-tab-btn" id="btn-team-season" onclick="switchTeamStats('season')">Season Leaders</button>
+        </div>
+
+        <div id="team-tonight" class="stats-view active">
+            <div class="stats-grid">
+                {% set team_categories = [
+                    ('Points', tonight_team_leaders.points_per_game),
+                    ('Rebounds', tonight_team_leaders.rebounds_per_game),
+                    ('Assists', tonight_team_leaders.assists_per_game),
+                    ('Blocks', tonight_team_leaders.blocks_per_game),
+                    ('Steals', tonight_team_leaders.steals_per_game),
+                    ('Field Goal %', tonight_team_leaders.field_goal_percentage),
+                    ('3-Point Made', tonight_team_leaders.three_pointers_made),
+                    ('3-Point %', tonight_team_leaders.three_point_percentage),
+                    ('Free Throw %', tonight_team_leaders.free_throw_percentage)
+                ] %}
+
+                {% for title, category_data in team_categories %}
+                <div class="stat-category">
+                    <h3>{{ title }}</h3>
+                    {% if category_data %}
+                    <ol class="stat-list">
+                        {% for team in category_data %}
+                        <li>
+                            <div class="stat-left">
+                                <span class="stat-rank">{{ loop.index }}.</span>
+                                <span class="stat-player">
+                                    <a href="{{ url_for('team.team_page', team_name=team.team_name) }}">{{ team.team_name }}</a>
+                                </span>
+                            </div>
+                            <span class="stat-value">{{ team.value }}{% if '%' in title %}%{% endif %}</span>
+                        </li>
+                        {% endfor %}
+                    </ol>
+                    {% else %}
+                    <div class="stat-no-data">No Data Available</div>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div id="team-season" class="stats-view">
+            <div class="stats-grid">
+                {% set team_season_cats = [
+                    ('Points Per Game', season_team_leaders.points_per_game),
+                    ('Rebounds Per Game', season_team_leaders.rebounds_per_game),
+                    ('Assists Per Game', season_team_leaders.assists_per_game),
+                    ('Blocks Per Game', season_team_leaders.blocks_per_game),
+                    ('Steals Per Game', season_team_leaders.steals_per_game),
+                    ('Field Goal %', season_team_leaders.field_goal_percentage),
+                    ('3-Pointers Made', season_team_leaders.three_pointers_made),
+                    ('3-Point %', season_team_leaders.three_point_percentage),
+                    ('Free Throw %', season_team_leaders.free_throw_percentage)
+                ] %}
+
+                {% for title, category_data in team_season_cats %}
+                <div class="stat-category">
+                    <h3>{{ title }}</h3>
+                    {% if category_data %}
+                    <ol class="stat-list">
+                        {% for team in category_data %}
+                        <li>
+                            <div class="stat-left">
+                                <span class="stat-rank">{{ loop.index }}.</span>
+                                <span class="stat-player">
+                                    <a href="{{ url_for('team.team_page', team_name=team.team_name) }}">{{ team.team_name }}</a>
+                                </span>
+                            </div>
+                            <span class="stat-value">{{ team.value }}{% if '%' in title %}%{% endif %}</span>
+                        </li>
+                        {% endfor %}
+                    </ol>
+                    {% else %}
+                    <div class="stat-no-data">No Data Available</div>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+function switchPlayerStats(view) {
+    document.getElementById('player-tonight').classList.remove('active');
+    document.getElementById('player-season').classList.remove('active');
+    document.getElementById('btn-player-tonight').classList.remove('active');
+    document.getElementById('btn-player-season').classList.remove('active');
+
+    document.getElementById('player-' + view).classList.add('active');
+    document.getElementById('btn-player-' + view).classList.add('active');
+}
+
+function switchTeamStats(view) {
+    document.getElementById('team-tonight').classList.remove('active');
+    document.getElementById('team-season').classList.remove('active');
+    document.getElementById('btn-team-tonight').classList.remove('active');
+    document.getElementById('btn-team-season').classList.remove('active');
+
+    document.getElementById('team-' + view).classList.add('active');
+    document.getElementById('btn-team-' + view).classList.add('active');
+}
+</script>
+{% endblock %}
