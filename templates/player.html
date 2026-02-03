@@ -195,22 +195,21 @@
     th {
         background-color: #555 !important;
         color: white;
-        border-color: #4a4a4a;
         padding: 10px;
         text-align: center;
+        border: 1px solid #3a3a3a;
     }
     tbody tr { background-color: #2b2b2b; }
     tbody tr:nth-child(even) { background-color: #323232; }
     td {
         background-color: inherit;
         color: #e0e0e0;
-        border-color: #3a3a3a;
         padding: 8px;
         text-align: center;
         border: 1px solid #3a3a3a;
     }
-    th:first-child, td:first-child,
-    th:nth-child(2), td:nth-child(2) { background-color: inherit; text-align: left; }
+    th:first-child, td:first-child { text-align: left; }
+    th:nth-child(2), td:nth-child(2) { text-align: center; position: static; border: 1px solid #3a3a3a; }
     tr:hover td { background-color: inherit; color: #e0e0e0 !important; }
 
     /* career highs cards */
@@ -683,7 +682,6 @@ function showGameLog(season) {
     document.getElementById('gamelog-' + season).classList.add('active');
 }
 
-// sorting
 document.querySelectorAll('th').forEach((header, index) => {
     header.addEventListener('click', function() {
         const table = this.closest('table');
